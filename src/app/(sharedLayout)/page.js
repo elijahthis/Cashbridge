@@ -13,10 +13,10 @@ function Home() {
       <div className="2xl:flex 2xl:space-x-[48px]">
         <section className="mb-6 2xl:mb-0 2xl:flex-1">
           <TotalWidget />
-          <div className="mb-[24px] w-full xl:flex xl:space-x-[24px]">
+          {/* <div className="mb-[24px] w-full xl:flex xl:space-x-[24px]">
             <RevenueFlow />
             <Efficiency />
-          </div>
+          </div> */}
 
           <ListTab />
         </section>
