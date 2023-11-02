@@ -6,10 +6,22 @@ import Link from "next/link";
 import PasswordResetModal from "../modal/PasswordResetModal";
 import { useState } from "react";
 import Image from "next/image";
+import Button from "../button";
+import { userLogin } from "../../../requests";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 function LeftSide() {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [modalData, setModalData] = useState("");
+
+	const [loginData, setLoginData] = useState({
+		email: "",
+		password: "",
+	});
+	const [loading, setLoading] = useState(false);
+
+	const router = useRouter();
 
 	return (
 		<div className="lg:w-1/2 px-5 xl:pl-12 pt-10">
@@ -48,12 +60,39 @@ function LeftSide() {
 						Send, spend and save smarter
 					</p>
 				</header>
-				<form action="">
+				<form
+					action=""
+					onSubmit={async (e) => {
+						e.preventDefault();
+
+						setLoading(true);
+						try {
+							const res = await userLogin({
+								email: loginData.email,
+								password: loginData.password,
+							});
+							if (res?.status === 200) {
+								toast.success("Login successful."); // success notification
+								router.push("/");
+								// updateNewLogin();
+							}
+						} catch (e) {
+							console.log(e);
+						} finally {
+							setLoading(false);
+						}
+					}}
+				>
 					<div className="mb-4">
 						<input
 							type="text"
 							className="text-bgray-800 text-base border border-bgray-300 dark:border-darkblack-400 dark:bg-darkblack-500 dark:text-white h-14 w-full focus:border-success-300 focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base"
-							placeholder="Username or email"
+							placeholder="Email"
+							value={loginData.email}
+							onChange={(e) => {
+								setLoginData({ ...loginData, email: e.target.value });
+							}}
+							required={true}
 						/>
 					</div>
 					<div className="mb-6 relative">
@@ -61,6 +100,11 @@ function LeftSide() {
 							type="text"
 							className="text-bgray-800 text-base border border-bgray-300 dark:border-darkblack-400 dark:bg-darkblack-500 dark:text-white h-14 w-full focus:border-success-300 focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base"
 							placeholder="Password"
+							value={loginData.password}
+							onChange={(e) => {
+								setLoginData({ ...loginData, password: e.target.value });
+							}}
+							required={true}
 						/>
 						<button
 							aria-label="none"
@@ -122,12 +166,7 @@ function LeftSide() {
 							</a>
 						</div>
 					</div>
-					<Link
-						href="/"
-						className="py-3.5 flex items-center justify-center text-white font-bold bg-success-300 hover:bg-success-400 transition-all rounded-lg w-full"
-					>
-						Sign In
-					</Link>
+					<Button loading={loading}>Sign In</Button>
 				</form>
 				<p className="text-center text-bgray-900 dark:text-bgray-50 text-base font-medium pt-7">
 					Don’t have an account?{" "}
