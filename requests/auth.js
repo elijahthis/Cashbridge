@@ -42,7 +42,7 @@ export const sendOtp = async (values) => {
 
 export const confirmOtp = async (values) => {
 	try {
-		const res = await AuthRequest.post("api/accounts/confirm_email", values);
+		const res = await AuthRequest.post("v1/auth/verify-login", values);
 		console.log(res);
 		return res;
 	} catch (err) {
