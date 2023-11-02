@@ -87,7 +87,9 @@ function LeftSide() {
 						/>
 					</div>
 
-					<Button loading={loading}>Confirm OTP</Button>
+					<Button loading={loading} disabled={otp.length !== 6}>
+						Confirm OTP
+					</Button>
 				</form>
 				<p className="text-center text-bgray-900 dark:text-bgray-50 text-base font-medium pt-7">
 					<Link href="/signin" className="font-semibold underline">
