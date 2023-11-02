@@ -34,8 +34,8 @@ export const sendOtp = async (values) => {
 		console.log(res);
 		return res;
 	} catch (err) {
+		toast.error(err?.response?.data?.error);
 		console.log(err?.response?.data);
-		console.log(err?.response?.data?.message);
 		throw err;
 	}
 };
@@ -46,8 +46,8 @@ export const confirmOtp = async (values) => {
 		console.log(res);
 		return res;
 	} catch (err) {
+		toast.error(err?.response?.data?.error);
 		console.log(err?.response?.data);
-		console.log(err?.response?.data?.message);
 		throw err;
 	}
 };

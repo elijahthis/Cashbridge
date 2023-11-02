@@ -6,9 +6,17 @@ import { useState } from "react";
 import Image from "next/image";
 import OtpInput from "react-otp-input";
 import OTPInput from "react-otp-input";
+import { confirmOtp } from "../../../requests";
+import { getToken } from "../../../config/helpers";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import Button from "../button";
 
 function LeftSide() {
 	const [otp, setOtp] = useState("");
+	const [loading, setLoading] = useState(false);
+
+	const router = useRouter();
 
 	return (
 		<div className="lg:w-1/2 px-5 xl:pl-12 pt-10">
@@ -41,23 +49,44 @@ function LeftSide() {
 						Send, spend and save smarter
 					</p>
 				</header>
-				<form action="">
+				<form
+					action=""
+					onSubmit={async (e) => {
+						e.preventDefault();
+
+						setLoading(true);
+						try {
+							const res = await confirmOtp({
+								otp: otp,
+								token: getToken(),
+							});
+							if (res?.status === 200) {
+								toast.success("OTP Verified");
+								router.push("/");
+							}
+						} catch (e) {
+							console.log(e);
+						} finally {
+							setLoading(false);
+						}
+					}}
+				>
 					<div className="mb-6 otpInputWrap">
 						<OTPInput
 							value={otp}
 							onChange={setOtp}
 							numInputs={4}
 							renderSeparator={<span> • </span>}
-							renderInput={(props) => <input {...props} />}
+							renderInput={(props) => (
+								<input
+									{...props}
+									className="text-bgray-800 dark:text-white dark:bg-darkblack-500 dark:border-darkblack-400 text-base border border-bgray-300 h-14 w-full focus:border-success-300 focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base "
+								/>
+							)}
 						/>
 					</div>
 
-					<Link
-						href="/"
-						className="py-3.5 flex items-center justify-center text-white font-bold bg-success-300 hover:bg-success-400 transition-all rounded-lg w-full"
-					>
-						Confirm
-					</Link>
+					<Button loading={loading}>Confirm OTP</Button>
 				</form>
 				<p className="text-center text-bgray-900 dark:text-bgray-50 text-base font-medium pt-7">
 					<Link href="/signin" className="font-semibold underline">

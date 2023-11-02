@@ -73,7 +73,7 @@ function LeftSide() {
 							});
 							if (res?.status === 200) {
 								toast.success("Login successful."); // success notification
-								router.push("/");
+								router.push("/otp");
 								// updateNewLogin();
 							}
 						} catch (e) {
