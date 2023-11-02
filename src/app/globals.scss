@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Urbanist:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.switch-btn {
+	@apply bg-bgray-300;
+}
+.switch-btn.active {
+	@apply bg-success-300;
+}
+.switch-btn span {
+	@apply translate-x-0;
+}
+.switch-btn.active span {
+	@apply translate-x-[23px];
+}
+
+.Toastify {
+	&__toast {
+		font-family: "Urbanist", sans-serif !important;
+		&-container {
+			width: unset !important;
+			min-width: 320px;
+		}
+
+		&--error {
+			border: 0;
+			/* border-radius: 50px !important; */
+			background: #a10f18 !important;
+			color: #ffffff !important;
+
+			svg > path {
+				fill: #ffffff !important;
+			}
+		}
+
+		&--success {
+			border: 0;
+			/* border-radius: 50px !important; */
+			background: #169d53 !important;
+			color: #ffffff !important;
+
+			svg > path {
+				fill: #ffffff !important;
+			}
+		}
+
+		&--info {
+			border: 0;
+			/* border-radius: 50px !important; */
+			background: #243256 !important;
+			color: #ffffff !important;
+			svg > path {
+				fill: #ffffff !important;
+			}
+		}
+	}
+}
+
+.btn-loader {
+	-webkit-animation: spin 0.4s ease-in-out infinite; /* Safari */
+	animation: spin 0.4s ease-in-out infinite;
+	color: #ffffff;
+}
+
+.otpInputWrap {
+	& > div {
+		display: grid !important;
+		grid-template-columns: repeat(7, 1fr) !important;
+		justify-content: center !important;
+		text-align: center;
+
+		& > input {
+			width: 100% !important;
+			border-radius: 0.5rem;
+			padding-top: 2rem !important;
+			padding-bottom: 2rem !important;
+
+			font-size: 1.5rem !important;
+		}
+	}
+}
