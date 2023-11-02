@@ -1,6 +1,7 @@
 import UserFilter from "@/component/forms/UserFilter";
 import UsersList from "@/component/user/UsersList";
 import RightSidebar from "@/component/user/RightSidebar";
+import withAuth from "../../../../HOCs/withAuth";
 
 function Users() {
   return (
@@ -14,4 +15,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default withAuth(Users);

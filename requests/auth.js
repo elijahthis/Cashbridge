@@ -51,3 +51,15 @@ export const confirmOtp = async (values) => {
 		throw err;
 	}
 };
+
+export const getMe = async () => {
+	try {
+		const res = await request.get("v1/auth/me");
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};

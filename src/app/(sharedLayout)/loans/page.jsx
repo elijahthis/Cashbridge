@@ -1,6 +1,7 @@
 import Wallet from "@/component/wallet";
 import TeamChat from "@/component/teamChat";
 import HistoryTable from "@/component/listTab/HistoryTable";
+import withAuth from "../../../../HOCs/withAuth";
 
 function History() {
   return (
@@ -16,4 +17,4 @@ function History() {
   );
 }
 
-export default History;
+export default withAuth(History);

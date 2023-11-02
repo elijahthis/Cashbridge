@@ -2,6 +2,7 @@ import ListTab from "@/component/listTab";
 import TeamChat from "@/component/teamChat";
 import EfficiencyV2 from "@/component/revenueFlow/EfficiencyV2";
 import SummaryV3 from "@/component/summary/SummaryV3";
+import withAuth from "../../../../HOCs/withAuth";
 
 function Analytics() {
   return (
@@ -18,4 +19,4 @@ function Analytics() {
   );
 }
 
-export default Analytics;
+export default withAuth(Analytics);

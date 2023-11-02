@@ -74,6 +74,11 @@
 	color: #ffffff;
 }
 
+.animate-spin {
+	-webkit-animation: spin 0.4s ease-in-out infinite; /* Safari */
+	animation: spin 0.4s ease-in-out infinite;
+}
+
 .otpInputWrap {
 	& > div {
 		display: grid !important;

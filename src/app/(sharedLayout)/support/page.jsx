@@ -8,6 +8,7 @@ import RecentSupport from "@/component/support/RecentSupport";
 import SupportHeader from "@/component/support/Header";
 
 import dynamic from "next/dynamic";
+import withAuth from "../../../../HOCs/withAuth";
 
 const SupportTicket = dynamic(() => import("@/component/forms/SupportTicket"), {
   ssr: false,
@@ -49,4 +50,4 @@ function Support() {
   );
 }
 
-export default Support;
+export default withAuth(Support);

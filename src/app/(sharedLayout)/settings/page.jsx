@@ -8,6 +8,7 @@ import Payment from "@/component/settings/Payment";
 import ProgramAndResources from "@/component/settings/ProgramAndResources";
 import Notification from "@/component/settings/Notification";
 import PersonalInfo from "@/component/settings/PersonalInfo";
+import withAuth from "../../../../HOCs/withAuth";
 
 function Settings() {
   const [activeTab, setActiveTab] = useState("personalInfo");
@@ -36,4 +37,4 @@ function Settings() {
   );
 }
 
-export default Settings;
+export default withAuth(Settings);
