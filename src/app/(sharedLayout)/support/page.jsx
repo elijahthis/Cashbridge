@@ -1,3 +1,4 @@
+"use client";
 import Progressbar from "@/component/chart/Progressbar";
 import Note from "@/component/support/Note";
 import PresentAddress from "@/component/support/PresentAddress";

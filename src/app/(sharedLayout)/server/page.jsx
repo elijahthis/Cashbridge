@@ -1,3 +1,4 @@
+"use client";
 import ListTab from "@/component/listTab";
 import TeamChat from "@/component/teamChat";
 import EfficiencyV2 from "@/component/revenueFlow/EfficiencyV2";

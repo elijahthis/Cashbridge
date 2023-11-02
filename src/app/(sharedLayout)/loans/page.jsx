@@ -1,3 +1,4 @@
+"use client";
 import Wallet from "@/component/wallet";
 import TeamChat from "@/component/teamChat";
 import HistoryTable from "@/component/listTab/HistoryTable";
