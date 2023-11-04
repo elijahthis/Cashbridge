@@ -74,14 +74,14 @@ function UserData({ userInfo, index }) {
 			</td>
 			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 				<Link
-					href="/messages"
+					href={`users/${userInfo?._id}`}
 					className={`${
 						userInfo?.isOnline
 							? "bg-success-300 hover:bg-success-400"
 							: "bg-darkblack-500 hover:bg-darkblack-400"
 					} transition duration-300 ease-in-out ml-6 font-semibold text-white py-3 flex items-center justify-center rounded-xl px-11`}
 				>
-					Message
+					View More
 				</Link>
 			</td>
 			<td className="whitespace-nowrap pr-3 py-4 text-sm text-gray-500 rounded-r-lg">

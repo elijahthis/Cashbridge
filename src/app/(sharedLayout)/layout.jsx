@@ -24,8 +24,12 @@ function Layout({ bg, overlay, children }) {
 	const fetchData = async () => {
 		try {
 			const res = await getMe();
+
 			if (res?.data?.success) {
 				setIsLoggedIn(true);
+
+				console.log(res?.data?.data);
+				setUserObj(res?.data?.data);
 			}
 		} catch (e) {
 			console.log(e);

@@ -34,7 +34,6 @@ function Users() {
 				<UserFilter />
 				{loading ? <Loading /> : <UsersList userArr={userArr} />}
 			</div>
-			<RightSidebar />
 		</>
 	);
 }
