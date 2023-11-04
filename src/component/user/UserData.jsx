@@ -67,9 +67,7 @@ function UserData({ userInfo, index }) {
 			</td>
 			<td className="whitespace-nowrap px-2 py-4 text-sm text-gray-500">
 				<span
-					className={`bg-bamber-50  dark:bg-darkblack-500 rounded-lg text-sm ${
-						userInfo?.level === "Senior" ? "text-bamber-500" : "text-error-300"
-					} font-medium text-am px-3 py-1`}
+					className={`bg-success-300 rounded-lg text-sm  text-white font-medium text-am px-3 py-1`}
 				>
 					Tier {userInfo?.tierLevel}
 				</span>
