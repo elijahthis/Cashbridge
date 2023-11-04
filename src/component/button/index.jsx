@@ -12,7 +12,7 @@ const Button = ({
 }) => {
 	return (
 		<button
-			className={`py-3.5 flex items-center justify-center text-white font-bold  transition-all rounded-lg w-full ${
+			className={`py-3.5 px-4 flex items-center justify-center text-white font-bold  transition-all rounded-lg w-full ${
 				disabled
 					? "bg-[#e5e5e5] cursor-not-allowed "
 					: "bg-success-300 hover:bg-success-400 cursor-pointer"

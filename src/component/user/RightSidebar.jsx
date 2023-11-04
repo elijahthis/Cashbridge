@@ -17,6 +17,7 @@ import {
 import InfoRow from "./InfoRow";
 import InfoBlock from "./InfoBlock";
 import { bankList } from "@/data/bankList";
+import Button from "../button";
 
 function RightSidebar({ params }) {
 	const [userData, setUserData] = useState({});
@@ -116,71 +117,15 @@ function RightSidebar({ params }) {
 						+5
 					</div>
 				</div> */}
-					<div className="flex gap-4 mt-6">
-						<button
-							aria-label="none"
-							className="w-10 h-10 group rounded-full bg-transparent hover:bg-success-300 hover:border-transparent inline-flex items-center justify-center border border-gray-500"
+					<div className="flex gap-4 mt-6 ">
+						<Button
+							disabled={true}
+							style={{
+								backgroundColor: userData?.isSuspended ? "#dc2626" : "#dc2626",
+							}}
 						>
-							<svg
-								className="stroke-bgray-500 group-hover:stroke-white"
-								width="24"
-								height="25"
-								viewBox="0 0 24 25"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M19 21.5659L12 16.5659L5 21.5659V5.56592C5 5.03548 5.21071 4.52678 5.58579 4.1517C5.96086 3.77663 6.46957 3.56592 7 3.56592H17C17.5304 3.56592 18.0391 3.77663 18.4142 4.1517C18.7893 4.52678 19 5.03548 19 5.56592V21.5659Z"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
-						</button>
-						<button
-							aria-label="none"
-							className="w-10 h-10 rounded-full group bg-transparent hover:bg-success-300 hover:border-transparent inline-flex items-center justify-center border border-gray-500"
-						>
-							<svg
-								className="stroke-bgray-500 group-hover:stroke-white"
-								width="20"
-								height="21"
-								viewBox="0 0 20 21"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M4 13.5659C5.65685 13.5659 7 12.2228 7 10.5659C7 8.90906 5.65685 7.56592 4 7.56592C2.34315 7.56592 1 8.90906 1 10.5659C1 12.2228 2.34315 13.5659 4 13.5659Z"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-								<path
-									d="M16 7.56592C17.6569 7.56592 19 6.22277 19 4.56592C19 2.90906 17.6569 1.56592 16 1.56592C14.3431 1.56592 13 2.90906 13 4.56592C13 6.22277 14.3431 7.56592 16 7.56592Z"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-								<path
-									d="M16 19.5659C17.6569 19.5659 19 18.2228 19 16.5659C19 14.9091 17.6569 13.5659 16 13.5659C14.3431 13.5659 13 14.9091 13 16.5659C13 18.2228 14.3431 19.5659 16 19.5659Z"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-								<path
-									d="M6.69995 9.26572L13.3 5.86572"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-								<path
-									d="M6.69995 11.8657L13.3 15.2657"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
-						</button>
+							{userData?.isSuspended ? "Un-suspend" : "Suspend"} User
+						</Button>
 					</div>
 				</header>
 				<InfoBlock title="Personal Info">
@@ -504,7 +449,7 @@ function RightSidebar({ params }) {
 			</div>
 		)
 	) : (
-		<></>
+		<Loading />
 	);
 }
 

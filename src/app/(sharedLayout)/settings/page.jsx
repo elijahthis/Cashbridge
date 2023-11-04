@@ -1,3 +1,4 @@
+"use state";
 import { useState } from "react";
 import SettingsSidebar from "@/component/settings/SettingsSidebar";
 import TermsAndCondition from "@/component/settings/TermsAndCondition";
