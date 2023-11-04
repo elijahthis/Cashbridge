@@ -1,7 +1,7 @@
-import RightSidebar from "@/component/user/RightSidebar";
+import UserProfile from "@/component/user/UserProfile";
 
 const CurrentUserPage = ({ params }) => {
-	return <RightSidebar params={params} />;
+	return <UserProfile params={params} />;
 };
 
 export default CurrentUserPage;

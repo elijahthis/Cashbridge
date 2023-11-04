@@ -1,7 +1,7 @@
 "use client";
 import UserFilter from "@/component/forms/UserFilter";
 import UsersList from "@/component/user/UsersList";
-import RightSidebar from "@/component/user/RightSidebar";
+import RightSidebar from "@/component/user/UserProfile";
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../../../requests/users";
 import Loading from "@/component/loading";

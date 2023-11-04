@@ -6,7 +6,11 @@ import groupImg3 from "@/assets/images/avatar/group-img.png";
 import hr from "@/assets/images/avatar/hr.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getSelectedUserKYC } from "../../../requests/users";
+import {
+	getSelectedUserKYC,
+	suspendUser,
+	unSuspendUser,
+} from "../../../requests/users";
 import { useRouter } from "next/navigation";
 import Loading from "../loading";
 import {
@@ -18,10 +22,13 @@ import InfoRow from "./InfoRow";
 import InfoBlock from "./InfoBlock";
 import { bankList } from "@/data/bankList";
 import Button from "../button";
+import { toast } from "react-toastify";
 
-function RightSidebar({ params }) {
+function UserProfile({ params }) {
 	const [userData, setUserData] = useState({});
 	const [loading, setLoading] = useState(false);
+	const [refetch, setRefetch] = useState(false);
+	const [suspendLoading, setSuspendLoading] = useState(false);
 	const [fetched, setFetched] = useState(false);
 
 	const fetchData = async () => {
@@ -39,9 +46,41 @@ function RightSidebar({ params }) {
 		}
 	};
 
+	const suspendFunc = async () => {
+		setSuspendLoading(true);
+		try {
+			const res = await suspendUser(params?.id);
+			if (res?.data?.success) {
+				toast.success("User Suspended Successfully");
+				setRefetch((val) => !val);
+			}
+		} catch (error) {
+			console.log(error);
+			toast.error("Unable to suspend user");
+		} finally {
+			setSuspendLoading(false);
+		}
+	};
+
+	const unSuspendFunc = async () => {
+		setSuspendLoading(true);
+		try {
+			const res = await unSuspendUser(params?.id);
+			if (res?.data?.success) {
+				toast.success("User Suspended Successfully");
+				setRefetch((val) => !val);
+			}
+		} catch (error) {
+			console.log(error);
+			toast.error("Unable to suspend user");
+		} finally {
+			setSuspendLoading(false);
+		}
+	};
+
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [refetch]);
 
 	console.log("userData", userData);
 
@@ -117,11 +156,22 @@ function RightSidebar({ params }) {
 						+5
 					</div>
 				</div> */}
-					<div className="flex gap-4 mt-6 ">
+					<div className="flex flex-col items-center gap-4 mt-6 ">
+						<p className="text-warning-300">
+							{userData?.isSuspended ? "User Account Suspended" : ""}
+						</p>
 						<Button
-							disabled={true}
+							// disabled={true}
 							style={{
-								backgroundColor: userData?.isSuspended ? "#dc2626" : "#dc2626",
+								backgroundColor: userData?.isSuspended ? "#86272D" : "#dc2626",
+							}}
+							loading={suspendLoading}
+							onClick={() => {
+								if (userData?.isSuspended) {
+									unSuspendFunc();
+								} else {
+									suspendFunc();
+								}
 							}}
 						>
 							{userData?.isSuspended ? "Un-suspend" : "Suspend"} User
@@ -453,4 +503,4 @@ function RightSidebar({ params }) {
 	);
 }
 
-export default RightSidebar;
+export default UserProfile;
