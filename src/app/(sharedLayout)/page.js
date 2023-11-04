@@ -1,11 +1,9 @@
-"use client";
 import TotalWidget from "@/component/widget/TotalWidget";
 import RevenueFlow from "@/component/revenueFlow";
 import ListTab from "@/component/listTab";
 import Wallet from "@/component/wallet";
 import TeamChat from "@/component/teamChat";
 import Efficiency from "@/component/revenueFlow/Efficiency";
-import withAuth from "../../../HOCs/withAuth";
 
 function Home() {
 	return (
@@ -30,4 +28,4 @@ function Home() {
 	);
 }
 
-export default withAuth(Home);
+export default Home;
