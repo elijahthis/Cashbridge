@@ -1,10 +1,9 @@
-"use client";
 import ListTab from "@/component/listTab";
 import TeamChat from "@/component/teamChat";
 import Wallet from "@/component/wallet";
-import withAuth from "../../../../HOCs/withAuth";
+import { middleware } from "../middleware";
 
-function Transaction() {
+async function Transaction() {
 	return (
 		<>
 			<section className="2xl:w-70 w-full 2xl:mb-0 mb-6">
@@ -18,4 +17,4 @@ function Transaction() {
 	);
 }
 
-export default withAuth(Transaction);
+export default Transaction;

@@ -157,7 +157,7 @@ export const sidebarList = [
 			<svg
 				stroke="#86272D"
 				fill="#A3A3A3"
-				stroke-width="0"
+				strokeWidth="0"
 				viewBox="0 0 384 512"
 				height="20"
 				width="24"
@@ -177,7 +177,7 @@ export const sidebarList = [
 			<svg
 				stroke="#86272D"
 				fill="#A3A3A3"
-				stroke-width="0"
+				strokeWidth="0"
 				viewBox="0 0 24 24"
 				height="24"
 				width="24"

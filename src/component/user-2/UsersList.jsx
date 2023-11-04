@@ -6,8 +6,8 @@ function UsersList({ userArr }) {
 		<div className="w-full overflow-x-scroll">
 			<table className="w-full">
 				<tbody>
-					{userArr?.map((item, index) => (
-						<UserData key={item?._id} userInfo={item} index={index} />
+					{authors?.map((item, index) => (
+						<UserData key={item.id} userInfo={item} index={index} />
 					))}
 				</tbody>
 			</table>
