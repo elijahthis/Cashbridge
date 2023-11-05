@@ -81,10 +81,10 @@ function UserData({ userInfo, index }) {
 							: "bg-darkblack-500 hover:bg-darkblack-400"
 					} transition duration-300 ease-in-out ml-6 font-semibold text-white py-3 flex items-center justify-center rounded-xl px-11`}
 				>
-					View More
+					Details
 				</Link>
 			</td>
-			<td className="whitespace-nowrap pr-3 py-4 text-sm text-gray-500 rounded-r-lg">
+			{/* <td className="whitespace-nowrap pr-3 py-4 text-sm text-gray-500 rounded-r-lg">
 				<button aria-label="none" className="">
 					<svg
 						width="24"
@@ -116,7 +116,7 @@ function UserData({ userInfo, index }) {
 						/>
 					</svg>
 				</button>
-			</td>
+			</td> */}
 		</tr>
 	);
 }

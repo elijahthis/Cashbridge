@@ -5,6 +5,7 @@ import logoWhite from "@/assets/images/logo/logo-white.svg";
 import Link from "next/link";
 import Image from "next/image";
 
+
 export const CrossBtn = ({ close }) => {
 	return (
 		<div className="absolute top-0 right-0 pt-5 pr-5">
@@ -347,6 +348,8 @@ function PasswordResetModal({
 		</div>
 	);
 }
+
+
 
 PasswordResetModal.propTypes = {
 	isActive: ProtoTypes.bool,
