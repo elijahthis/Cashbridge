@@ -38,7 +38,34 @@ export const suspendUser = async (userId) => {
 
 export const unSuspendUser = async (userId) => {
 	try {
-		const res = await request.post(`v1/user-management/${userId}/unsuspend`, {});
+		const res = await request.post(
+			`v1/user-management/${userId}/unsuspend`,
+			{}
+		);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
+
+export const verifyKYC = async (userId, values) => {
+	try {
+		const res = await request.post(`v1/user-management/${userId}/kyc`, values);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
+
+export const updatePIN = async (userId) => {
+	try {
+		const res = await request.put(`v1/user-management/${userId}/pin`);
 		console.log(res);
 		return res;
 	} catch (err) {

@@ -1,4 +1,4 @@
-const InputComponent = ({ label, name, value, onChange }) => {
+const InputComponent = ({ label, name, value, onChange, required = false }) => {
 	return (
 		<div className="flex flex-col gap-2">
 			<label
@@ -13,6 +13,7 @@ const InputComponent = ({ label, name, value, onChange }) => {
 				name={name}
 				value={value}
 				onChange={onChange}
+				required={required}
 			/>
 		</div>
 	);

@@ -10,6 +10,8 @@ import {
 	getSelectedUserKYC,
 	suspendUser,
 	unSuspendUser,
+	verifyKYC,
+	updatePIN,
 } from "../../../requests/users";
 import { useRouter } from "next/navigation";
 import Loading from "../loading";
@@ -25,14 +27,18 @@ import Button from "../button";
 import { toast } from "react-toastify";
 import Modal from "../modal";
 import { EditUserEmploymentModal } from "../modal/EditUserEmploymentModal";
+import EditPersonalInfoModal from "../modal/EditPersonalInfoModal";
 
 function UserProfile({ params }) {
 	const [userData, setUserData] = useState({});
 	const [loading, setLoading] = useState(false);
 	const [refetch, setRefetch] = useState(false);
 	const [suspendLoading, setSuspendLoading] = useState(false);
+	const [verifyKYCLoading, setVerifyKYCLoading] = useState(false);
+	const [updatePINLoading, setUpdatePINLoading] = useState(false);
 	const [fetched, setFetched] = useState(false);
 	const [openEmploymentModal, setOpenEmploymentModal] = useState(false);
+	const [openPersonalModal, setOpenPersonalModal] = useState(false);
 
 	const fetchData = async () => {
 		setLoading(true);
@@ -70,7 +76,7 @@ function UserProfile({ params }) {
 		try {
 			const res = await unSuspendUser(params?.id);
 			if (res?.data?.success) {
-				toast.success("User Suspended Successfully");
+				toast.success("User un-suspended Successfully");
 				setRefetch((val) => !val);
 			}
 		} catch (error) {
@@ -78,6 +84,38 @@ function UserProfile({ params }) {
 			toast.error("Unable to suspend user");
 		} finally {
 			setSuspendLoading(false);
+		}
+	};
+
+	const verifyKYCFunc = async () => {
+		setVerifyKYCLoading(true);
+		try {
+			const res = await verifyKYC(params?.id, { bvn: "" });
+			if (res?.data?.success) {
+				toast.success("Customer KYC Verified");
+				setRefetch((val) => !val);
+			}
+		} catch (error) {
+			console.log(error);
+			toast.error("Unable to verify KYC");
+		} finally {
+			setVerifyKYCLoading(false);
+		}
+	};
+
+	const updatePINFunc = async () => {
+		setUpdatePINLoading(true);
+		try {
+			const res = await updatePIN(params?.id);
+			if (res?.data?.success) {
+				toast.success("Customer PIN Updated");
+				// setRefetch((val) => !val);
+			}
+		} catch (error) {
+			console.log(error);
+			toast.error("Unable to update PIN");
+		} finally {
+			setUpdatePINLoading(false);
 		}
 	};
 
@@ -92,6 +130,13 @@ function UserProfile({ params }) {
 			<Loading />
 		) : (
 			<>
+				<Modal isActive={openPersonalModal} setIsActive={setOpenPersonalModal}>
+					<EditPersonalInfoModal
+						isActive={openPersonalModal}
+						setIsActive={setOpenPersonalModal}
+						personalData={userData ?? {}}
+					/>
+				</Modal>
 				<Modal
 					isActive={openEmploymentModal}
 					setIsActive={setOpenEmploymentModal}
@@ -102,6 +147,7 @@ function UserProfile({ params }) {
 						employmentData={userData?.employmentDetail[0] ?? {}}
 					/>
 				</Modal>
+
 				<div className="2xl:w-[382px] w-full bg-white dark:bg-darkblack-600 rounded-lg px-12 pb-7">
 					<header className="flex flex-col items-center text-center -mt-8 pb-7">
 						<Image
@@ -196,7 +242,10 @@ function UserProfile({ params }) {
 							</Button>
 						</div>
 					</header>
-					<InfoBlock title="Personal Info">
+					<InfoBlock
+						title="Personal Info"
+						editFunc={() => setOpenPersonalModal(true)}
+					>
 						<InfoRow
 							label="Name"
 							value={`${userData?.firstname} ${userData?.lastname}`}
@@ -309,6 +358,39 @@ function UserProfile({ params }) {
 							value={userData?.nok[0]?.relationship}
 						/>
 					</InfoBlock>
+
+					<div className="py-6 border-b border-bgray-200 dark:border-darkblack-400">
+						<h2 className="font-bold text-3xl">Actions</h2>
+						<div className="grid grid-cols-3 gap-4 py-3">
+							<Button>Verify KYC</Button>
+							<Button
+								onClick={() => {
+									updatePINFunc();
+								}}
+								loading={updatePINLoading}
+							>
+								Update User PIN
+							</Button>
+							<Button
+								// disabled={true}
+								style={{
+									backgroundColor: userData?.isSuspended
+										? "#86272D"
+										: "#dc2626",
+								}}
+								loading={suspendLoading}
+								onClick={() => {
+									if (userData?.isSuspended) {
+										unSuspendFunc();
+									} else {
+										suspendFunc();
+									}
+								}}
+							>
+								{userData?.isSuspended ? "Un-suspend" : "Suspend"} User
+							</Button>
+						</div>
+					</div>
 
 					{/* <div className="py-6 border-b border-bgray-200 dark:border-darkblack-400">
 					<h4 className="font-medium text-gray-500 text-sm dark:text-white mb-3">

@@ -41,7 +41,11 @@ export const EditUserEmploymentModal = ({
 					setIsActive(false);
 				}}
 			>
-				<InputComponent label="Employment Status" name="employment_status" />
+				<InputComponent
+					label="Employment Status"
+					name="employment_status"
+					required={true}
+				/>
 				<InputComponent
 					label="Company"
 					name="company"
@@ -49,8 +53,9 @@ export const EditUserEmploymentModal = ({
 					onChange={(e) =>
 						setFormData({ ...formData, company: e.target.value })
 					}
+					required={true}
 				/>
-				<InputComponent label="Sector" name="sector" />
+				<InputComponent label="Sector" name="sector" required={true} />
 				<div>
 					<p className="mb-2">EMPLOYMENT ADDRESS</p>
 					<div className="grid grid-cols-2 gap-2">
@@ -61,6 +66,7 @@ export const EditUserEmploymentModal = ({
 							onChange={(e) =>
 								setFormData({ ...formData, address: e.target.value })
 							}
+							required={true}
 						/>
 						<InputComponent
 							label="City"
@@ -69,8 +75,9 @@ export const EditUserEmploymentModal = ({
 							onChange={(e) =>
 								setFormData({ ...formData, city: e.target.value })
 							}
+							required={true}
 						/>
-						<InputComponent label="State" name="state" />
+						<InputComponent label="State" name="state" required={true} />
 					</div>
 				</div>
 				<InputComponent
@@ -80,9 +87,16 @@ export const EditUserEmploymentModal = ({
 					onChange={(e) =>
 						setFormData({ ...formData, month_income: e.target.value })
 					}
+					required={true}
 				/>
-				<InputComponent label="Date Started" name="date_started" />
-				<Button>Update</Button>
+				<InputComponent
+					label="Date Started"
+					name="date_started"
+					required={true}
+				/>
+				<div className="mt-5">
+					<Button>Update</Button>
+				</div>
 			</form>
 		</div>
 	);
