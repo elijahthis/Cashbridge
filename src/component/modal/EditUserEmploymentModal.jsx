@@ -146,23 +146,20 @@ export const EditUserEmploymentModal = ({
 					}
 					required={true}
 				/>
-				<InputComponent
-					label="Date Started"
-					name="date_started"
-					required={true}
-					value={formData.dateStarted}
-					onChange={(e) => {}}
-				/>
-
-				<CBDatePicker
-					selectedDate={formData.dateStarted}
-					handleSelect={(date) => {
-						setFormData({
-							...formData,
-							dateStarted: formatDateToDdMmYyyy(date),
-						});
-					}}
-				/>
+				<div>
+					<p className="text-base text-bgray-600 dark:text-bgray-50  font-medium text-sm mb-2 ">
+						Date Started
+					</p>
+					<CBDatePicker
+						selectedDate={formData.dateStarted}
+						handleSelect={(date) => {
+							setFormData({
+								...formData,
+								dateStarted: formatDateToDdMmYyyy(date),
+							});
+						}}
+					/>
+				</div>
 
 				<div className="mt-5">
 					<Button loading={loading}>Update</Button>
