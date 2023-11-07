@@ -264,3 +264,15 @@ export const sidebarList = [
 		),
 	},
 ];
+
+export const sectorList = [
+	"FINANCES",
+	"AGRICULTURE",
+	"HEALTH-CARE",
+	"MARKETING",
+	"REAL-ESTATE",
+	"ICT",
+	"EDUCATION",
+	"MASS-MEDIA",
+	"OTHERS",
+];

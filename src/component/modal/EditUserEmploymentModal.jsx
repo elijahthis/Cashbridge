@@ -3,6 +3,8 @@ import { CgClose } from "react-icons/cg";
 import InputComponent from "../InputComponent";
 import Button from "../button";
 import { useState } from "react";
+import Dropdown from "../Dropdown";
+import { sectorList } from "@/data/constants";
 
 export const EditUserEmploymentModal = ({
 	isActive,
@@ -55,7 +57,19 @@ export const EditUserEmploymentModal = ({
 					}
 					required={true}
 				/>
-				<InputComponent label="Sector" name="sector" required={true} />
+				<div>
+					<p className="text-base text-bgray-600 dark:text-bgray-50  font-medium text-sm ">
+						Sector
+					</p>
+					<Dropdown
+						optionsList={sectorList}
+						selectedOption={formData.sector}
+						handleSelect={(e) =>
+							setFormData({ ...formData, sector: e.target.innerText })
+						}
+						placeholder="Select Sector"
+					/>
+				</div>
 				<div>
 					<p className="mb-2">EMPLOYMENT ADDRESS</p>
 					<div className="grid grid-cols-2 gap-2">
@@ -94,6 +108,7 @@ export const EditUserEmploymentModal = ({
 					name="date_started"
 					required={true}
 				/>
+
 				<div className="mt-5">
 					<Button>Update</Button>
 				</div>

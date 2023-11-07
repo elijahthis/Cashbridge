@@ -130,23 +130,30 @@ function UserProfile({ params }) {
 			<Loading />
 		) : (
 			<>
-				<Modal isActive={openPersonalModal} setIsActive={setOpenPersonalModal}>
-					<EditPersonalInfoModal
+				{openPersonalModal && (
+					<Modal
 						isActive={openPersonalModal}
 						setIsActive={setOpenPersonalModal}
-						personalData={userData ?? {}}
-					/>
-				</Modal>
-				<Modal
-					isActive={openEmploymentModal}
-					setIsActive={setOpenEmploymentModal}
-				>
-					<EditUserEmploymentModal
+					>
+						<EditPersonalInfoModal
+							isActive={openPersonalModal}
+							setIsActive={setOpenPersonalModal}
+							personalData={userData ?? {}}
+						/>
+					</Modal>
+				)}
+				{openEmploymentModal && (
+					<Modal
 						isActive={openEmploymentModal}
 						setIsActive={setOpenEmploymentModal}
-						employmentData={userData?.employmentDetail[0] ?? {}}
-					/>
-				</Modal>
+					>
+						<EditUserEmploymentModal
+							isActive={openEmploymentModal}
+							setIsActive={setOpenEmploymentModal}
+							employmentData={userData?.employmentDetail[0] ?? {}}
+						/>
+					</Modal>
+				)}
 
 				<div className="2xl:w-[382px] w-full bg-white dark:bg-darkblack-600 rounded-lg px-12 pb-7">
 					<header className="flex flex-col items-center text-center -mt-8 pb-7">
@@ -222,7 +229,7 @@ function UserProfile({ params }) {
 									? "This user account has been suspended"
 									: ""}
 							</p>
-							<Button
+							{/* <Button
 								// disabled={true}
 								style={{
 									backgroundColor: userData?.isSuspended
@@ -239,7 +246,7 @@ function UserProfile({ params }) {
 								}}
 							>
 								{userData?.isSuspended ? "Un-suspend" : "Suspend"} User
-							</Button>
+							</Button> */}
 						</div>
 					</header>
 					<InfoBlock
