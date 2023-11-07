@@ -115,3 +115,185 @@
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 }
+
+.react-datepicker {
+	width: 100% !important;
+	padding: 33.75px;
+	font-family: "Urbanist", sans-serif !important;
+	border: 0 !important;
+
+	border-radius: 16.851px !important;
+	background: white !important;
+	box-shadow: 0px 6px 12px 0px rgba(92, 115, 131, 0.08),
+		0px 4px 8px 0px rgba(92, 115, 131, 0.08) !important;
+
+	&-wrapper {
+		width: 100%;
+	}
+
+	&__triangle {
+		display: none !important;
+	}
+
+	&__input-container {
+		input {
+			padding: 14px 16px 14px 16px;
+			outline: 0;
+			width: 100%;
+			// width: 200px;
+			background-color: transparent;
+			cursor: pointer;
+
+			color: var(--black-black-300, #131316);
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 16px; /* 114.286% */
+			letter-spacing: -0.2px;
+
+			border-radius: 12px;
+			background: var(--white-white-100, #eff1f6);
+			border: 3px solid var(--gray-gray-50, #eff1f6);
+
+			transition: all 0.2s ease-in-out;
+		}
+
+		.react-datepicker-ignore-onclickoutside {
+			border: 3px solid var(--black-black-300, #131316);
+			background-color: #ffffff;
+		}
+	}
+
+	&-popper {
+		width: 436px !important;
+	}
+
+	&__aria-live {
+		display: none !important;
+	}
+
+	&__navigation {
+		top: 33.75px !important;
+		position: absolute;
+
+		&--previous {
+			left: 33.75px !important;
+
+			& > span {
+				display: none !important;
+			}
+			&::after {
+				content: "<-";
+				display: block;
+				font-size: 20px;
+				font-weight: 600;
+				line-height: 24px;
+				letter-spacing: -0.4px;
+				color: #56616b;
+			}
+		}
+		&--next {
+			right: 33.75px !important;
+
+			& > span {
+				display: none !important;
+			}
+			&::after {
+				content: "->";
+				display: block;
+				font-size: 20px;
+				font-weight: 600;
+				line-height: 24px;
+				letter-spacing: -0.4px;
+				color: #56616b;
+			}
+		}
+	}
+
+	&__month {
+		margin: 0 !important;
+
+		&-container {
+			width: 100% !important;
+		}
+	}
+
+	&__header {
+		background-color: white !important;
+		border: 0 !important;
+		padding: 0 !important;
+	}
+
+	&__current-month {
+		color: var(--black-black-300, #131316) !important;
+		text-align: center !important;
+		font-size: 13.481px !important;
+		font-style: normal !important;
+		font-weight: 600 !important;
+		line-height: 150% !important; /* 20.221px */
+		letter-spacing: -0.337px !important;
+	}
+
+	&__day-names {
+		margin-top: 14.32px !important;
+	}
+	&__week {
+		margin-top: 13.48px !important;
+	}
+
+	&__day-names,
+	&__week {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		// gap: 12px;
+	}
+
+	&__day-name {
+		padding: 7.583px 5.055px !important;
+
+		font-size: 14px !important;
+		font-weight: 600 !important;
+		line-height: 16px !important; /* 114.286% */
+		letter-spacing: -0.4px !important;
+		color: #56616b !important;
+	}
+
+	&__day {
+		width: 32px !important;
+		height: 32px !important;
+		margin: 0 !important;
+
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+
+		font-size: 14px !important;
+		font-style: normal !important;
+		font-weight: 400 !important;
+		line-height: 16px !important; /* 114.286% */
+		letter-spacing: -0.4px !important;
+		color: #56616b !important;
+		cursor: pointer;
+
+		&--today {
+			color: #131316 !important;
+			font-weight: 600 !important;
+			border: 1px solid #131316 !important;
+			border-radius: 50% !important;
+		}
+
+		&--selected {
+			background-color: var(--black-black-300, #86272d) !important;
+			color: var(--white-white-100, #ffffff) !important;
+			border-radius: 50% !important;
+			font-weight: 600 !important;
+		}
+		&:hover {
+			background-color: rgba(#131316, 0.4) !important;
+			color: var(--white-white-100, #ffffff) !important;
+			border-radius: 50% !important;
+		}
+	}
+}

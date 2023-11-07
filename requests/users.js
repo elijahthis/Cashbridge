@@ -74,3 +74,15 @@ export const updatePIN = async (userId) => {
 		throw err;
 	}
 };
+
+export const updateUserEmployment = async (userId, values) => {
+	try {
+		const res = await request.put(`v1/user-management/${userId}/employment`, values);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};

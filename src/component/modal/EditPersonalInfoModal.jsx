@@ -7,7 +7,6 @@ import { useState } from "react";
 const EditPersonalInfoModal = ({
 	isActive,
 	setIsActive,
-	children,
 	personalData = {},
 }) => {
 	return (

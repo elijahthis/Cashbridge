@@ -4,26 +4,52 @@ import InputComponent from "../InputComponent";
 import Button from "../button";
 import { useState } from "react";
 import Dropdown from "../Dropdown";
-import { sectorList } from "@/data/constants";
+import { employmentStatusList, sectorList, statesList } from "@/data/constants";
+import CBDatePicker from "../CBDatePicker";
+import { set } from "date-fns";
+import { formatDateToDdMmYyyy } from "../../../utils/helperFuncs";
+import { updateUserEmployment } from "../../../requests/users";
+import { toast } from "react-toastify";
 
 export const EditUserEmploymentModal = ({
 	isActive,
 	setIsActive,
-	children,
 	employmentData = {},
+	refetchFunc,
 }) => {
 	const [formData, setFormData] = useState({
-		_id: employmentData?._id ?? "",
-		userId: employmentData?.userId ?? "",
 		status: employmentData?.status ?? "",
 		company: employmentData?.company ?? "",
-		dateStarted: employmentData?.employmentData ?? "",
+		dateStarted: employmentData?.dateStarted ?? "",
 		sector: employmentData?.sector ?? "",
 		address: employmentData?.address ?? "",
 		state: employmentData?.state ?? "",
 		month_income: employmentData?.month_income ?? "",
 		city: employmentData?.city ?? "",
 	});
+
+	const [loading, setLoading] = useState(false);
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		console.log("formData", formData);
+
+		setLoading(true);
+		try {
+			const res = await updateUserEmployment(employmentData?.userId, formData);
+			if (res?.data?.success) {
+				console.log("res", res);
+				toast.success("Employment Info Updated Successfully");
+				refetchFunc();
+			}
+		} catch (error) {
+			console.log("error", error);
+			toast.error("Error Updating Employment Info");
+		} finally {
+			setLoading(false);
+			setIsActive(false);
+		}
+	};
 
 	return (
 		<div className="bg-white rounded-lg px-4 pt-4 pb-8 ">
@@ -38,16 +64,21 @@ export const EditUserEmploymentModal = ({
 			<form
 				action=""
 				className="flex flex-col items-stretch gap-3 "
-				onSubmit={(e) => {
-					e.preventDefault();
-					setIsActive(false);
-				}}
+				onSubmit={handleSubmit}
 			>
-				<InputComponent
-					label="Employment Status"
-					name="employment_status"
-					required={true}
-				/>
+				<div>
+					<p className="text-base text-bgray-600 dark:text-bgray-50  font-medium text-sm mb-2 ">
+						Employment Status
+					</p>
+					<Dropdown
+						optionsList={employmentStatusList}
+						selectedOption={formData.status}
+						handleSelect={(e) =>
+							setFormData({ ...formData, status: e.target.innerText })
+						}
+						placeholder="Select Employment Status"
+					/>
+				</div>
 				<InputComponent
 					label="Company"
 					name="company"
@@ -58,7 +89,7 @@ export const EditUserEmploymentModal = ({
 					required={true}
 				/>
 				<div>
-					<p className="text-base text-bgray-600 dark:text-bgray-50  font-medium text-sm ">
+					<p className="text-base text-bgray-600 dark:text-bgray-50  font-medium text-sm mb-2 ">
 						Sector
 					</p>
 					<Dropdown
@@ -70,7 +101,7 @@ export const EditUserEmploymentModal = ({
 						placeholder="Select Sector"
 					/>
 				</div>
-				<div>
+				<div className="py-4">
 					<p className="mb-2">EMPLOYMENT ADDRESS</p>
 					<div className="grid grid-cols-2 gap-2">
 						<InputComponent
@@ -91,7 +122,19 @@ export const EditUserEmploymentModal = ({
 							}
 							required={true}
 						/>
-						<InputComponent label="State" name="state" required={true} />
+						<div>
+							<p className="text-base text-bgray-600 dark:text-bgray-50  font-medium text-sm mb-2 ">
+								State
+							</p>
+							<Dropdown
+								optionsList={statesList}
+								selectedOption={formData.state}
+								handleSelect={(e) =>
+									setFormData({ ...formData, state: e.target.innerText })
+								}
+								placeholder="Select State"
+							/>
+						</div>
 					</div>
 				</div>
 				<InputComponent
@@ -107,10 +150,22 @@ export const EditUserEmploymentModal = ({
 					label="Date Started"
 					name="date_started"
 					required={true}
+					value={formData.dateStarted}
+					onChange={(e) => {}}
+				/>
+
+				<CBDatePicker
+					selectedDate={formData.dateStarted}
+					handleSelect={(date) => {
+						setFormData({
+							...formData,
+							dateStarted: formatDateToDdMmYyyy(date),
+						});
+					}}
 				/>
 
 				<div className="mt-5">
-					<Button>Update</Button>
+					<Button loading={loading}>Update</Button>
 				</div>
 			</form>
 		</div>

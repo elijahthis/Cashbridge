@@ -139,6 +139,7 @@ function UserProfile({ params }) {
 							isActive={openPersonalModal}
 							setIsActive={setOpenPersonalModal}
 							personalData={userData ?? {}}
+							refetchFunc={() => setRefetch((val) => !val)}
 						/>
 					</Modal>
 				)}
@@ -151,6 +152,7 @@ function UserProfile({ params }) {
 							isActive={openEmploymentModal}
 							setIsActive={setOpenEmploymentModal}
 							employmentData={userData?.employmentDetail[0] ?? {}}
+							refetchFunc={() => setRefetch((val) => !val)}
 						/>
 					</Modal>
 				)}
