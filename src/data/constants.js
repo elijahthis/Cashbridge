@@ -322,3 +322,12 @@ export const employmentStatusList = [
 	"SELF-EMPLOYED",
 	"UN-EMPLOYED",
 ];
+
+export const NOKRelationshipList = [
+	"SIBLING",
+	"PARENT",
+	"FRIEND",
+	"COUSIN",
+	"SON",
+	"DAUGHTER",
+];

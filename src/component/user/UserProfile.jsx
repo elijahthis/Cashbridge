@@ -28,6 +28,7 @@ import { toast } from "react-toastify";
 import Modal from "../modal";
 import { EditUserEmploymentModal } from "../modal/EditUserEmploymentModal";
 import EditPersonalInfoModal from "../modal/EditPersonalInfoModal";
+import EditNOKModal from "../modal/EditNOKModal";
 
 function UserProfile({ params }) {
 	const [userData, setUserData] = useState({});
@@ -39,6 +40,7 @@ function UserProfile({ params }) {
 	const [fetched, setFetched] = useState(false);
 	const [openEmploymentModal, setOpenEmploymentModal] = useState(false);
 	const [openPersonalModal, setOpenPersonalModal] = useState(false);
+	const [openNOKModal, setOpenNOKModal] = useState(false);
 
 	const fetchData = async () => {
 		setLoading(true);
@@ -152,6 +154,16 @@ function UserProfile({ params }) {
 							isActive={openEmploymentModal}
 							setIsActive={setOpenEmploymentModal}
 							employmentData={userData?.employmentDetail[0] ?? {}}
+							refetchFunc={() => setRefetch((val) => !val)}
+						/>
+					</Modal>
+				)}
+				{openNOKModal && (
+					<Modal isActive={openNOKModal} setIsActive={setOpenNOKModal}>
+						<EditNOKModal
+							isActive={openNOKModal}
+							setIsActive={setOpenNOKModal}
+							NOKData={userData?.nok[0] ?? {}}
 							refetchFunc={() => setRefetch((val) => !val)}
 						/>
 					</Modal>
@@ -355,7 +367,7 @@ function UserProfile({ params }) {
 						/>
 					</InfoBlock>
 					<div className="mb-6"></div>
-					<InfoBlock title="Next of Kin">
+					<InfoBlock title="Next of Kin" editFunc={() => setOpenNOKModal(true)}>
 						<InfoRow
 							label="Name"
 							value={`${userData?.nok[0]?.firstName} ${userData?.nok[0]?.lastName}`}

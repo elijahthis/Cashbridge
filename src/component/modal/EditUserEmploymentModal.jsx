@@ -6,7 +6,6 @@ import { useState } from "react";
 import Dropdown from "../Dropdown";
 import { employmentStatusList, sectorList, statesList } from "@/data/constants";
 import CBDatePicker from "../CBDatePicker";
-import { set } from "date-fns";
 import { formatDateToDdMmYyyy } from "../../../utils/helperFuncs";
 import { updateUserEmployment } from "../../../requests/users";
 import { toast } from "react-toastify";
