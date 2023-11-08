@@ -29,6 +29,7 @@ import Modal from "../modal";
 import { EditUserEmploymentModal } from "../modal/EditUserEmploymentModal";
 import EditPersonalInfoModal from "../modal/EditPersonalInfoModal";
 import EditNOKModal from "../modal/EditNOKModal";
+import EditAddressModal from "../modal/EditAddressModal";
 
 function UserProfile({ params }) {
 	const [userData, setUserData] = useState({});
@@ -41,6 +42,7 @@ function UserProfile({ params }) {
 	const [openEmploymentModal, setOpenEmploymentModal] = useState(false);
 	const [openPersonalModal, setOpenPersonalModal] = useState(false);
 	const [openNOKModal, setOpenNOKModal] = useState(false);
+	const [openAddressModal, setOpenAddressModal] = useState(false);
 
 	const fetchData = async () => {
 		setLoading(true);
@@ -168,6 +170,16 @@ function UserProfile({ params }) {
 						/>
 					</Modal>
 				)}
+				{openAddressModal && (
+					<Modal isActive={openAddressModal} setIsActive={setOpenAddressModal}>
+						<EditAddressModal
+							isActive={openAddressModal}
+							setIsActive={setOpenAddressModal}
+							addressData={userData?.residentialAddress[0] ?? {}}
+							refetchFunc={() => setRefetch((val) => !val)}
+						/>
+					</Modal>
+				)}
 
 				<div className="2xl:w-[382px] w-full bg-white dark:bg-darkblack-600 rounded-lg px-12 pb-7">
 					<header className="flex flex-col items-center text-center -mt-8 pb-7">
@@ -282,7 +294,10 @@ function UserProfile({ params }) {
 							}
 						/>
 					</InfoBlock>
-					<InfoBlock title="Residential Address">
+					<InfoBlock
+						title="Residential Address"
+						editFunc={() => setOpenAddressModal(true)}
+					>
 						<InfoRow
 							label="Address"
 							value={[

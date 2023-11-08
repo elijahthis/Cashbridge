@@ -113,3 +113,18 @@ export const updateUserNextOfKin = async (userId, values) => {
 		throw err;
 	}
 };
+
+export const updateUserAddress = async (userId, values) => {
+	try {
+		const res = await request.put(
+			`v1/user-management/${userId}/address`,
+			values
+		);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};

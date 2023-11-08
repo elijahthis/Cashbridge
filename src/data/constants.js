@@ -331,3 +331,5 @@ export const NOKRelationshipList = [
 	"SON",
 	"DAUGHTER",
 ];
+
+export const accomodationTypeList = ["RENTED", "OWNED", "LEASED", "SQUATTER"];
