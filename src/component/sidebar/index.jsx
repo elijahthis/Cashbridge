@@ -8,11 +8,12 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import { sidebarList } from "@/data/constants";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 function Sidebar({ handleActive }) {
 	const [activeDashboard, setActiveDashboard] = useState(false);
 	const router = useRouter();
+	const pathname = usePathname();
 
 	return (
 		<aside className="sidebar-wrapper fixed top-0 z-30 block h-full w-[308px] bg-white dark:bg-darkblack-600 sm:hidden xl:block">
@@ -74,19 +75,36 @@ function Sidebar({ handleActive }) {
 						<ul className="mt-2.5">
 							{sidebarList.map((item, index) => (
 								<li
-									className="item py-[11px] text-bgray-900 dark:text-white"
+									className="item py-[11px] dark:text-white relative"
 									key={index}
 								>
 									<Link href={item.link}>
 										<div className="flex items-center justify-between">
 											<div className="flex items-center space-x-2.5">
 												<span className="item-ico">{item.icon}</span>
-												<span className="item-text text-lg font-medium leading-none">
+												<span
+													className={`item-text text-lg leading-none ${
+														(pathname.startsWith(item.link) &&
+															item.link !== "/") ||
+														(pathname === "/" && item.link === "/")
+															? "font-bold text-success-300 "
+															: "font-medium text-bgray-700"
+													}`}
+												>
 													{item.title}
 												</span>
 											</div>
 										</div>
 									</Link>
+									{(pathname.startsWith(item.link) && item.link !== "/") ||
+									(pathname === "/" && item.link === "/") ? (
+										<div
+											className="absolute w-6 h-6 rounded-full bg-success-300 top-[50%] left-[-62px] "
+											style={{ transform: "translateY(-50%)" }}
+										></div>
+									) : (
+										<></>
+									)}
 								</li>
 							))}
 						</ul>
