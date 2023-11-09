@@ -5,6 +5,11 @@ import Wallet from "@/component/wallet";
 import TeamChat from "@/component/teamChat";
 import Efficiency from "@/component/revenueFlow/Efficiency";
 
+export const metadata = {
+	title: "Dashboard | Cashbridge",
+	description: "Cashbridge Dashboard",
+};
+
 function Home() {
 	return (
 		<main className="w-full px-6 pb-6 pt-[100px] sm:pt-[156px] xl:px-12 xl:pb-12">
