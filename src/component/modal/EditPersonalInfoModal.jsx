@@ -17,7 +17,6 @@ const EditPersonalInfoModal = ({
 	const [formData, setFormData] = useState({
 		firstname: personalData?.firstname ?? "",
 		lastname: personalData?.lastname ?? "",
-		phone: personalData?.phone ?? "",
 		dob: personalData?.dob ?? "",
 	});
 
@@ -79,13 +78,6 @@ const EditPersonalInfoModal = ({
 						required={true}
 					/>
 				</div>
-				<InputComponent
-					label="Phone Number"
-					name="phone"
-					value={formData.phone}
-					onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-					required={true}
-				/>
 				<div>
 					<p className="text-base text-bgray-600 dark:text-bgray-50  font-medium text-sm mb-2 ">
 						Date Of Birth (DOB)
