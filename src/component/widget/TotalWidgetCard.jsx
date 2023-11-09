@@ -4,6 +4,7 @@ import LineChart from "../chart/LineChart";
 import { useEffect } from "react";
 import { useRef } from "react";
 import Image from "next/image";
+import Loading from "../loading";
 
 const createGradient = (ctx) => {
 	const gradient = ctx.createLinearGradient(0, 0, 0, 450);
@@ -12,7 +13,14 @@ const createGradient = (ctx) => {
 	return gradient;
 };
 
-function TotalWidgetCard({ title, amount, groth, memberImg, totalEarnImg }) {
+function TotalWidgetCard({
+	title,
+	amount,
+	groth,
+	memberImg,
+	totalEarnImg,
+	loading,
+}) {
 	const chartRef = useRef(null);
 
 	useEffect(() => {
@@ -120,21 +128,21 @@ function TotalWidgetCard({ title, amount, groth, memberImg, totalEarnImg }) {
 					</span>
 				</div>
 				<div>
-					<Image
+					{/* <Image
 						priority={true}
 						height={memberImg.height}
 						width={memberImg.width}
 						src={memberImg.src}
 						alt="members"
-					/>
+					/> */}
 				</div>
 			</div>
 			<div className="flex items-end justify-between">
 				<div className="flex-1">
 					<p className="text-3xl font-bold leading-[48px] text-bgray-900 dark:text-white">
-						${amount}
+						{loading ? <Loading size={"48px"} /> : amount}
 					</p>
-					<div className="flex items-center space-x-1">
+					{/* <div className="flex items-center space-x-1">
 						<span>
 							<svg
 								width="16"
@@ -160,11 +168,11 @@ function TotalWidgetCard({ title, amount, groth, memberImg, totalEarnImg }) {
 						<span className="text-sm font-medium text-bgray-700 dark:text-bgray-50">
 							from last week
 						</span>
-					</div>
+					</div> */}
 				</div>
-				<div className="w-[106px] h-[68px]">
+				{/* <div className="w-[106px] h-[68px]">
 					<LineChart option={options} dataSet={data} refer={chartRef} />
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

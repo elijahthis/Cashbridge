@@ -48,6 +48,9 @@ export default function RootLayout({ children }) {
 		>
 			<ThemeContext.Provider value={{ theme, setTheme }}>
 				<html lang="en">
+					<head>
+						<link rel="icon" href="/images/logo.png" sizes="any" />
+					</head>
 					<body>
 						{children}
 						<ToastContainer
