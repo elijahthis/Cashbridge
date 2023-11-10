@@ -2,6 +2,11 @@ import RightSide from "@/component/signin/RightSide";
 import signinImg from "@/assets/images/illustration/signin.svg";
 import LeftSide from "@/component/otp";
 
+export const metadata = {
+	title: "OTP | Cashbridge",
+	description: "Cashbridge OTP",
+};
+
 const OTPPage = () => {
 	return (
 		<section className="bg-white dark:bg-darkblack-500">

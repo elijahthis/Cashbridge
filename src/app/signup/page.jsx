@@ -6,6 +6,11 @@ import logoWhite from "@/assets/images/logo/logo-white.svg";
 import Link from "next/link";
 import Image from "next/image";
 
+export const metadata = {
+	title: "Signup | Cashbridge",
+	description: "Cashbridge Signup",
+};
+
 function SignUp() {
 	return (
 		<section className="bg-white dark:bg-darkblack-500">

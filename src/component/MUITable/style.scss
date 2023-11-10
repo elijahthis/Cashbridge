@@ -1,0 +1,31 @@
+.MuiTable-root {
+    .MuiTableCell-head,
+    .MuiTableCell-body,
+    .MuiToolbar-root > p {
+        font-family: "Circular Std";
+        font-style: normal;
+        font-weight: 450;
+        font-size: 14.0088px;
+        line-height: 18px;
+        color: #655f5f;
+        padding: 0.75rem 1rem;
+    }
+    .MuiTableCell-head {
+        color: #252627;
+        padding-bottom: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .MuiTable-root {
+        .MuiTableCell-head,
+        .MuiTableCell-body,
+        .MuiToolbar-root > p {
+            font-size: 12px;
+            line-height: 15px;
+        }
+    }
+    tfoot {
+        display: none !important;
+    }
+}

@@ -30,6 +30,7 @@ import { EditUserEmploymentModal } from "../modal/EditUserEmploymentModal";
 import EditPersonalInfoModal from "../modal/EditPersonalInfoModal";
 import EditNOKModal from "../modal/EditNOKModal";
 import EditAddressModal from "../modal/EditAddressModal";
+import MUITable from "../MUITable";
 
 function UserProfile({ params }) {
 	const [userData, setUserData] = useState({});
@@ -426,6 +427,10 @@ function UserProfile({ params }) {
 								{userData?.isSuspended ? "Un-suspend" : "Suspend"} User
 							</Button>
 						</div>
+					</div>
+					<div>
+						<h2 className="font-bold text-3xl">Transactions</h2>
+						<MUITable />
 					</div>
 
 					{/* <div className="py-6 border-b border-bgray-200 dark:border-darkblack-400">
