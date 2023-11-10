@@ -5,6 +5,7 @@ import Overlay from "@/component/overlay";
 import Sidebar from "@/component/sidebar";
 import SidebarV2 from "@/component/sidebar/SidebarV2";
 import ProtoTypes from "prop-types";
+import { BsArrowLeft } from "react-icons/bs";
 
 import { useContext, useEffect, useState } from "react";
 import { getMe } from "../../../requests";

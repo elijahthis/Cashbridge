@@ -1,10 +1,23 @@
 import { useState } from "react";
 import EmptyState from "../EmptyState";
 
+// interface MUITableProps {
+// 	headers: { label: string, key: string }[];
+// 	bodyData: any[];
+// 	stripped?: boolean;
+// 	showPagination?: boolean;
+// 	specialStyles?: { key: string, styles: any }[];
+// 	specialActions?: { key: string, action: (ind: number) => void }[];
+// 	emptyState?: {
+// 		message?: string,
+// 		button?: { label: string, action?: () => void },
+// 	};
+// }
+
 const MUITable = ({
 	headers = [],
 	bodyData = [],
-	stripped = true,
+	stripped = false,
 	showPagination = true,
 	specialStyles = [{ key: "", styles: {} }],
 	specialActions = [],
@@ -29,11 +42,16 @@ const MUITable = ({
 
 	return (
 		<div className="table-content w-full overflow-x-auto">
-			<table className="w-full">
+			<table className="w-full w-max">
 				<thead>
-					<tr>
-						{headers.map((header) => (
-							<th key={`table-header-${ind}`}>{header.label}</th>
+					<tr className="border-b border-bgray-300 dark:border-darkblack-400">
+						{headers.map((header, ind) => (
+							<th
+								key={`table-header-${ind}`}
+								className="text-base text-left font-medium text-bgray-600 dark:text-bgray-50 px-6 py-5 "
+							>
+								{header.label}
+							</th>
 						))}
 					</tr>
 				</thead>
@@ -67,7 +85,7 @@ const MUITable = ({
 										);
 										return (
 											<td
-												align="left"
+												className="text-base font-medium px-6 py-5 text-left "
 												style={
 													specialIndex !== -1
 														? specialStyles[specialIndex].styles
@@ -90,7 +108,10 @@ const MUITable = ({
 								</tr>
 							))}
 							{emptyRows > 0 && (
-								<tr style={{ height: 53 * emptyRows }}>
+								<tr
+									style={{ height: 53 * emptyRows }}
+									className="border-b border-bgray-300 dark:border-darkblack-400"
+								>
 									<td colSpan={keyList.length} />
 								</tr>
 							)}
@@ -98,7 +119,7 @@ const MUITable = ({
 
 						{showPagination && (
 							<tfoot>
-								<tr>
+								<tr className="border-b border-bgray-300 dark:border-darkblack-400">
 									<TablePaginationActions />
 									{/* <TablePagination
 										rowsPerPageOptions={[

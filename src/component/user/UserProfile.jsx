@@ -31,10 +31,16 @@ import EditPersonalInfoModal from "../modal/EditPersonalInfoModal";
 import EditNOKModal from "../modal/EditNOKModal";
 import EditAddressModal from "../modal/EditAddressModal";
 import MUITable from "../MUITable";
+import { getUserWalletTransactions } from "../../../requests/transactions";
+import { BsArrowLeft } from "react-icons/bs";
+import GoBack from "../GoBack";
+import EmptyState from "../EmptyState";
 
 function UserProfile({ params }) {
 	const [userData, setUserData] = useState({});
+	const [transactionList, setTransactionList] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [transLoading, setTransLoading] = useState(false);
 	const [refetch, setRefetch] = useState(false);
 	const [suspendLoading, setSuspendLoading] = useState(false);
 	const [verifyKYCLoading, setVerifyKYCLoading] = useState(false);
@@ -56,6 +62,22 @@ function UserProfile({ params }) {
 			console.log(error);
 		} finally {
 			setLoading(false);
+			// setFetched(true);
+		}
+	};
+
+	const fetchTransactionData = async () => {
+		setTransLoading(true);
+		try {
+			const res2 = await getUserWalletTransactions(params.id);
+			console.log("res2", res2);
+			if (res2.data?.success) {
+				setTransactionList(res2.data?.data?.transactions);
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setTransLoading(false);
 			setFetched(true);
 		}
 	};
@@ -125,10 +147,13 @@ function UserProfile({ params }) {
 	};
 
 	useEffect(() => {
-		fetchData();
+		fetchData().then(() => {
+			fetchTransactionData();
+		});
 	}, [refetch]);
 
 	console.log("userData", userData);
+	console.log("transactionList", transactionList);
 
 	return fetched ? (
 		loading ? (
@@ -181,7 +206,7 @@ function UserProfile({ params }) {
 						/>
 					</Modal>
 				)}
-
+				<GoBack backLink="/users" />
 				<div className="2xl:w-[382px] w-full bg-white dark:bg-darkblack-600 rounded-lg px-12 pb-7">
 					<header className="flex flex-col items-center text-center -mt-8 pb-7">
 						<Image
@@ -256,24 +281,6 @@ function UserProfile({ params }) {
 									? "This user account has been suspended"
 									: ""}
 							</p>
-							{/* <Button
-								// disabled={true}
-								style={{
-									backgroundColor: userData?.isSuspended
-										? "#86272D"
-										: "#dc2626",
-								}}
-								loading={suspendLoading}
-								onClick={() => {
-									if (userData?.isSuspended) {
-										unSuspendFunc();
-									} else {
-										suspendFunc();
-									}
-								}}
-							>
-								{userData?.isSuspended ? "Un-suspend" : "Suspend"} User
-							</Button> */}
 						</div>
 					</header>
 					<InfoBlock
@@ -282,10 +289,14 @@ function UserProfile({ params }) {
 					>
 						<InfoRow
 							label="Name"
-							value={`${userData?.firstname} ${userData?.lastname}`}
+							value={
+								userData?.firstname
+									? `${userData?.firstname} ${userData?.lastname}`
+									: "-"
+							}
 						/>
-						<InfoRow label="Phone Number" value={userData?.phone} />
-						<InfoRow label="Email Address" value={userData?.email} />
+						<InfoRow label="Phone Number" value={userData?.phone ?? "-"} />
+						<InfoRow label="Email Address" value={userData?.email ?? "-"} />
 						<InfoRow
 							label="Date of Birth (DOB)"
 							value={
@@ -301,11 +312,15 @@ function UserProfile({ params }) {
 					>
 						<InfoRow
 							label="Address"
-							value={[
-								userData?.residentialAddress[0]?.address,
-								userData?.residentialAddress[0]?.city,
-								userData?.residentialAddress[0]?.state,
-							].join(", ")}
+							value={
+								userData?.residentialAddress?.[0]?.address
+									? [
+											userData?.residentialAddress?.[0]?.address,
+											userData?.residentialAddress?.[0]?.city,
+											userData?.residentialAddress?.[0]?.state,
+									  ].join(", ")
+									: "-"
+							}
 						/>
 						<InfoRow
 							label="Landmark"
@@ -319,7 +334,7 @@ function UserProfile({ params }) {
 					<InfoBlock title="Bank Information">
 						<InfoRow
 							label="Account Number"
-							value={userData?.customerBank[0]?.accountNumber}
+							value={userData?.customerBank[0]?.accountNumber ?? "-"}
 						/>
 						<InfoRow
 							label="Bank Name"
@@ -331,12 +346,12 @@ function UserProfile({ params }) {
 						/>
 						<InfoRow
 							label="Phone Number"
-							value={userData?.customerBank[0]?.phone}
+							value={userData?.customerBank[0]?.phone ?? "-"}
 						/>
-						<InfoRow label="BVN" value={userData?.bvn} />
+						<InfoRow label="BVN" value={userData?.bvn ? userData?.bvn : "-"} />
 						<InfoRow
 							label="CBS Account Reference"
-							value={userData?.cbsAccountReference}
+							value={userData?.cbsAccountReference ?? "-"}
 						/>
 					</InfoBlock>
 					<InfoBlock
@@ -345,29 +360,37 @@ function UserProfile({ params }) {
 					>
 						<InfoRow
 							label="Employment Status"
-							value={userData?.employmentDetail[0]?.status}
+							value={userData?.employmentDetail?.[0]?.status ?? "-"}
 						/>
 						<InfoRow
 							label="Company"
-							value={userData?.employmentDetail[0]?.company}
+							value={userData?.employmentDetail?.[0]?.company ?? "-"}
 						/>
 						<InfoRow
 							label="Sector"
-							value={userData?.employmentDetail[0]?.sector}
+							value={userData?.employmentDetail?.[0]?.sector ?? "-"}
 						/>
 						<InfoRow
 							label="Employment Address"
-							value={[
-								userData?.employmentDetail[0]?.address,
-								userData?.employmentDetail[0]?.city,
-								userData?.employmentDetail[0]?.state,
-							].join(", ")}
+							value={
+								userData?.employmentDetail[0]?.address
+									? [
+											userData?.employmentDetail[0]?.address,
+											userData?.employmentDetail[0]?.city,
+											userData?.employmentDetail[0]?.state,
+									  ].join(", ")
+									: "-"
+							}
 						/>
 						<InfoRow
 							label="Monthly Income"
-							value={`NGN ${prettifyMoney(
-								Number(userData?.employmentDetail[0]?.month_income)
-							)}`}
+							value={
+								userData?.employmentDetail[0]?.month_income
+									? `NGN ${prettifyMoney(
+											Number(userData?.employmentDetail[0]?.month_income)
+									  )}`
+									: "-"
+							}
 						/>
 						<InfoRow
 							label="Date Started"
@@ -386,17 +409,24 @@ function UserProfile({ params }) {
 					<InfoBlock title="Next of Kin" editFunc={() => setOpenNOKModal(true)}>
 						<InfoRow
 							label="Name"
-							value={`${userData?.nok[0]?.firstName} ${userData?.nok[0]?.lastName}`}
+							value={
+								userData?.nok[0]?.firstName
+									? `${userData?.nok[0]?.firstName} ${userData?.nok[0]?.lastName}`
+									: "-"
+							}
 						/>
-						<InfoRow label="Phone Number" value={userData?.nok[0]?.phone} />
-						<InfoRow label="Address" value={userData?.nok[0]?.address} />
+						<InfoRow
+							label="Phone Number"
+							value={userData?.nok[0]?.phone ?? "-"}
+						/>
+						<InfoRow label="Address" value={userData?.nok[0]?.address ?? "-"} />
 						<InfoRow
 							label="Relationship"
-							value={userData?.nok[0]?.relationship}
+							value={userData?.nok[0]?.relationship ?? "-"}
 						/>
 					</InfoBlock>
 
-					<div className="py-6 border-b border-bgray-200 dark:border-darkblack-400">
+					<div className="py-6 mb-6 border-b border-bgray-200 dark:border-darkblack-400">
 						<h2 className="font-bold text-3xl">Actions</h2>
 						<div className="grid grid-cols-3 gap-4 py-3">
 							{/* <Button>Verify KYC</Button> */}
@@ -429,8 +459,35 @@ function UserProfile({ params }) {
 						</div>
 					</div>
 					<div>
-						<h2 className="font-bold text-3xl">Transactions</h2>
-						<MUITable />
+						<h2 className="font-bold text-3xl mb-4">Transactions</h2>
+						{transLoading ? (
+							<Loading size="400px" />
+						) : (
+							<MUITable
+								headers={[
+									{ label: "Amount", key: "amount" },
+									{ label: "Reference", key: "reference" },
+									{ label: "Balance Before", key: "balance_before" },
+									{ label: "Balance After", key: "balance_after" },
+									{ label: "Remarks", key: "remarks" },
+									{ label: "Transaction Date", key: "date" },
+								]}
+								bodyData={transactionList.map((transItem) => ({
+									amount: `${transItem?.currency}${prettifyMoney(
+										transItem?.amount
+									)}`,
+									balance_before: `${transItem?.currency}${prettifyMoney(
+										transItem?.balance_before
+									)}`,
+									balance_after: `${transItem?.currency}${prettifyMoney(
+										transItem?.balance_after
+									)}`,
+									reference: transItem?.reference,
+									remarks: transItem?.remarks,
+									date: formatDate(transItem?.date),
+								}))}
+							/>
+						)}
 					</div>
 
 					{/* <div className="py-6 border-b border-bgray-200 dark:border-darkblack-400">
