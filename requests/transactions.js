@@ -23,3 +23,15 @@ export const getUserWalletBalance = async (userId) => {
 		throw err;
 	}
 };
+
+export const getCompanyWalletBalance = async () => {
+	try {
+		const res = await request.get(`v1/transactions/balance`);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
