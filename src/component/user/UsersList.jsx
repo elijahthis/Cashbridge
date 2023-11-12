@@ -16,7 +16,13 @@ function UsersList({
 		<div className="w-full overflow-x-scroll">
 			<table className="w-full">
 				{loading ? (
-					<Loading size="480px" />
+					<tbody>
+						<tr>
+							<td>
+								<Loading size="480px" />
+							</td>
+						</tr>
+					</tbody>
 				) : (
 					<tbody>
 						{userArr?.map((item, index) => (
