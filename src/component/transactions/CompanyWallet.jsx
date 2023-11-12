@@ -34,7 +34,7 @@ const CompanyWallet = () => {
 			) : (
 				<div className="grid grid-cols-3 gap-4 flex-wrap w-full">
 					{walletList.map((item, index) => (
-						<WalletComponent walletData={item} />
+						<WalletComponent walletData={item} key={index} />
 					))}
 				</div>
 			)}
