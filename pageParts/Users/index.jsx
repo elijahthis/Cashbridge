@@ -9,12 +9,17 @@ import Loading from "@/component/loading";
 const UserClientPage = () => {
 	const [userArr, setUserArr] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [currPage, setCurrPage] = useState(1);
+	const [totalUsers, setTotalUsers] = useState(false);
+
+	const itemsPerPage = 5;
 
 	const fetchData = async () => {
 		setLoading(true);
 		try {
-			const res = await getAllUsers();
+			const res = await getAllUsers(currPage, itemsPerPage);
 			setUserArr(res?.data?.data?.users);
+			setTotalUsers(res?.data?.data?.totalUsers);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -24,14 +29,20 @@ const UserClientPage = () => {
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [currPage, itemsPerPage]);
 
 	console.log("userArr", userArr);
 
 	return (
 		<div className="2xl:flex-1 w-full">
-			<UserFilter />
-			{loading ? <Loading /> : <UsersList userArr={userArr} />}
+			{/* <UserFilter /> */}
+			<UsersList
+				userArr={userArr}
+				loading={loading}
+				itemsPerPage={itemsPerPage}
+				handlePageClick={(page) => setCurrPage(page)}
+				totalUsers={totalUsers}
+			/>
 		</div>
 	);
 };

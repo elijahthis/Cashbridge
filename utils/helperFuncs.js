@@ -21,7 +21,7 @@ export const convertWeirdDate = (dateString) => {
 };
 
 export const formatDate = (date) => {
-	console.log(date);
+	// console.log(date);
 	// format date as Apr 02,2022
 	const d = new Date(date);
 	const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);

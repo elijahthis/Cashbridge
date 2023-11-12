@@ -1,8 +1,10 @@
 import { request } from "../utils/axios";
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (page, limit) => {
 	try {
-		const res = await request.get("v1/user-management");
+		const res = await request.get(
+			`v1/user-management?page=${page}&limit=${limit}`
+		);
 		console.log(res);
 		return res;
 	} catch (err) {
