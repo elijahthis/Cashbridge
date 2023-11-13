@@ -35,15 +35,7 @@ import {
 	getUserWalletBalance,
 	getUserWalletTransactions,
 } from "../../../requests/transactions";
-import { BsArrowLeft } from "react-icons/bs";
 import GoBack from "../GoBack";
-import EmptyState from "../EmptyState";
-import PaymentSelect from "../forms/PaymentSelect";
-import Slider from "../slider";
-
-import card1 from "@/assets/images/payments/card-1.svg";
-import card2 from "@/assets/images/payments/card-2.svg";
-import card3 from "@/assets/images/payments/card-3.svg";
 import WalletComponent from "../WalletComponent";
 
 function UserProfile({ params }) {
@@ -70,6 +62,9 @@ function UserProfile({ params }) {
 	const [openPersonalModal, setOpenPersonalModal] = useState(false);
 	const [openNOKModal, setOpenNOKModal] = useState(false);
 	const [openAddressModal, setOpenAddressModal] = useState(false);
+	// Pagination states
+	const [currPage, setCurrPage] = useState(1);
+	const [totalTransactionPages, setTotalTransactionPages] = useState(1);
 
 	// data fetching requests
 	const fetchData = async () => {
@@ -90,10 +85,11 @@ function UserProfile({ params }) {
 	const fetchTransactionData = async () => {
 		setTransLoading(true);
 		try {
-			const res2 = await getUserWalletTransactions(params.id);
+			const res2 = await getUserWalletTransactions(params.id, currPage);
 			console.log("res2", res2);
 			if (res2.data?.success) {
 				setTransactionList(res2.data?.data?.transactions);
+				setTotalTransactionPages(res2.data?.data?.page_info?.total_pages);
 			}
 		} catch (error) {
 			console.log(error);
@@ -186,13 +182,15 @@ function UserProfile({ params }) {
 	// -------------------------------------------------
 
 	useEffect(() => {
-		fetchData()
-			.then(() => {
-				fetchTransactionData();
-			})
-			.then(() => {
-				fetchWalletBalance();
-			});
+		fetchData();
+	}, [refetch]);
+
+	useEffect(() => {
+		fetchTransactionData();
+	}, [refetch, currPage]);
+
+	useEffect(() => {
+		fetchWalletBalance();
 	}, [refetch]);
 
 	console.log("userData", userData);
@@ -503,34 +501,35 @@ function UserProfile({ params }) {
 					</div>
 					<div>
 						<h2 className="font-bold text-3xl mb-4">Transactions</h2>
-						{transLoading ? (
-							<Loading size="400px" />
-						) : (
-							<MUITable
-								headers={[
-									{ label: "Amount", key: "amount" },
-									{ label: "Reference", key: "reference" },
-									{ label: "Balance Before", key: "balance_before" },
-									{ label: "Balance After", key: "balance_after" },
-									{ label: "Remarks", key: "remarks" },
-									{ label: "Transaction Date", key: "date" },
-								]}
-								bodyData={transactionList.map((transItem) => ({
-									amount: `${transItem?.currency}${prettifyMoney(
-										transItem?.amount
-									)}`,
-									balance_before: `${transItem?.currency}${prettifyMoney(
-										transItem?.balance_before
-									)}`,
-									balance_after: `${transItem?.currency}${prettifyMoney(
-										transItem?.balance_after
-									)}`,
-									reference: transItem?.reference,
-									remarks: transItem?.remarks,
-									date: formatDate(transItem?.date),
-								}))}
-							/>
-						)}
+						<MUITable
+							headers={[
+								{ label: "Amount", key: "amount" },
+								{ label: "Reference", key: "reference" },
+								{ label: "Balance Before", key: "balance_before" },
+								{ label: "Balance After", key: "balance_after" },
+								{ label: "Remarks", key: "remarks" },
+								{ label: "Transaction Date", key: "date" },
+							]}
+							bodyData={transactionList.map((transItem) => ({
+								amount: `${transItem?.currency}${prettifyMoney(
+									transItem?.amount
+								)}`,
+								balance_before: `${transItem?.currency}${prettifyMoney(
+									transItem?.balance_before
+								)}`,
+								balance_after: `${transItem?.currency}${prettifyMoney(
+									transItem?.balance_after
+								)}`,
+								reference: transItem?.reference,
+								remarks: transItem?.remarks,
+								date: formatDate(transItem?.date),
+							}))}
+							handlePageClick={(page) => {
+								setCurrPage(page);
+							}}
+							pageCount={totalTransactionPages}
+							loading={transLoading}
+						/>
 					</div>
 					<div className="py-6">
 						<h2 className="font-bold text-3xl mb-4">Wallet</h2>

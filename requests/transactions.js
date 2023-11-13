@@ -1,8 +1,10 @@
 import { request } from "../utils/axios";
 
-export const getUserWalletTransactions = async (userId) => {
+export const getUserWalletTransactions = async (userId, page) => {
 	try {
-		const res = await request.get(`v1/transactions/wallet/${userId}`);
+		const res = await request.get(
+			`v1/transactions/wallet/${userId}?page=${page}`
+		);
 		console.log(res);
 		return res;
 	} catch (err) {
@@ -27,6 +29,22 @@ export const getUserWalletBalance = async (userId) => {
 export const getCompanyWalletBalance = async () => {
 	try {
 		const res = await request.get(`v1/transactions/balance`);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
+
+export const getCompanyExternalTransactions = async (page, status) => {
+	try {
+		const res = await request.get(
+			`v1/transactions/external?page=${page}&${
+				status ? `status=${status}` : ""
+			}`
+		);
 		console.log(res);
 		return res;
 	} catch (err) {

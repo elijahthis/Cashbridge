@@ -10,7 +10,7 @@ const UserClientPage = () => {
 	const [userArr, setUserArr] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [currPage, setCurrPage] = useState(1);
-	const [totalUsers, setTotalUsers] = useState(false);
+	const [totalUsers, setTotalUsers] = useState(0);
 
 	const itemsPerPage = 5;
 
