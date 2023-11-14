@@ -40,7 +40,7 @@ const CompanyTransactions = () => {
 
 	return (
 		<section className="py-6">
-			<h2 className="font-bold text-3xl mb-4">Company Transactions</h2>
+			<h2 className="font-bold text-3xl mb-4">Company External Transactions</h2>
 			<div>
 				<MUITable
 					headers={[
