@@ -53,3 +53,17 @@ export const getCompanyExternalTransactions = async (page, status) => {
 		throw err;
 	}
 };
+
+export const getCompanyWalletTransactions = async (page, type) => {
+	try {
+		const res = await request.get(
+			`v1/transactions/wallet?page=${page}&${type ? `type=${type}` : ""}`
+		);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
