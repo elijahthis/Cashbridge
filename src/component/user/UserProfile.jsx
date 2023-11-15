@@ -98,14 +98,7 @@ function UserProfile({ params }) {
 							</p>
 						</div>
 					</header>
-
-					<UserInfo
-						userId={params.id}
-						refetch={refetch}
-						setRefetch={setRefetch}
-						userData={userData}
-					/>
-
+					<UserWallet userId={params.id} refetch={refetch} />
 					<UserActions
 						userId={params.id}
 						refetch={refetch}
@@ -113,7 +106,12 @@ function UserProfile({ params }) {
 						userData={userData}
 					/>
 
-					<UserWallet userId={params.id} refetch={refetch} />
+					<UserInfo
+						userId={params.id}
+						refetch={refetch}
+						setRefetch={setRefetch}
+						userData={userData}
+					/>
 
 					<WalletTransactions userId={params.id} refetch={refetch} />
 

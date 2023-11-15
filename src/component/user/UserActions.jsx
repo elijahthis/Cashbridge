@@ -116,7 +116,6 @@ const UserActions = ({ refetch, setRefetch, userId, userData }) => {
 				</Modal>
 			)}
 			<div className="py-6 mb-6 border-b border-bgray-200 dark:border-darkblack-400">
-				<h2 className="font-bold text-3xl">Actions</h2>
 				<div className="grid grid-cols-3 gap-4 py-3">
 					{/* <Button>Verify KYC</Button> */}
 					<Button

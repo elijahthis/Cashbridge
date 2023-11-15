@@ -35,7 +35,7 @@ const UserWallet = ({ refetch, userId }) => {
 	return (
 		<div className="py-6">
 			<h2 className="font-bold text-3xl mb-4">Wallet</h2>
-			<div className="card-slider relative w-[280px] md:w-[340px]">
+			<div className="card-slider relative w-full ">
 				{balanceLoading ? (
 					<Loading size="80px" />
 				) : (
