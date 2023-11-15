@@ -7,13 +7,16 @@ import {
 import MUITable from "../MUITable";
 import {
 	capitalizeFirstLetter,
+	convertWeirdDate,
 	formatDate,
+	formatDateToDdMmYyyy,
 	prettifyMoney,
 } from "../../../utils/helperFuncs";
 import Link from "next/link";
 import Dropdown from "../Dropdown";
 import { currencyList, transactionTypeList } from "@/data/constants";
-import { tr } from "date-fns/locale";
+import CBDatePicker from "../CBDatePicker";
+import useFilterWalletHistory from "../../../hooks/useFilterWalletHistory";
 
 const CompanyWalletHistory = () => {
 	const [currPage, setCurrPage] = useState(1);
@@ -46,7 +49,21 @@ const CompanyWalletHistory = () => {
 		fetchTransactionData();
 	}, [currPage, transactionType]);
 
+	const {
+		filteredTransactions,
+		filterStartDate,
+		filterEndDate,
+		setFilterStartDate,
+		setFilterEndDate,
+	} = useFilterWalletHistory(transactionList);
+
 	console.log("transactionList", transactionList);
+
+	const clearFilters = () => {
+		setTransactionType(undefined);
+		setFilterStartDate(undefined);
+		setFilterEndDate(undefined);
+	};
 
 	return (
 		<section className="py-6">
@@ -69,23 +86,34 @@ const CompanyWalletHistory = () => {
 						placeholder="Select Type"
 					/>
 				</div>
-				{/* <div>
+				<div>
 					<p className="mb-2 text-base font-bold leading-[24px] text-bgray-900 dark:text-white">
-						Type
+						From
 					</p>
-					<Dropdown
-						optionsList={["Debit", "Credit"]}
-						selectedOption={undefined}
-						handleSelect={(e) => {
-							// setFormData({ ...formData, status: e.target.innerText })
+					<CBDatePicker
+						selectedDate={
+							filterStartDate ? new Date(filterStartDate) : undefined
+						}
+						handleSelect={(date) => {
+							setFilterStartDate(date);
 						}}
-						placeholder="Select Type"
 					/>
-				</div> */}
+				</div>
+				<div>
+					<p className="mb-2 text-base font-bold leading-[24px] text-bgray-900 dark:text-white">
+						To
+					</p>
+					<CBDatePicker
+						selectedDate={filterEndDate ? new Date(filterEndDate) : undefined}
+						handleSelect={(date) => {
+							setFilterEndDate(date);
+						}}
+					/>
+				</div>
 				<button
 					className="ml-auto"
 					onClick={() => {
-						setTransactionType(undefined);
+						clearFilters();
 					}}
 				>
 					Clear filters
@@ -103,7 +131,7 @@ const CompanyWalletHistory = () => {
 						{ label: "Type", key: "type" },
 						{ label: "Remarks", key: "remarks" },
 					]}
-					bodyData={transactionList.map((transItem) => ({
+					bodyData={filteredTransactions.map((transItem) => ({
 						amount: `${
 							currencyList.find((item) => item.label === transItem?.currency)
 								?.symbol ?? "₦"

@@ -119,7 +119,7 @@ const MUITable = ({
 					)}
 				</table>
 			</div>
-			{showPagination && bodyData.length !== 0 && (
+			{showPagination && (
 				<div className="border-b border-bgray-300 dark:border-darkblack-400">
 					<PaginationComponent
 						handlePageClick={handlePageClick}

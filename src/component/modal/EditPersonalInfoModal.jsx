@@ -6,7 +6,10 @@ import { useState } from "react";
 import CBDatePicker from "../CBDatePicker";
 import { updateUserData } from "../../../requests/users";
 import { toast } from "react-toastify";
-import { formatDateToDdMmYyyy } from "../../../utils/helperFuncs";
+import {
+	convertWeirdDate,
+	formatDateToDdMmYyyy,
+} from "../../../utils/helperFuncs";
 
 const EditPersonalInfoModal = ({
 	isActive,
@@ -83,7 +86,7 @@ const EditPersonalInfoModal = ({
 						Date Of Birth (DOB)
 					</p>
 					<CBDatePicker
-						selectedDate={formData.dob}
+						selectedDate={new Date(convertWeirdDate(formData.dob))}
 						handleSelect={(date) => {
 							setFormData({
 								...formData,

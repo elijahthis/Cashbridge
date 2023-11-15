@@ -6,7 +6,7 @@ import { useState } from "react";
 import Dropdown from "../Dropdown";
 import { employmentStatusList, sectorList, statesList } from "@/data/constants";
 import CBDatePicker from "../CBDatePicker";
-import { formatDateToDdMmYyyy } from "../../../utils/helperFuncs";
+import { convertWeirdDate, formatDateToDdMmYyyy } from "../../../utils/helperFuncs";
 import { updateUserEmployment } from "../../../requests/users";
 import { toast } from "react-toastify";
 
@@ -150,7 +150,7 @@ export const EditUserEmploymentModal = ({
 						Date Started
 					</p>
 					<CBDatePicker
-						selectedDate={formData.dateStarted}
+						selectedDate={new Date(convertWeirdDate(formData.dateStarted))}
 						handleSelect={(date) => {
 							setFormData({
 								...formData,

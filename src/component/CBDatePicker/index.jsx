@@ -6,7 +6,7 @@ import { convertWeirdDate } from "../../../utils/helperFuncs";
 const CBDatePicker = ({ selectedDate, handleSelect }) => {
 	return (
 		<DatePicker
-			selected={new Date(convertWeirdDate(selectedDate))}
+			selected={selectedDate}
 			onChange={(date) => handleSelect(date)}
 			dateFormat="dd MMM yyyy"
 			wrapperClassName={``}
