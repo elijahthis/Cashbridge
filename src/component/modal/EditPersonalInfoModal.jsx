@@ -44,7 +44,7 @@ const EditPersonalInfoModal = ({
 	};
 
 	return (
-		<div className="bg-white rounded-lg px-4 pt-4 pb-8 ">
+		<div className="bg-white rounded-lg px-4 pt-4 pb-8 mt-20 ">
 			<div className="flex flex-row items-center gap-4 justify-between mb-6 ">
 				<h2 className="font-bold text-2xl ">Edit Personal Info</h2>
 				<CgClose

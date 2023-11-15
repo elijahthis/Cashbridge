@@ -333,3 +333,8 @@ export const NOKRelationshipList = [
 ];
 
 export const accomodationTypeList = ["RENTED", "OWNED", "LEASED", "SQUATTER"];
+
+export const transactionTypeList = [
+	{ label: "Debit", value: "D" },
+	{ label: "Credit", value: "C" },
+];
