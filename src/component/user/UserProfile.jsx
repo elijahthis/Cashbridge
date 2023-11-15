@@ -9,6 +9,7 @@ import WalletTransactions from "./WalletTransactions";
 import UserWallet from "./UserWallet";
 import UserActions from "./UserActions";
 import UserInfo from "./UserInfo";
+import UserSavings from "./UserSavings";
 
 function UserProfile({ params }) {
 	// Data states
@@ -115,6 +116,8 @@ function UserProfile({ params }) {
 					<UserWallet userId={params.id} refetch={refetch} />
 
 					<WalletTransactions userId={params.id} refetch={refetch} />
+
+					<UserSavings userId={params.id} refetch={refetch} />
 
 					{/* <WalletHistory userId={params.id} refetch={refetch} /> */}
 				</div>
