@@ -70,6 +70,7 @@ const UserInfo = ({ refetch, setRefetch, userId, userData }) => {
 					title="Personal Info"
 					editFunc={() => setOpenPersonalModal(true)}
 				>
+					<InfoRow label="User ID" value={userId ?? "-"} />
 					<InfoRow
 						label="Name"
 						value={
