@@ -338,3 +338,20 @@ export const transactionTypeList = [
 	{ label: "Debit", value: "D" },
 	{ label: "Credit", value: "C" },
 ];
+
+export const currencyList = [
+	{ label: "NGN", symbol: "₦" },
+	{ label: "USD", symbol: "$" },
+	{ label: "GBP", symbol: "£" },
+	{ label: "EUR", symbol: "€" },
+	{ label: "CAD", symbol: "$" },
+	{ label: "AUD", symbol: "$" },
+	{ label: "JPY", symbol: "¥" },
+	{ label: "CNY", symbol: "¥" },
+	{ label: "CHF", symbol: "₣" },
+	{ label: "SEK", symbol: "kr" },
+	{ label: "NZD", symbol: "$" },
+	{ label: "MXN", symbol: "$" },
+	{ label: "SGD", symbol: "$" },
+	{ label: "HKD", symbol: "$" },
+];

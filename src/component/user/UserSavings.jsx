@@ -7,6 +7,7 @@ import {
 	prettifyMoney,
 } from "../../../utils/helperFuncs";
 import { getUserSavings } from "../../../requests/savings";
+import { currencyList } from "@/data/constants";
 
 const UserSavings = ({ refetch, userId }) => {
 	const [currPage, setCurrPage] = useState(1);
@@ -57,9 +58,10 @@ const UserSavings = ({ refetch, userId }) => {
 					bodyData={savingsList.map((transItem) => ({
 						// customer: `${transItem?.userId?.firstname} ${transItem?.userId?.lastname}`,
 
-						amount: `${transItem?.currency ?? "NGN"}${prettifyMoney(
-							transItem?.amount ?? 0
-						)}`,
+						amount: `${
+							currencyList.find((item) => item.label === transItem?.currency)
+								?.symbol ?? "₦"
+						}${prettifyMoney(transItem?.amount ?? 0)}`,
 						type: (transItem?.type || "").toUpperCase(),
 						status:
 							transItem?.status === "inactive" ? (
@@ -77,9 +79,10 @@ const UserSavings = ({ refetch, userId }) => {
 						createdAt: formatDate(transItem?.createdAt),
 						updatedAt: formatDate(transItem?.updatedAt),
 						interestRate: `${transItem?.interestRate}%`,
-						interestEarned: `NGN${prettifyMoney(
-							transItem?.interestEarned ?? 0
-						)}`,
+						interestEarned: `${
+							currencyList.find((item) => item.label === transItem?.currency)
+								?.symbol ?? "₦"
+						}${prettifyMoney(transItem?.interestEarned ?? 0)}`,
 					}))}
 					handlePageClick={(page) => {
 						setCurrPage(page);

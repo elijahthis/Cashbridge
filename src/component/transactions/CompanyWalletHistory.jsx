@@ -12,7 +12,7 @@ import {
 } from "../../../utils/helperFuncs";
 import Link from "next/link";
 import Dropdown from "../Dropdown";
-import { transactionTypeList } from "@/data/constants";
+import { currencyList, transactionTypeList } from "@/data/constants";
 import { tr } from "date-fns/locale";
 
 const CompanyWalletHistory = () => {
@@ -104,18 +104,22 @@ const CompanyWalletHistory = () => {
 						{ label: "Remarks", key: "remarks" },
 					]}
 					bodyData={transactionList.map((transItem) => ({
-						amount: `${transItem?.currency}${prettifyMoney(
-							transItem?.amount ?? 0
-						)}`,
-						sent_amount: `${transItem?.currency}${prettifyMoney(
-							transItem?.sent_amount ?? 0
-						)}`,
-						balance_before: `${transItem?.currency}${prettifyMoney(
-							transItem?.balance_before
-						)}`,
-						balance_after: `${transItem?.currency}${prettifyMoney(
-							transItem?.balance_after
-						)}`,
+						amount: `${
+							currencyList.find((item) => item.label === transItem?.currency)
+								?.symbol ?? "₦"
+						}${prettifyMoney(transItem?.amount ?? 0)}`,
+						sent_amount: `${
+							currencyList.find((item) => item.label === transItem?.currency)
+								?.symbol ?? "₦"
+						}${prettifyMoney(transItem?.sent_amount ?? 0)}`,
+						balance_before: `${
+							currencyList.find((item) => item.label === transItem?.currency)
+								?.symbol ?? "₦"
+						}${prettifyMoney(transItem?.balance_before)}`,
+						balance_after: `${
+							currencyList.find((item) => item.label === transItem?.currency)
+								?.symbol ?? "₦"
+						}${prettifyMoney(transItem?.balance_after)}`,
 						reference: transItem?.reference,
 						type:
 							transItem?.type === "D" ? (

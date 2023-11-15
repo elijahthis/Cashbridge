@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { formatDate, prettifyMoney } from "../../../utils/helperFuncs";
 import MUITable from "../MUITable";
 import { getUserWalletTransactions } from "../../../requests/transactions";
+import { currencyList } from "@/data/constants";
 
 const WalletTransactions = ({ refetch, userId }) => {
 	// Data states
@@ -49,13 +50,18 @@ const WalletTransactions = ({ refetch, userId }) => {
 					{ label: "Transaction Date", key: "date" },
 				]}
 				bodyData={transactionList.map((transItem) => ({
-					amount: `${transItem?.currency}${prettifyMoney(transItem?.amount)}`,
-					balance_before: `${transItem?.currency}${prettifyMoney(
-						transItem?.balance_before
-					)}`,
-					balance_after: `${transItem?.currency}${prettifyMoney(
-						transItem?.balance_after
-					)}`,
+					amount: `${
+						currencyList.find((item) => item.label === transItem?.currency)
+							?.symbol ?? "₦"
+					}${prettifyMoney(transItem?.amount)}`,
+					balance_before: `${
+						currencyList.find((item) => item.label === transItem?.currency)
+							?.symbol ?? "₦"
+					}${prettifyMoney(transItem?.balance_before)}`,
+					balance_after: `${
+						currencyList.find((item) => item.label === transItem?.currency)
+							?.symbol ?? "₦"
+					}${prettifyMoney(transItem?.balance_after)}`,
 					reference: transItem?.reference,
 					remarks: transItem?.remarks,
 					date: formatDate(transItem?.date),

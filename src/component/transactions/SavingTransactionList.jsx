@@ -8,6 +8,7 @@ import {
 	formatDate,
 	prettifyMoney,
 } from "../../../utils/helperFuncs";
+import { currencyList } from "@/data/constants";
 
 const SavingTransactionList = () => {
 	const [currPage, setCurrPage] = useState(1);
@@ -55,9 +56,10 @@ const SavingTransactionList = () => {
 					bodyData={transactionList.map((transItem) => ({
 						customer: `${transItem?.userId?.firstname} ${transItem?.userId?.lastname}`,
 
-						amount: `${transItem?.currency ?? "NGN"}${prettifyMoney(
-							transItem?.amount ?? 0
-						)}`,
+						amount: `${
+							currencyList.find((item) => item.label === transItem?.currency)
+								?.symbol ?? "₦"
+						}${prettifyMoney(transItem?.amount ?? 0)}`,
 						reference: transItem?.reference,
 						type: (transItem?.type || "").toUpperCase(),
 						source: transItem?.source,

@@ -8,6 +8,7 @@ import {
 	prettifyMoney,
 } from "../../../utils/helperFuncs";
 import Link from "next/link";
+import { currencyList } from "@/data/constants";
 
 const CompanyTransactions = () => {
 	const [currPage, setCurrPage] = useState(1);
@@ -63,15 +64,18 @@ const CompanyTransactions = () => {
 						// 		</p>
 						// 	</Link>
 						// ),
-						amount: `${transItem?.currency}${prettifyMoney(
-							transItem?.amount ?? 0
-						)}`,
-						amount_settled: `${transItem?.currency}${prettifyMoney(
-							transItem?.amount_settled ?? 0
-						)}`,
-						app_fee: `${transItem?.currency}${prettifyMoney(
-							transItem?.app_fee ?? 0
-						)}`,
+						amount: `${
+							currencyList.find((item) => item.label === transItem?.currency)
+								?.symbol ?? "₦"
+						}${prettifyMoney(transItem?.amount ?? 0)}`,
+						amount_settled: `${
+							currencyList.find((item) => item.label === transItem?.currency)
+								?.symbol ?? "₦"
+						}${prettifyMoney(transItem?.amount_settled ?? 0)}`,
+						app_fee: `${
+							currencyList.find((item) => item.label === transItem?.currency)
+								?.symbol ?? "₦"
+						}${prettifyMoney(transItem?.app_fee ?? 0)}`,
 						flw_ref: transItem?.flw_ref,
 						payment_type: (transItem?.payment_type || "").toUpperCase(),
 						narration: transItem?.narration,
