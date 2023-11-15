@@ -17,10 +17,10 @@ function Support() {
 	return (
 		<>
 			{/* Left Column */}
-			<div className="2xl:col-span-9 col-span-8">
+			<div className="col-span-8">
 				<SupportHeader />
 				<div className="rounded-lg bg-white dark:bg-darkblack-600 px-6 py-8">
-					<div className="2xl:flex justify-between gap-12">
+					<div className=" justify-between gap-12">
 						{/* Form  */}
 						<SupportTicket />
 						{/* Tabs  */}
@@ -29,7 +29,7 @@ function Support() {
 				</div>
 			</div>
 			{/* right Column */}
-			<div className="w-full 2xl:col-span-3 col-span-4 space-y-10">
+			<div className="w-full  col-span-4 space-y-10">
 				<div className="bg-white dark:bg-darkblack-600 dark:border-darkblack-400 p-8 divide-y divide-bgray-300 dark:divide-darkblack-400 rounded-lg">
 					{/* Customer  */}
 					<CustomerInfo />

@@ -50,7 +50,7 @@ function UserProfile({ params }) {
 		) : (
 			<>
 				<GoBack backLink="/users" />
-				<div className="2xl:w-[382px] w-full bg-white dark:bg-darkblack-600 rounded-lg px-12 pb-7">
+				<div className="w-full bg-white dark:bg-darkblack-600 rounded-lg px-12 pb-7">
 					<header className="flex flex-col items-center text-center -mt-8 pb-7">
 						<Image
 							priority={true}

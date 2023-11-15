@@ -34,7 +34,7 @@ const UserClientPage = () => {
 	console.log("userArr", userArr);
 
 	return (
-		<div className="2xl:flex-1 w-full">
+		<div className="w-full">
 			{/* <UserFilter /> */}
 			<UsersList
 				userArr={userArr}

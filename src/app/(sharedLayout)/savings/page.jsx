@@ -3,7 +3,7 @@ import SavingsList from "@/component/savings/SavingsList";
 function MyWallet() {
 	return (
 		<>
-			<div className="2xl:flex-1">
+			<div className="">
 				<SavingsList />
 			</div>
 		</>

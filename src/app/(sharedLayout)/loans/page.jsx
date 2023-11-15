@@ -5,10 +5,10 @@ import HistoryTable from "@/component/listTab/HistoryTable";
 function History() {
 	return (
 		<>
-			<section className="mb-6 2xl:mb-0 2xl:flex-1">
+			<section className="mb-6 ">
 				<HistoryTable />
 			</section>
-			<section className="2xl:w-[400px] w-full flex flex-col lg:flex-row 2xl:space-x-0 2xl:flex-col lg:space-x-6 space-x-0">
+			<section className=" w-full flex flex-col lg:flex-row lg:space-x-6 space-x-0">
 				<Wallet />
 				<TeamChat />
 			</section>
