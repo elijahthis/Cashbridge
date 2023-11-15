@@ -115,6 +115,8 @@ function UserProfile({ params }) {
 					<UserWallet userId={params.id} refetch={refetch} />
 
 					<WalletTransactions userId={params.id} refetch={refetch} />
+
+					{/* <WalletHistory userId={params.id} refetch={refetch} /> */}
 				</div>
 			</>
 		)

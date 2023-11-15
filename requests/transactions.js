@@ -67,3 +67,15 @@ export const getCompanyWalletTransactions = async (page, type) => {
 		throw err;
 	}
 };
+
+export const getAllSavingTransactions = async () => {
+	try {
+		const res = await request.get(`v1/transactions/savings`);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
