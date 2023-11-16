@@ -8,7 +8,12 @@ import {
 	prettifyMoney,
 } from "../../../utils/helperFuncs";
 import Link from "next/link";
-import { currencyList } from "@/data/constants";
+import { amountFilterList, currencyList, statusList } from "@/data/constants";
+import useFilterTransactions from "../../../hooks/useFilterTransactions";
+import FilterBlock from "../filter/FilterBlock";
+import Dropdown from "../Dropdown";
+import FilterRow from "../filter/FilterRow";
+import CBDatePicker from "../CBDatePicker";
 
 const CompanyTransactions = () => {
 	const [currPage, setCurrPage] = useState(1);
@@ -37,25 +42,100 @@ const CompanyTransactions = () => {
 		fetchTransactionData();
 	}, [currPage]);
 
+	const {
+		filteredTransactions,
+		startDate,
+		endDate,
+		setStartDate,
+		setEndDate,
+		amountRange,
+		setAmountRange,
+		status,
+		setStatus,
+	} = useFilterTransactions(transactionList);
+
 	console.log("transactionList", transactionList);
+
+	const clearFilters = () => {
+		setStatus(undefined);
+		setStartDate(undefined);
+		setEndDate(undefined);
+		setAmountRange(undefined);
+	};
 
 	return (
 		<section className="py-6">
 			<h2 className="font-bold text-3xl mb-4">Company External Transactions</h2>
+			<FilterRow clearFilters={clearFilters}>
+				<FilterBlock label="Status">
+					<Dropdown
+						optionsList={statusList.map((item) => capitalizeFirstLetter(item))}
+						selectedOption={status ? capitalizeFirstLetter(status) : undefined}
+						handleSelect={(e, ind) => {
+							setStatus(statusList[ind]);
+						}}
+						placeholder="Select Type"
+					/>
+				</FilterBlock>
+				<FilterBlock label="From">
+					<CBDatePicker
+						selectedDate={startDate ? new Date(startDate) : undefined}
+						handleSelect={(date) => {
+							// set date at 12:00am
+							const newDate = new Date(date);
+							newDate.setHours(0, 0, 0, 0);
+							setStartDate(newDate);
+						}}
+					/>
+				</FilterBlock>
+				<FilterBlock label="To">
+					<CBDatePicker
+						selectedDate={endDate ? new Date(endDate) : undefined}
+						handleSelect={(date) => {
+							// set date at 11:59pm
+							const newDate = new Date(date);
+							newDate.setHours(23, 59, 59, 999);
+							setEndDate(newDate);
+						}}
+					/>
+				</FilterBlock>
+				<FilterBlock label="Amount">
+					<Dropdown
+						optionsList={amountFilterList.map((item) =>
+							item?.from === 0
+								? `< ₦${prettifyMoney(item?.to)}`
+								: item.to === Number.MAX_SAFE_INTEGER
+								? `> ₦${prettifyMoney(item?.from)}`
+								: `₦${prettifyMoney(item?.from)} - ₦${prettifyMoney(item?.to)}`
+						)}
+						selectedOption={
+							amountRange
+								? `₦${prettifyMoney(amountRange?.from)} - ₦${prettifyMoney(
+										amountRange?.to
+								  )}`
+								: undefined
+						}
+						handleSelect={(e, ind) => {
+							setAmountRange(amountFilterList[ind]);
+						}}
+						placeholder="Select Filter Amount"
+					/>
+				</FilterBlock>
+			</FilterRow>
 			<div>
 				<MUITable
 					headers={[
 						{ label: "Customer Name", key: "customer" },
 						{ label: "Amount", key: "amount" },
-						{ label: "Amount Settled", key: "amount_settled" },
-						{ label: "App Fee", key: "app_fee" },
-						{ label: "Flutterwave Reference", key: "flw_ref" },
 						{ label: "Transaction Date", key: "created_at" },
 						{ label: "Payment Type", key: "payment_type" },
 						{ label: "Status", key: "status" },
+						{ label: "Amount Settled", key: "amount_settled" },
+						{ label: "App Fee", key: "app_fee" },
 						{ label: "Narration", key: "narration" },
+						{ label: "Flutterwave Reference", key: "flw_ref" },
 					]}
-					bodyData={transactionList.map((transItem) => ({
+					bodyData={filteredTransactions.map((transItem) => ({
 						customer: transItem?.customer?.name,
 						// customer: (
 						// 	<Link href={`${process.env.NEXT_PUBLIC_BASE_URL}users/`}>
@@ -80,7 +160,18 @@ const CompanyTransactions = () => {
 						payment_type: (transItem?.payment_type || "").toUpperCase(),
 						narration: transItem?.narration,
 						created_at: formatDate(transItem?.created_at),
-						status: capitalizeFirstLetter(transItem?.status),
+						status:
+							transItem?.status === "failed" ? (
+								<span className="px-3 py-2 rounded-lg bg-[#FCDEDE] text-[#DD3333] ">
+									Failed
+								</span>
+							) : transItem?.status === "successful" ? (
+								<span className="px-3 py-2 rounded-lg bg-[#D9FBE6] text-[#22C55E] ">
+									Successful
+								</span>
+							) : (
+								transItem?.status
+							),
 					}))}
 					handlePageClick={(page) => {
 						setCurrPage(page);

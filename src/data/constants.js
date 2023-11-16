@@ -364,3 +364,5 @@ export const amountFilterList = [
 	{ from: 500000, to: 1000000 },
 	{ from: 1000000, to: Number.MAX_SAFE_INTEGER },
 ];
+
+export const statusList = ["successful", "failed"];
