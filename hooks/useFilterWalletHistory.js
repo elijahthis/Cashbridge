@@ -6,36 +6,29 @@ const useFilterWalletHistory = (transactionArr) => {
 	const [filteredTransactions, setFilteredTransactions] =
 		useState(transactionArr);
 
-	useEffect(() => {
-		if (filterStartDate) {
-			if (filterEndDate) {
-				setFilteredTransactions(
-					filteredTransactions.filter((transaction) => {
-						const transactionDate = new Date(transaction.date);
-						return (
-							transactionDate >= filterStartDate &&
-							transactionDate <= filterEndDate
-						);
-					})
-				);
-			} else
-				setFilteredTransactions(
-					transactionArr.filter((transaction) => {
-						const transactionDate = new Date(transaction.date);
-						return transactionDate >= filterStartDate;
-					})
-				);
-		} else if (filterEndDate) {
-			setFilteredTransactions(
-				transactionArr.filter((transaction) => {
-					const transactionDate = new Date(transaction.date);
-					return transactionDate <= filterEndDate;
-				})
+	const filterTransactionsFunc = [...transactionArr].filter((transaction) => {
+		const transactionDate = new Date(transaction.date);
+		const startDate = new Date(filterStartDate);
+		const endDate = new Date(filterEndDate);
+		if (filterStartDate && filterEndDate) {
+			return (
+				transactionDate.getTime() >= startDate.getTime() &&
+				transactionDate.getTime() <= endDate.getTime()
 			);
+		} else if (filterStartDate) {
+			return transactionDate.getTime() >= startDate.getTime();
+		} else if (filterEndDate) {
+			return transactionDate.getTime() <= endDate.getTime();
 		} else {
-			setFilteredTransactions(transactionArr);
+			return true;
 		}
+	});
+	useEffect(() => {
+		// filter transactions by date
+		setFilteredTransactions(filterTransactionsFunc);
 	}, [filterStartDate, filterEndDate, transactionArr]);
+
+	console.log("filteredTransactions", filteredTransactions);
 
 	return {
 		filteredTransactions,
