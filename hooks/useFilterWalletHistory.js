@@ -1,41 +1,47 @@
 import { useEffect, useState } from "react";
 
 const useFilterWalletHistory = (transactionArr) => {
-	const [filterStartDate, setFilterStartDate] = useState(undefined);
-	const [filterEndDate, setFilterEndDate] = useState(undefined);
-	const [filteredTransactions, setFilteredTransactions] =
-		useState(transactionArr);
+	if (!Array.isArray(transactionArr)) {
+		throw new Error("Invalid input: transactionArr must be an array");
+	}
 
-	const filterTransactionsFunc = [...transactionArr].filter((transaction) => {
-		const transactionDate = new Date(transaction.date);
-		const startDate = new Date(filterStartDate);
-		const endDate = new Date(filterEndDate);
-		if (filterStartDate && filterEndDate) {
-			return (
-				transactionDate.getTime() >= startDate.getTime() &&
-				transactionDate.getTime() <= endDate.getTime()
-			);
-		} else if (filterStartDate) {
-			return transactionDate.getTime() >= startDate.getTime();
-		} else if (filterEndDate) {
-			return transactionDate.getTime() <= endDate.getTime();
-		} else {
-			return true;
-		}
+	const [filters, setFilters] = useState({
+		startDate: null,
+		endDate: null,
+		amountRange: null,
 	});
-	useEffect(() => {
-		// filter transactions by date
-		setFilteredTransactions(filterTransactionsFunc);
-	}, [filterStartDate, filterEndDate, transactionArr]);
+
+	const { startDate, endDate, amountRange } = filters;
+
+	const filteredTransactions = transactionArr.filter((transaction) => {
+		const transactionDate = new Date(transaction.date);
+		const isDateInRange =
+			(!startDate || transactionDate >= startDate) &&
+			(!endDate || transactionDate <= endDate);
+
+		let isAmountInRange = true;
+		if (amountRange) {
+			isAmountInRange =
+				transaction.amount >= amountRange.from &&
+				transaction.amount <= amountRange.to;
+		}
+
+		return isDateInRange && isAmountInRange;
+	});
 
 	console.log("filteredTransactions", filteredTransactions);
 
 	return {
 		filteredTransactions,
-		filterStartDate,
-		filterEndDate,
-		setFilterStartDate,
-		setFilterEndDate,
+		startDate,
+		endDate,
+		setStartDate: (date) =>
+			setFilters((prevFilters) => ({ ...prevFilters, startDate: date })),
+		setEndDate: (date) =>
+			setFilters((prevFilters) => ({ ...prevFilters, endDate: date })),
+		amountRange,
+		setAmountRange: (range) =>
+			setFilters((prevFilters) => ({ ...prevFilters, amountRange: range })),
 	};
 };
 

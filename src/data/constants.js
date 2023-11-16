@@ -355,3 +355,12 @@ export const currencyList = [
 	{ label: "SGD", symbol: "$" },
 	{ label: "HKD", symbol: "$" },
 ];
+
+export const amountFilterList = [
+	{ from: 0, to: 20000 },
+	{ from: 20000, to: 50000 },
+	{ from: 50000, to: 100000 },
+	{ from: 100000, to: 500000 },
+	{ from: 500000, to: 1000000 },
+	{ from: 1000000, to: Number.MAX_SAFE_INTEGER },
+];

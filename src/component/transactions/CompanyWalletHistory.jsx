@@ -14,7 +14,11 @@ import {
 } from "../../../utils/helperFuncs";
 import Link from "next/link";
 import Dropdown from "../Dropdown";
-import { currencyList, transactionTypeList } from "@/data/constants";
+import {
+	amountFilterList,
+	currencyList,
+	transactionTypeList,
+} from "@/data/constants";
 import CBDatePicker from "../CBDatePicker";
 import useFilterWalletHistory from "../../../hooks/useFilterWalletHistory";
 
@@ -51,24 +55,27 @@ const CompanyWalletHistory = () => {
 
 	const {
 		filteredTransactions,
-		filterStartDate,
-		filterEndDate,
-		setFilterStartDate,
-		setFilterEndDate,
+		startDate,
+		endDate,
+		setStartDate,
+		setEndDate,
+		amountRange,
+		setAmountRange,
 	} = useFilterWalletHistory(transactionList);
 
 	console.log("transactionList", transactionList);
 
 	const clearFilters = () => {
 		setTransactionType(undefined);
-		setFilterStartDate(undefined);
-		setFilterEndDate(undefined);
+		setStartDate(undefined);
+		setEndDate(undefined);
+		setAmountRange(undefined);
 	};
 
 	return (
 		<section className="py-6">
 			<h2 className="font-bold text-3xl mb-4">Company Wallet History</h2>
-			<div className="bg-white py-4 px-4 rounded-lg flex flex-row items-stretch gap-4 ">
+			<div className="bg-white py-4 px-4 rounded-lg flex flex-row items-stretch gap-4 flex-wrap ">
 				<div>
 					<p className="mb-2 text-base font-bold leading-[24px] text-bgray-900 dark:text-white">
 						Type
@@ -91,11 +98,9 @@ const CompanyWalletHistory = () => {
 						From
 					</p>
 					<CBDatePicker
-						selectedDate={
-							filterStartDate ? new Date(filterStartDate) : undefined
-						}
+						selectedDate={startDate ? new Date(startDate) : undefined}
 						handleSelect={(date) => {
-							setFilterStartDate(date);
+							setStartDate(date);
 						}}
 					/>
 				</div>
@@ -104,10 +109,35 @@ const CompanyWalletHistory = () => {
 						To
 					</p>
 					<CBDatePicker
-						selectedDate={filterEndDate ? new Date(filterEndDate) : undefined}
+						selectedDate={endDate ? new Date(endDate) : undefined}
 						handleSelect={(date) => {
-							setFilterEndDate(date);
+							setEndDate(date);
 						}}
+					/>
+				</div>
+				<div>
+					<p className="mb-2 text-base font-bold leading-[24px] text-bgray-900 dark:text-white">
+						Amount
+					</p>
+					<Dropdown
+						optionsList={amountFilterList.map((item) =>
+							item?.from === 0
+								? `< ₦${prettifyMoney(item?.to)}`
+								: item.to === Number.MAX_SAFE_INTEGER
+								? `> ₦${prettifyMoney(item?.from)}`
+								: `₦${prettifyMoney(item?.from)} - ₦${prettifyMoney(item?.to)}`
+						)}
+						selectedOption={
+							amountRange
+								? `₦${prettifyMoney(amountRange?.from)} - ₦${prettifyMoney(
+										amountRange?.to
+								  )}`
+								: undefined
+						}
+						handleSelect={(e, ind) => {
+							setAmountRange(amountFilterList[ind]);
+						}}
+						placeholder="Select Filter Amount"
 					/>
 				</div>
 				<button
