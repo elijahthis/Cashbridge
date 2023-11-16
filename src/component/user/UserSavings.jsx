@@ -149,7 +149,12 @@ const UserSavings = ({ refetch, userId }) => {
 							currencyList.find((item) => item.label === transItem?.currency)
 								?.symbol ?? "₦"
 						}${prettifyMoney(transItem?.amount ?? 0)}`,
-						type: (transItem?.type || "").toUpperCase(),
+						type:
+							transItem?.type === "lock"
+								? "BRIDGE LOCK"
+								: transItem?.type === "saving"
+								? "BRIDGE SAVE"
+								: transItem?.type,
 						status:
 							transItem?.status === "inactive" ? (
 								<span className="px-3 py-2 rounded-lg bg-[#FCDEDE] text-[#DD3333] ">

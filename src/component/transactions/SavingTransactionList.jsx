@@ -147,7 +147,12 @@ const SavingTransactionList = () => {
 								?.symbol ?? "₦"
 						}${prettifyMoney(transItem?.amount ?? 0)}`,
 						reference: transItem?.reference,
-						type: (transItem?.type || "").toUpperCase(),
+						type:
+							transItem?.type === "lock"
+								? "BRIDGE LOCK"
+								: transItem?.type === "saving"
+								? "BRIDGE SAVE"
+								: transItem?.type,
 						source: transItem?.source,
 						createdAt: formatDate(transItem?.createdAt),
 						trnx_id: transItem?.trnx_id,
