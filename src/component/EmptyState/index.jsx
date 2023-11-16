@@ -5,7 +5,7 @@ const EmptyState = ({
 	button,
 	height = 250,
 }) => (
-	<div className="EmptyState" style={{ height: `${height}px` }}>
+	<div className="EmptyState p-6" style={{ height: `${height}px` }}>
 		<p>{message}</p>
 		{button && (
 			<Button onClick={button?.action} className="pry">

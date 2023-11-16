@@ -42,7 +42,7 @@ const Dropdown = ({
 					showFilter ? "block" : "hidden"
 				}`}
 			>
-				<ul className="max-h-[120px] overflow-auto ">
+				<ul className="max-h-[160px] overflow-auto ">
 					{optionsList.map((option, index) => (
 						<li
 							onClick={(e) => {

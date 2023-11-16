@@ -21,21 +21,19 @@ import {
 } from "@/data/constants";
 import CBDatePicker from "../CBDatePicker";
 import useFilterWalletHistory from "../../../hooks/useFilterWalletHistory";
+import FilterRow from "../filter/FilterRow";
+import FilterBlock from "../filter/FilterBlock";
 
 const CompanyWalletHistory = () => {
 	const [currPage, setCurrPage] = useState(1);
 	const [transLoading, setTransLoading] = useState(false);
 	const [totalTransactionPages, setTotalTransactionPages] = useState(1);
 	const [transactionList, setTransactionList] = useState([]);
-	const [transactionType, setTransactionType] = useState(undefined);
 
 	const fetchTransactionData = async () => {
 		setTransLoading(true);
 		try {
-			const res2 = await getCompanyWalletTransactions(
-				currPage,
-				transactionType
-			);
+			const res2 = await getCompanyWalletTransactions(currPage);
 			console.log("res2", res2);
 			if (res2.data?.success) {
 				setTransactionList(res2.data?.data?.transactions);
@@ -51,7 +49,7 @@ const CompanyWalletHistory = () => {
 
 	useEffect(() => {
 		fetchTransactionData();
-	}, [currPage, transactionType]);
+	}, [currPage]);
 
 	const {
 		filteredTransactions,
@@ -61,6 +59,8 @@ const CompanyWalletHistory = () => {
 		setEndDate,
 		amountRange,
 		setAmountRange,
+		transactionType,
+		setTransactionType,
 	} = useFilterWalletHistory(transactionList);
 
 	console.log("transactionList", transactionList);
@@ -75,11 +75,8 @@ const CompanyWalletHistory = () => {
 	return (
 		<section className="py-6">
 			<h2 className="font-bold text-3xl mb-4">Company Wallet History</h2>
-			<div className="bg-white py-4 px-4 rounded-lg flex flex-row items-stretch gap-4 flex-wrap ">
-				<div>
-					<p className="mb-2 text-base font-bold leading-[24px] text-bgray-900 dark:text-white">
-						Type
-					</p>
+			<FilterRow clearFilters={clearFilters}>
+				<FilterBlock label="Type">
 					<Dropdown
 						optionsList={transactionTypeList.map((item) => item?.label)}
 						selectedOption={
@@ -92,33 +89,30 @@ const CompanyWalletHistory = () => {
 						}}
 						placeholder="Select Type"
 					/>
-				</div>
-				<div>
-					<p className="mb-2 text-base font-bold leading-[24px] text-bgray-900 dark:text-white">
-						From
-					</p>
+				</FilterBlock>
+				<FilterBlock label="From">
 					<CBDatePicker
 						selectedDate={startDate ? new Date(startDate) : undefined}
 						handleSelect={(date) => {
-							setStartDate(date);
+							// set date at 12:00am
+							const newDate = new Date(date);
+							newDate.setHours(0, 0, 0, 0);
+							setStartDate(newDate);
 						}}
 					/>
-				</div>
-				<div>
-					<p className="mb-2 text-base font-bold leading-[24px] text-bgray-900 dark:text-white">
-						To
-					</p>
+				</FilterBlock>
+				<FilterBlock label="To">
 					<CBDatePicker
 						selectedDate={endDate ? new Date(endDate) : undefined}
 						handleSelect={(date) => {
-							setEndDate(date);
+							// set date at 11:59pm
+							const newDate = new Date(date);
+							newDate.setHours(23, 59, 59, 999);
+							setEndDate(newDate);
 						}}
 					/>
-				</div>
-				<div>
-					<p className="mb-2 text-base font-bold leading-[24px] text-bgray-900 dark:text-white">
-						Amount
-					</p>
+				</FilterBlock>
+				<FilterBlock label="Amount">
 					<Dropdown
 						optionsList={amountFilterList.map((item) =>
 							item?.from === 0
@@ -139,16 +133,8 @@ const CompanyWalletHistory = () => {
 						}}
 						placeholder="Select Filter Amount"
 					/>
-				</div>
-				<button
-					className="ml-auto"
-					onClick={() => {
-						clearFilters();
-					}}
-				>
-					Clear filters
-				</button>
-			</div>
+				</FilterBlock>
+			</FilterRow>
 			<div>
 				<MUITable
 					headers={[

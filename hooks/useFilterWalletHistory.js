@@ -9,9 +9,10 @@ const useFilterWalletHistory = (transactionArr) => {
 		startDate: null,
 		endDate: null,
 		amountRange: null,
+		transactionType: null,
 	});
 
-	const { startDate, endDate, amountRange } = filters;
+	const { startDate, endDate, amountRange, transactionType } = filters;
 
 	const filteredTransactions = transactionArr.filter((transaction) => {
 		const transactionDate = new Date(transaction.date);
@@ -26,7 +27,12 @@ const useFilterWalletHistory = (transactionArr) => {
 				transaction.amount <= amountRange.to;
 		}
 
-		return isDateInRange && isAmountInRange;
+		let isTransactionTypeMatch = true;
+		if (transactionType) {
+			isTransactionTypeMatch = transaction.type === transactionType;
+		}
+
+		return isDateInRange && isAmountInRange && isTransactionTypeMatch;
 	});
 
 	console.log("filteredTransactions", filteredTransactions);
@@ -42,6 +48,9 @@ const useFilterWalletHistory = (transactionArr) => {
 		amountRange,
 		setAmountRange: (range) =>
 			setFilters((prevFilters) => ({ ...prevFilters, amountRange: range })),
+		transactionType,
+		setTransactionType: (type) =>
+			setFilters((prevFilters) => ({ ...prevFilters, transactionType: type })),
 	};
 };
 

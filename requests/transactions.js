@@ -1,9 +1,11 @@
 import { request } from "../utils/axios";
 
-export const getUserWalletTransactions = async (userId, page) => {
+export const getUserWalletTransactions = async (userId, page, type) => {
 	try {
 		const res = await request.get(
-			`v1/transactions/wallet/${userId}?page=${page}`
+			`v1/transactions/wallet/${userId}?page=${page}&${
+				type ? `type=${type}` : ""
+			}`
 		);
 		console.log(res);
 		return res;
