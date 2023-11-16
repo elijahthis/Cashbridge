@@ -366,3 +366,5 @@ export const amountFilterList = [
 ];
 
 export const statusList = ["successful", "failed"];
+
+export const savingsStatusList = ["active", "inactive"];

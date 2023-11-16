@@ -8,7 +8,16 @@ import {
 	formatDate,
 	prettifyMoney,
 } from "../../../utils/helperFuncs";
-import { currencyList } from "@/data/constants";
+import {
+	amountFilterList,
+	currencyList,
+	savingsStatusList,
+} from "@/data/constants";
+import useFilterSavings from "../../../hooks/useFilterSavings";
+import FilterRow from "../filter/FilterRow";
+import FilterBlock from "../filter/FilterBlock";
+import Dropdown from "../Dropdown";
+import CBDatePicker from "../CBDatePicker";
 
 const SavingTransactionList = () => {
 	const [currPage, setCurrPage] = useState(1);
@@ -37,11 +46,88 @@ const SavingTransactionList = () => {
 		fetchTransactionData();
 	}, [currPage]);
 
+	const {
+		filteredSavings,
+		startDate,
+		endDate,
+		setStartDate,
+		setEndDate,
+		amountRange,
+		setAmountRange,
+		status,
+		setStatus,
+	} = useFilterSavings(transactionList);
+
 	console.log("transactionList", transactionList);
+
+	const clearFilters = () => {
+		setStatus(undefined);
+		setStartDate(undefined);
+		setEndDate(undefined);
+		setAmountRange(undefined);
+	};
 
 	return (
 		<section className="py-6">
 			<h2 className="font-bold text-3xl mb-4">Savings Transactions</h2>
+			<FilterRow clearFilters={clearFilters}>
+				{/* <FilterBlock label="Status">
+					<Dropdown
+						optionsList={savingsStatusList.map((item) =>
+							capitalizeFirstLetter(item)
+						)}
+						selectedOption={status ? capitalizeFirstLetter(status) : undefined}
+						handleSelect={(e, ind) => {
+							setStatus(savingsStatusList[ind]);
+						}}
+						placeholder="Select Status"
+					/>
+				</FilterBlock> */}
+				<FilterBlock label="From">
+					<CBDatePicker
+						selectedDate={startDate ? new Date(startDate) : undefined}
+						handleSelect={(date) => {
+							// set date at 12:00am
+							const newDate = new Date(date);
+							newDate.setHours(0, 0, 0, 0);
+							setStartDate(newDate);
+						}}
+					/>
+				</FilterBlock>
+				<FilterBlock label="To">
+					<CBDatePicker
+						selectedDate={endDate ? new Date(endDate) : undefined}
+						handleSelect={(date) => {
+							// set date at 11:59pm
+							const newDate = new Date(date);
+							newDate.setHours(23, 59, 59, 999);
+							setEndDate(newDate);
+						}}
+					/>
+				</FilterBlock>
+				<FilterBlock label="Amount">
+					<Dropdown
+						optionsList={amountFilterList.map((item) =>
+							item?.from === 0
+								? `< ₦${prettifyMoney(item?.to)}`
+								: item.to === Number.MAX_SAFE_INTEGER
+								? `> ₦${prettifyMoney(item?.from)}`
+								: `₦${prettifyMoney(item?.from)} - ₦${prettifyMoney(item?.to)}`
+						)}
+						selectedOption={
+							amountRange
+								? `₦${prettifyMoney(amountRange?.from)} - ₦${prettifyMoney(
+										amountRange?.to
+								  )}`
+								: undefined
+						}
+						handleSelect={(e, ind) => {
+							setAmountRange(amountFilterList[ind]);
+						}}
+						placeholder="Select Filter Amount"
+					/>
+				</FilterBlock>
+			</FilterRow>
 			<div>
 				<MUITable
 					headers={[
@@ -53,7 +139,7 @@ const SavingTransactionList = () => {
 						{ label: "Transaction Date", key: "createdAt" },
 						{ label: "Transaction ID", key: "trnx_id" },
 					]}
-					bodyData={transactionList.map((transItem) => ({
+					bodyData={filteredSavings.map((transItem) => ({
 						customer: `${transItem?.userId?.firstname} ${transItem?.userId?.lastname}`,
 
 						amount: `${

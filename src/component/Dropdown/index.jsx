@@ -15,7 +15,7 @@ const Dropdown = ({
 				onClick={() => {
 					setShowFilter(!showFilter);
 				}}
-				className="bg-[#fafafa] flex items-center justify-between p-4 cursor-pointer rounded-lg"
+				className="bg-[#fafafa] flex items-center justify-between gap-2 p-4 cursor-pointer rounded-lg"
 			>
 				<p>{selectedOption ? selectedOption : placeholder}</p>
 				<span>
