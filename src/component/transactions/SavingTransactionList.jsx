@@ -136,11 +136,11 @@ const SavingTransactionList = () => {
 					headers={[
 						{ label: "Customer Name", key: "customer" },
 						{ label: "Amount", key: "amount" },
-						{ label: "Reference", key: "reference" },
 						{ label: "Type", key: "type" },
-						{ label: "Source", key: "source" },
+						// { label: "Source", key: "source" },
 						{ label: "Transaction Date", key: "createdAt" },
 						{ label: "Transaction ID", key: "trnx_id" },
+						{ label: "Reference", key: "reference" },
 					]}
 					bodyData={filteredSavings.map((transItem) => ({
 						customer: `${transItem?.userId?.firstname} ${transItem?.userId?.lastname}`,
