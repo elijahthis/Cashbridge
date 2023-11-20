@@ -40,11 +40,11 @@ export const getCompanyWalletBalance = async () => {
 	}
 };
 
-export const getCompanyExternalTransactions = async (page, status) => {
+export const getCompanyExternalTransactions = async (page, tx_ref) => {
 	try {
 		const res = await request.get(
 			`v1/transactions/external?page=${page}&${
-				status ? `status=${status}` : ""
+				tx_ref ? `tx_ref=${tx_ref}` : ""
 			}`
 		);
 		console.log(res);

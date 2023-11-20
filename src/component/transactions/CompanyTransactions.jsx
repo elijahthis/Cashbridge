@@ -14,12 +14,15 @@ import FilterBlock from "../filter/FilterBlock";
 import Dropdown from "../Dropdown";
 import FilterRow from "../filter/FilterRow";
 import CBDatePicker from "../CBDatePicker";
+import { useRouter } from "next/navigation";
 
 const CompanyTransactions = () => {
 	const [currPage, setCurrPage] = useState(1);
 	const [transLoading, setTransLoading] = useState(false);
 	const [totalTransactionPages, setTotalTransactionPages] = useState(1);
 	const [transactionList, setTransactionList] = useState([]);
+
+	const router = useRouter();
 
 	const fetchTransactionData = async () => {
 		setTransLoading(true);
@@ -128,37 +131,17 @@ const CompanyTransactions = () => {
 						{ label: "Customer Name", key: "customer" },
 						{ label: "Amount", key: "amount" },
 						{ label: "Transaction Date", key: "created_at" },
-						{ label: "Payment Type", key: "payment_type" },
 						{ label: "Status", key: "status" },
-						{ label: "Amount Settled", key: "amount_settled" },
-						{ label: "App Fee", key: "app_fee" },
-						{ label: "Narration", key: "narration" },
-						{ label: "Flutterwave Reference", key: "flw_ref" },
+						{ label: "Transaction Reference", key: "tx_ref" },
 					]}
 					bodyData={filteredTransactions.map((transItem) => ({
 						customer: transItem?.customer?.name,
-						// customer: (
-						// 	<Link href={`${process.env.NEXT_PUBLIC_BASE_URL}users/`}>
-						// 		<p className="font-bold text-success-300">
-						// 			{transItem?.customer?.name}
-						// 		</p>
-						// 	</Link>
-						// ),
 						amount: `${
 							currencyList.find((item) => item.label === transItem?.currency)
 								?.symbol ?? "₦"
 						}${prettifyMoney(transItem?.amount ?? 0)}`,
-						amount_settled: `${
-							currencyList.find((item) => item.label === transItem?.currency)
-								?.symbol ?? "₦"
-						}${prettifyMoney(transItem?.amount_settled ?? 0)}`,
-						app_fee: `${
-							currencyList.find((item) => item.label === transItem?.currency)
-								?.symbol ?? "₦"
-						}${prettifyMoney(transItem?.app_fee ?? 0)}`,
-						flw_ref: transItem?.flw_ref,
-						payment_type: (transItem?.payment_type || "").toUpperCase(),
-						narration: transItem?.narration,
+
+						tx_ref: transItem?.tx_ref,
 						created_at: formatDate(transItem?.created_at),
 						status:
 							transItem?.status === "failed" ? (
@@ -172,6 +155,9 @@ const CompanyTransactions = () => {
 							) : (
 								transItem?.status
 							),
+						onClick: () => {
+							router.push(`/transactions/external/${transItem?.tx_ref}`);
+						},
 					}))}
 					handlePageClick={(page) => {
 						setCurrPage(page);

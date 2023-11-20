@@ -36,3 +36,20 @@ export function formatDateToDdMmYyyy(date) {
 	const year = date.getFullYear();
 	return `${day}-${month}-${year}`;
 }
+export function formatNumberAsMoney(number) {
+	// Check if the input is a valid number
+	if (isNaN(number)) {
+		return "Invalid input";
+	}
+
+	// Round the number to 2 decimal places
+	const roundedNumber = Math.round(number * 100) / 100;
+
+	// Convert the number to a string with commas for thousands, millions, etc.
+	const formattedNumber = roundedNumber.toLocaleString("en-US", {
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2,
+	});
+
+	return formattedNumber;
+}

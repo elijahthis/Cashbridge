@@ -16,6 +16,18 @@ export const getAllSavings = async (page, limit, status, type) => {
 	}
 };
 
+export const getSelectedSavings = async (savingsId) => {
+	try {
+		const res = await request.get(`v1/savings?id=${savingsId}`);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
+
 export const getUserSavings = async (userId, page, limit, status, type) => {
 	try {
 		const res = await request.get(

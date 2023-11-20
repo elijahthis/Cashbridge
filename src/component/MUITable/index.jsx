@@ -68,7 +68,10 @@ const MUITable = ({
 												border: 0,
 											},
 										}}
-										className="border-b border-bgray-300 bg-white "
+										className={`border-b border-bgray-300 bg-white ${
+											row?.onClick && "cursor-pointer"
+										} `}
+										onClick={row?.onClick}
 									>
 										{keyList.map((key, ind) => {
 											const specialIndex = specialStyles.findIndex(
