@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getCompanyExternalTransactions } from "../../../requests/transactions";
+import {
+	getAllSavingTransactions,
+	getCompanyExternalTransactions,
+} from "../../../requests/transactions";
 import Loading from "../loading";
 import GoBack from "../GoBack";
 import InfoBlock from "../user/InfoBlock";
@@ -12,7 +15,7 @@ import {
 import { formatDate } from "@fullcalendar/core";
 import { currencyList } from "@/data/constants";
 
-const SelectedExternalTransactionClient = ({ params }) => {
+const SelectedSavingsTransactionClient = ({ params }) => {
 	const [transactionData, setTransactionData] = useState({});
 	const [transLoading, setTransLoading] = useState(false);
 	const [fetched, setFetched] = useState(false);
@@ -20,10 +23,10 @@ const SelectedExternalTransactionClient = ({ params }) => {
 	const fetchTransactionData = async () => {
 		setTransLoading(true);
 		try {
-			const res2 = await getCompanyExternalTransactions(1, params.tx_ref);
+			const res2 = await getAllSavingTransactions(params.trnx_id);
 			console.log("res2", res2);
 			if (res2.data?.success) {
-				setTransactionData(res2.data?.data?.data?.[0]);
+				setTransactionData(res2.data?.data?.[0]);
 			}
 		} catch (error) {
 			console.log(error);
@@ -45,21 +48,25 @@ const SelectedExternalTransactionClient = ({ params }) => {
 		) : (
 			<>
 				<GoBack backLink="/transactions" />
-				<h2 className="font-bold text-3xl my-4">Transaction Data</h2>
+				<h2 className="font-bold text-3xl my-4">Savings Transaction Data</h2>
 
 				{/* <div className="w-full bg-white dark:bg-darkblack-600 rounded-lg px-12 pb-7"> */}
 				<InfoBlock title="Customer Info">
 					<InfoRow
 						label="Name"
-						value={transactionData?.customer?.name ?? "-"}
+						value={
+							transactionData?.userId?.firstname
+								? `${transactionData?.userId?.firstname} ${transactionData?.userId?.lastname}`
+								: "-"
+						}
 					/>
 					<InfoRow
 						label="Phone Number"
-						value={transactionData?.customer?.phone_number ?? "-"}
+						value={transactionData?.userId?.phone ?? "-"}
 					/>
 					<InfoRow
 						label="Email Address"
-						value={transactionData?.customer?.email ?? "-"}
+						value={transactionData?.userId?.email ?? "-"}
 					/>
 				</InfoBlock>
 
@@ -73,63 +80,33 @@ const SelectedExternalTransactionClient = ({ params }) => {
 						}${formatNumberAsMoney(transactionData?.amount ?? 0)}`}
 					/>
 					<InfoRow
-						label="Amount Settled"
-						value={`${
-							currencyList.find(
-								(item) => item.label === transactionData?.currency
-							)?.symbol ?? "₦"
-						}${formatNumberAsMoney(transactionData?.amount_settled ?? 0)}`}
+						label="Transaction ID"
+						value={transactionData?.trnx_id ?? "-"}
 					/>
 					<InfoRow
-						label="Transaction Reference (tx_ref)"
-						value={transactionData?.tx_ref ?? "-"}
+						label="Reference"
+						value={transactionData?.reference ?? "-"}
 					/>
 					<InfoRow
-						label="Flutterwave Reference (flw_ref)"
-						value={transactionData?.flw_ref ?? "-"}
-					/>
-					<InfoRow
-						label="App Fee"
-						value={`${
-							currencyList.find(
-								(item) => item.label === transactionData?.currency
-							)?.symbol ?? "₦"
-						}${formatNumberAsMoney(transactionData?.app_fee ?? 0)}`}
-					/>
-					<InfoRow
-						label="Payment Type"
+						label="Type"
 						value={
-							transactionData?.payment_type
-								? transactionData?.payment_type?.toUpperCase()
-								: "-"
+							transactionData?.type === "lock"
+								? "BRIDGE LOCK"
+								: transactionData?.type === "saving"
+								? "BRIDGE SAVE"
+								: transactionData?.type
 						}
+					/>
+					<InfoRow
+						label="Source"
+						value={transactionData?.source?.toUpperCase() ?? "-"}
 					/>
 					<InfoRow
 						label="Transaction Date"
 						value={
-							transactionData?.created_at
-								? formatDate(transactionData?.created_at)
+							transactionData?.createdAt
+								? formatDate(transactionData?.createdAt)
 								: "-"
-						}
-					/>
-					<InfoRow
-						label="Narration"
-						value={transactionData?.narration ?? "-"}
-					/>
-					<InfoRow
-						label="Status"
-						value={
-							transactionData?.status === "failed" ? (
-								<span className="px-3 py-2 rounded-lg bg-[#FCDEDE] text-[#DD3333] ">
-									Failed
-								</span>
-							) : transactionData?.status === "successful" ? (
-								<span className="px-3 py-2 rounded-lg bg-[#D9FBE6] text-[#22C55E] ">
-									Successful
-								</span>
-							) : (
-								transactionData?.status
-							)
 						}
 					/>
 				</InfoBlock>
@@ -167,4 +144,4 @@ const SelectedExternalTransactionClient = ({ params }) => {
 	);
 };
 
-export default SelectedExternalTransactionClient;
+export default SelectedSavingsTransactionClient;

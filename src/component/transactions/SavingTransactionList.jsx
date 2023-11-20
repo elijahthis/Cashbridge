@@ -18,12 +18,15 @@ import FilterRow from "../filter/FilterRow";
 import FilterBlock from "../filter/FilterBlock";
 import Dropdown from "../Dropdown";
 import CBDatePicker from "../CBDatePicker";
+import { useRouter } from "next/navigation";
 
 const SavingTransactionList = () => {
 	const [currPage, setCurrPage] = useState(1);
 	const [transLoading, setTransLoading] = useState(false);
 	const [totalTransactionPages, setTotalTransactionPages] = useState(1);
 	const [transactionList, setTransactionList] = useState([]);
+
+	const router = useRouter();
 
 	const fetchTransactionData = async () => {
 		setTransLoading(true);
@@ -156,6 +159,9 @@ const SavingTransactionList = () => {
 						source: transItem?.source,
 						createdAt: formatDate(transItem?.createdAt),
 						trnx_id: transItem?.trnx_id,
+						onClick: () => {
+							router.push(`/transactions/savings/${transItem?.trnx_id}`);
+						},
 					}))}
 					handlePageClick={(page) => {
 						setCurrPage(page);

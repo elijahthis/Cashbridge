@@ -70,9 +70,11 @@ export const getCompanyWalletTransactions = async (page, type) => {
 	}
 };
 
-export const getAllSavingTransactions = async () => {
+export const getAllSavingTransactions = async (trnx_id) => {
 	try {
-		const res = await request.get(`v1/transactions/savings`);
+		const res = await request.get(
+			`v1/transactions/savings${trnx_id ? `?trnx_id=${trnx_id}` : ""}`
+		);
 		console.log(res);
 		return res;
 	} catch (err) {

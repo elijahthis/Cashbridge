@@ -69,7 +69,7 @@ const MUITable = ({
 											},
 										}}
 										className={`border-b border-bgray-300 bg-white ${
-											row?.onClick && "cursor-pointer"
+											row?.onClick && "cursor-pointer hover:bg-gray-200"
 										} `}
 										onClick={row?.onClick}
 									>
