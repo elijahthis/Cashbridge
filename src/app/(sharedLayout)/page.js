@@ -6,6 +6,7 @@ import TeamChat from "@/component/teamChat";
 import Efficiency from "@/component/revenueFlow/Efficiency";
 import UserDashPage from "@/component/dashboard/UserDashPage";
 import TransactionDashPage from "@/component/dashboard/TransactionDashPage";
+import SavingsDashPage from "@/component/dashboard/SavingsDashPage";
 
 export const metadata = {
 	title: "Dashboard | Cashbridge",
@@ -22,6 +23,7 @@ function Home() {
 					{/* <ListTab /> */}
 					<UserDashPage />
 					<TransactionDashPage />
+					<SavingsDashPage />
 				</section>
 			</div>
 		</main>

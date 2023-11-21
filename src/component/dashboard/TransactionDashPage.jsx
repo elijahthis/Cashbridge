@@ -141,7 +141,7 @@ const TransactionDashPage = () => {
 						{ label: "Status", key: "status" },
 						{ label: "Transaction Reference", key: "tx_ref" },
 					]}
-					bodyData={filteredTransactions.map((transItem) => ({
+					bodyData={filteredTransactions?.slice(0, 5).map((transItem) => ({
 						customer: transItem?.customer?.name,
 						amount: `${
 							currencyList.find((item) => item.label === transItem?.currency)
