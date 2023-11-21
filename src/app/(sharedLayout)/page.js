@@ -4,6 +4,8 @@ import ListTab from "@/component/listTab";
 import Wallet from "@/component/wallet";
 import TeamChat from "@/component/teamChat";
 import Efficiency from "@/component/revenueFlow/Efficiency";
+import UserDashPage from "@/component/dashboard/UserDashPage";
+import TransactionDashPage from "@/component/dashboard/TransactionDashPage";
 
 export const metadata = {
 	title: "Dashboard | Cashbridge",
@@ -17,7 +19,9 @@ function Home() {
 			<div>
 				<section className="mb-6 ">
 					<TotalWidget />
-					<ListTab />
+					{/* <ListTab /> */}
+					<UserDashPage />
+					<TransactionDashPage />
 				</section>
 			</div>
 		</main>
