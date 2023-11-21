@@ -116,7 +116,7 @@ const UserActions = ({ refetch, setRefetch, userId, userData }) => {
 				</Modal>
 			)}
 			<div className="py-6 mb-6 border-b border-bgray-200 dark:border-darkblack-400">
-				<div className="grid grid-cols-3 gap-4 py-3">
+				<div className="md:grid md:grid-cols-3 md:gap-4 flex flex-col items-stretch gap-3 py-3">
 					{/* <Button>Verify KYC</Button> */}
 					<Button
 						onClick={() => {
@@ -142,14 +142,14 @@ const UserActions = ({ refetch, setRefetch, userId, userData }) => {
 					>
 						{userData?.isSuspended ? "Un-suspend" : "Suspend"} User
 					</Button>
-					<Button
+					{/* <Button
 						onClick={() => {
 							getCreditScoreFunc();
 						}}
 						loading={creditScoreLoading}
 					>
 						Get Credit Score
-					</Button>
+					</Button> */}
 				</div>
 			</div>
 		</>
