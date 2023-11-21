@@ -10,6 +10,7 @@ import UserWallet from "./UserWallet";
 import UserActions from "./UserActions";
 import UserInfo from "./UserInfo";
 import UserSavings from "./UserSavings";
+import UserCreditScore from "./UserCreditScore";
 
 function UserProfile({ params }) {
 	// Data states
@@ -89,6 +90,8 @@ function UserProfile({ params }) {
 									: "BVN Not Verified"}
 							</span>
 						</div>
+
+						<UserCreditScore userId={params.id} />
 
 						<div className="flex flex-col items-center gap-4 mt-6 ">
 							<p className="text-warning-300">

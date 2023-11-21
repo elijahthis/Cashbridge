@@ -12,6 +12,18 @@ export const getUserCreditScore = async (userId) => {
 	}
 };
 
+export const getUserCreditHistory = async (userId) => {
+	try {
+		const res = await request.post(`v1/loans/credit-details/${userId}`, {});
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
+
 export const getLoanTiers = async () => {
 	try {
 		const res = await request.get(`v1/loans/loan-tier`);
