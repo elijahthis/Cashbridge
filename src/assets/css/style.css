@@ -690,6 +690,30 @@ button.fc-button.fc-button-primary.fc-prev-button {
 	}
 }
 
+@media (max-width: 640px) {
+	.layout-wrapper.active .body-wrapper {
+		margin-left: 0;
+	}
+	.layout-wrapper.active .body-wrapper .drawer-btn {
+		opacity: 1;
+	}
+	.layout-wrapper .body-wrapper {
+		margin-left: 0;
+	}
+	.layout-wrapper.active .sidebar-wrapper {
+		left: -308px;
+	}
+	.layout-wrapper .sidebar-wrapper {
+		left: 0;
+	}
+	.layout-wrapper .sidebar-wrapper + .aside-overlay {
+		left: 0;
+	}
+	.layout-wrapper.active .sidebar-wrapper + .aside-overlay {
+		left: -100%;
+	}
+}
+
 /* TODO: ===============RESPONSIVE END */
 
 .dark .jvm-container {

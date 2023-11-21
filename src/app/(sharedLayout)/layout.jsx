@@ -53,7 +53,11 @@ function Layout({ bg, overlay, children }) {
 		<div className={`layout-wrapper ${sidebar && "active"}  w-full`}>
 			<div className="relative flex w-full">
 				<Sidebar handleActive={() => setSidebar(!sidebar)} />
-				{overlay ? overlay : <Overlay />}
+				{overlay ? (
+					overlay
+				) : (
+					<Overlay handleActive={() => setSidebar(!sidebar)} />
+				)}
 				<SidebarV2 />
 				<div
 					className={`body-wrapper flex-1 overflow-x-hidden ${
