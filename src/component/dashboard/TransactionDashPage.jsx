@@ -66,7 +66,7 @@ const TransactionDashPage = () => {
 	return (
 		<section className="py-6">
 			<div className=" mb-4 flex flex-row items-center justify-between ">
-				<h2 class="font-bold text-3xl">Transactions</h2>
+				<h2 className="font-bold text-3xl">Transactions</h2>
 				<button
 					onClick={() => {
 						router.push("/transactions");

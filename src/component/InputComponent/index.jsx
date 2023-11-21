@@ -1,4 +1,11 @@
-const InputComponent = ({ label, name, value, onChange, required = false }) => {
+const InputComponent = ({
+	label,
+	name,
+	value,
+	onChange,
+	required = false,
+	type = "text",
+}) => {
 	return (
 		<div className="flex flex-col gap-2">
 			<label
@@ -8,7 +15,7 @@ const InputComponent = ({ label, name, value, onChange, required = false }) => {
 				{label}
 			</label>
 			<input
-				type="text"
+				type={type}
 				className="bg-bgray-50 dark:bg-darkblack-500 dark:text-white p-4 rounded-lg h-14 border-0 focus:border focus:border-success-300 focus:ring-0"
 				name={name}
 				value={value}

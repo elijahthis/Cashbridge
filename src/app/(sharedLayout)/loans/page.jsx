@@ -1,19 +1,13 @@
-import Wallet from "@/component/wallet";
-import TeamChat from "@/component/teamChat";
-import HistoryTable from "@/component/listTab/HistoryTable";
+import LoanTierList from "@/component/loans/LoanTierList";
 
-function History() {
+function Loans() {
 	return (
 		<>
-			<section className="mb-6 ">
-				<HistoryTable />
-			</section>
-			<section className=" w-full flex flex-col lg:flex-row lg:space-x-6 space-x-0">
-				<Wallet />
-				<TeamChat />
-			</section>
+			<div className="mb-6 ">
+				<LoanTierList />
+			</div>
 		</>
 	);
 }
 
-export default History;
+export default Loans;
