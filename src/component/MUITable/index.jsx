@@ -41,7 +41,7 @@ const MUITable = ({
 							{headers.map((header, ind) => (
 								<th
 									key={`table-header-${ind}`}
-									className="text-base text-left font-medium text-bgray-600 dark:text-bgray-50 px-6 py-5 "
+									className="text-sm lg:text-base text-left font-medium text-bgray-600 dark:text-bgray-50 p-3 lg:px-6 lg:py-5 "
 								>
 									{header.label}
 								</th>
@@ -79,7 +79,7 @@ const MUITable = ({
 											);
 											return (
 												<td
-													className="text-base font-medium px-6 py-5 text-left "
+													className="text-sm lg:text-base font-medium p-3 lg:px-6 lg:py-5 text-left "
 													style={
 														specialIndex !== -1
 															? specialStyles[specialIndex].styles
