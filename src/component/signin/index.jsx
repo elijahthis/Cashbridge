@@ -91,7 +91,7 @@ function LeftSide() {
 							placeholder="Email"
 							value={loginData.email}
 							onChange={(e) => {
-								setLoginData({ ...loginData, email: e.target.value });
+								setLoginData({ ...loginData, email: e.target.value.trim() });
 							}}
 							required={true}
 						/>

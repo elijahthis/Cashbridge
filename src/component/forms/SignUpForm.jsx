@@ -58,7 +58,10 @@ function SignUpForm() {
 						required={true}
 						value={signupData.firstname}
 						onChange={(e) => {
-							setSignupData({ ...signupData, firstname: e.target.value });
+							setSignupData({
+								...signupData,
+								firstname: e.target.value.trim(),
+							});
 						}}
 					/>
 				</div>
@@ -70,7 +73,7 @@ function SignUpForm() {
 						required={true}
 						value={signupData.lastname}
 						onChange={(e) => {
-							setSignupData({ ...signupData, lastname: e.target.value });
+							setSignupData({ ...signupData, lastname: e.target.value.trim() });
 						}}
 					/>
 				</div>
@@ -83,7 +86,7 @@ function SignUpForm() {
 					required={true}
 					value={signupData.email}
 					onChange={(e) => {
-						setSignupData({ ...signupData, email: e.target.value });
+						setSignupData({ ...signupData, email: e.target.value.trim() });
 					}}
 				/>
 			</div>
