@@ -15,7 +15,7 @@ const Dropdown = ({
 				onClick={() => {
 					setShowFilter(!showFilter);
 				}}
-				className="bg-[#fafafa] flex items-center justify-between gap-2 p-4 cursor-pointer rounded-lg"
+				className="bg-[#fafafa] flex items-center justify-between gap-2 p-2 lg:p-4 cursor-pointer rounded-lg"
 			>
 				<p>{selectedOption ? selectedOption : placeholder}</p>
 				<span>
@@ -38,9 +38,10 @@ const Dropdown = ({
 			</div>
 			<div
 				id="locationSelect"
-				className={`rounded-lg shadow-lg w-full bg-white dark:bg-darkblack-500 absolute right-0 z-10 top-full  overflow-hidden ${
+				className={`rounded-lg shadow-lg w-full bg-white dark:bg-darkblack-500 absolute right-0 top-full  overflow-hidden ${
 					showFilter ? "block" : "hidden"
 				}`}
+				style={{ zIndex: 5 }}
 			>
 				<ul className="max-h-[160px] overflow-auto ">
 					{optionsList.map((option, index) => (

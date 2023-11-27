@@ -116,6 +116,10 @@
 	scrollbar-width: none; /* Firefox */
 }
 
+.react-datepicker-wrapper {
+	position: relative;
+}
+
 .react-datepicker {
 	width: 100% !important;
 	padding: 33.75px;
@@ -126,6 +130,9 @@
 	background: white !important;
 	box-shadow: 0px 6px 12px 0px rgba(92, 115, 131, 0.08),
 		0px 4px 8px 0px rgba(92, 115, 131, 0.08) !important;
+
+	z-index: 10 !important;
+	position: relative;
 
 	&-wrapper {
 		width: 100%;
@@ -348,5 +355,15 @@
 
 	& > ul {
 		display: none;
+	}
+}
+
+@media (max-width: 1024px) {
+	.react-datepicker {
+		&__input-container {
+			& > input {
+				padding: 0.5rem !important;
+			}
+		}
 	}
 }
