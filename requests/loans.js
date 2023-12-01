@@ -1,5 +1,17 @@
 import { request } from "../utils/axios";
 
+export const getAllLoans = async (_id) => {
+	try {
+		const res = await request.get(`v1/loans/loans${_id ? `?_id=${_id}` : ""}`);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
+
 export const getUserCreditScore = async (userId) => {
 	try {
 		const res = await request.post(`v1/loans/credit-score/${userId}`, {});

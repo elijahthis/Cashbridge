@@ -38,7 +38,7 @@ const InfoBlock = ({ title, children, editFunc }) => {
 
 			<ul
 				className={` border-t border-gray-200 dark:border-darkblack-400 space-y-6 overflow-hidden transition-all duration-500 ${
-					collapsed ? "max-h-0 py-0" : "max-h-[305px] py-7 "
+					collapsed ? "max-h-0 py-0" : "max-h-[600px] py-7 "
 				}`}
 			>
 				{children}
