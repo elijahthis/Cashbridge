@@ -1,4 +1,4 @@
-import signupImg from "@/assets/images/illustration/signup.svg";
+import signupImg from "@/assets/images/illustration/side-2.jpg";
 import RightSide from "@/component/signin/RightSide";
 import SignUpForm from "@/component/forms/SignUpForm";
 import clogoColor from "@/assets/images/logo/c-logo-color.jpg";

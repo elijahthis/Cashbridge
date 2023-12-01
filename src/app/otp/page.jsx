@@ -1,5 +1,5 @@
 import RightSide from "@/component/signin/RightSide";
-import signinImg from "@/assets/images/illustration/signin.svg";
+import signinImg from "@/assets/images/illustration/side-3.jpg";
 import LeftSide from "@/component/otp";
 
 export const metadata = {

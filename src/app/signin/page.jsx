@@ -1,6 +1,6 @@
 import LeftSide from "@/component/signin";
 import RightSide from "@/component/signin/RightSide";
-import signinImg from "@/assets/images/illustration/signin.svg";
+import signinImg from "@/assets/images/illustration/side-1.jpg";
 
 export const metadata = {
 	title: "Login | Cashbridge",

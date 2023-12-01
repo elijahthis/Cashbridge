@@ -6,8 +6,8 @@ import Image from "next/image";
 
 function RightSide({ img }) {
 	return (
-		<div className="lg:w-1/2 lg:block hidden bg-[#F6FAFF] dark:bg-darkblack-600 p-20 relative min-h-screen ">
-			<ul>
+		<div className="lg:w-1/2 lg:grid place-items-center hidden bg-[#F6FAFF] dark:bg-darkblack-600 p-20 relative min-h-screen ">
+			{/* <ul>
 				<li className="absolute top-10 left-8">
 					<Image
 						priority={true}
@@ -35,7 +35,7 @@ function RightSide({ img }) {
 						alt=""
 					/>
 				</li>
-			</ul>
+			</ul> */}
 			<div className="">
 				<Image
 					priority={true}
@@ -45,7 +45,7 @@ function RightSide({ img }) {
 					alt=""
 				/>
 			</div>
-			<div>
+			{/* <div>
 				<div className="text-center max-w-lg px-1.5 m-auto">
 					<h3 className="text-bgray-900 dark:text-white font-semibold font-popins text-4xl mb-4">
 						Speady, Easy and Fast
@@ -57,7 +57,7 @@ function RightSide({ img }) {
 						when you receive qualifying direct deposits
 					</p>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 }
