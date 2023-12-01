@@ -2,6 +2,7 @@ import { useState } from "react";
 import EmptyState from "../EmptyState";
 import PaginationComponent from "../PaginationComponent";
 import Loading from "../loading";
+import { TbExternalLink } from "react-icons/tb";
 
 // interface MUITableProps {
 // 	headers: { label: string, key: string }[];
@@ -38,6 +39,9 @@ const MUITable = ({
 				<table className="w-full w-max">
 					<thead>
 						<tr className="border-b border-bgray-300 dark:border-darkblack-400">
+							{bodyData[0]?.onClick && (
+								<th className="p-3 lg:px-3 lg:py-5 "></th>
+							)}
 							{headers.map((header, ind) => (
 								<th
 									key={`table-header-${ind}`}
@@ -64,7 +68,7 @@ const MUITable = ({
 									<tr
 										key={rowInd}
 										sx={{
-											"&:last-child td, &:last-child th": {
+											"&:last-child td, &:last-child th relative": {
 												border: 0,
 											},
 										}}
@@ -73,6 +77,11 @@ const MUITable = ({
 										} `}
 										onClick={row?.onClick}
 									>
+										{row?.onClick && (
+											<td className="p-3 lg:px-3 lg:py-5 ">
+												<TbExternalLink className="" />
+											</td>
+										)}
 										{keyList.map((key, ind) => {
 											const specialIndex = specialStyles.findIndex(
 												(obj) => obj.key === key
