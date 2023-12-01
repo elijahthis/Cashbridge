@@ -89,8 +89,19 @@ const LoanList = () => {
 					bodyData={loanList.map((loanItem) => ({
 						loanAmount: `₦${formatNumberAsMoney(loanItem?.loanAmount ?? 0)}`,
 						interestRate: `${loanItem?.interestRate}%`,
-						repaymentPeriod: `${loanItem?.repaymentPeriod} months`,
-						status: loanItem?.status,
+						repaymentPeriod: `${loanItem?.repaymentPeriod} days`,
+						status:
+							loanItem?.status === "failed" ? (
+								<span className="px-3 py-2 rounded-lg bg-[#FCDEDE] text-[#DD3333] ">
+									Failed
+								</span>
+							) : loanItem?.status === "paid" ? (
+								<span className="px-3 py-2 rounded-lg bg-[#D9FBE6] text-[#22C55E] ">
+									Paid
+								</span>
+							) : (
+								loanItem?.status
+							),
 						createdAt: formatDate(loanItem?.createdAt),
 						amountPaid: `₦${formatNumberAsMoney(loanItem?.amountPaid ?? 0)}`,
 						onClick: () => {

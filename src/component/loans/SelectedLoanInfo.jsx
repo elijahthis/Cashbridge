@@ -13,9 +13,12 @@ import {
 } from "../../../utils/helperFuncs";
 import { currencyList } from "@/data/constants";
 import { getAllLoans } from "../../../requests/loans";
+import { getSelectedUserKYC } from "../../../requests/users";
 
 const SelectedLoanInfo = ({ id }) => {
 	const [loanData, setLoanData] = useState({});
+	const [userID, setUserID] = useState("");
+	const [userData, setUserData] = useState({});
 	const [loanLoading, setLoanLoading] = useState(false);
 	const [fetched, setFetched] = useState(false);
 
@@ -26,12 +29,12 @@ const SelectedLoanInfo = ({ id }) => {
 			console.log("res2", res2);
 			if (res2.data?.success) {
 				setLoanData(res2.data?.data?.[0]);
+				setUserID(res2.data?.data?.[0]?.userId);
 			}
 		} catch (error) {
 			console.log(error);
 		} finally {
 			setLoanLoading(false);
-			setFetched(true);
 		}
 	};
 
@@ -41,13 +44,43 @@ const SelectedLoanInfo = ({ id }) => {
 		fetchLoanData();
 	}, []);
 
+	// data fetching requests
+	const fetchUserData = async () => {
+		setLoanLoading(true);
+		try {
+			const res = await getSelectedUserKYC(userID);
+			if (res.data?.success) {
+				setUserData(res.data?.data);
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setLoanLoading(false);
+			setFetched(true);
+		}
+	};
+
+	useEffect(() => {
+		if (userID) fetchUserData();
+	}, [userID]);
+
 	return fetched ? (
 		loanLoading ? (
 			<Loading />
 		) : (
 			<>
 				<GoBack backLink="/loans" />
-				<h2 className="font-bold text-3xl my-4">Transaction Data</h2>
+				<h2 className="font-bold text-3xl my-4">Loan Data</h2>
+
+				<div className="my-5">
+					{loanData?.isDefaulted ? (
+						<span className="px-3 py-2 rounded-lg bg-[#FCDEDE] text-[#DD3333] ">
+							Defaulted
+						</span>
+					) : (
+						<></>
+					)}
+				</div>
 
 				{/* <div className="w-full bg-white dark:bg-darkblack-600 rounded-lg px-12 pb-7"> */}
 				<InfoBlock title="Loan Info">
@@ -73,7 +106,7 @@ const SelectedLoanInfo = ({ id }) => {
 						label="Repayment Period"
 						value={
 							loanData?.repaymentPeriod
-								? `${loanData?.repaymentPeriod} months`
+								? `${loanData?.repaymentPeriod} days`
 								: "-"
 						}
 					/>
@@ -99,8 +132,6 @@ const SelectedLoanInfo = ({ id }) => {
 						label="Date Taken"
 						value={loanData?.createdAt ? formatDate(loanData?.createdAt) : "-"}
 					/>
-
-					<InfoRow label="Narration" value={loanData?.narration ?? "-"} />
 					<InfoRow
 						label="Status"
 						value={
@@ -108,9 +139,9 @@ const SelectedLoanInfo = ({ id }) => {
 								<span className="px-3 py-2 rounded-lg bg-[#FCDEDE] text-[#DD3333] ">
 									Failed
 								</span>
-							) : loanData?.status === "successful" ? (
+							) : loanData?.status === "paid" ? (
 								<span className="px-3 py-2 rounded-lg bg-[#D9FBE6] text-[#22C55E] ">
-									Successful
+									Paid
 								</span>
 							) : (
 								loanData?.status
@@ -120,15 +151,16 @@ const SelectedLoanInfo = ({ id }) => {
 				</InfoBlock>
 
 				<InfoBlock title="Customer Info">
-					<InfoRow label="Name" value={loanData?.customer?.name ?? "-"} />
 					<InfoRow
-						label="Phone Number"
-						value={loanData?.customer?.phone_number ?? "-"}
+						label="Name"
+						value={
+							userData?.firstname
+								? `${userData?.firstname} ${userData?.lastname}`
+								: "-"
+						}
 					/>
-					<InfoRow
-						label="Email Address"
-						value={loanData?.customer?.email ?? "-"}
-					/>
+					<InfoRow label="Phone Number" value={userData?.phone ?? "-"} />
+					<InfoRow label="Email Address" value={userData?.email ?? "-"} />
 				</InfoBlock>
 
 				{/* </div> */}
