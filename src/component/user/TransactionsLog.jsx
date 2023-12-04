@@ -14,61 +14,11 @@ import useFilterWalletHistory from "../../../hooks/useFilterWalletHistory";
 import Dropdown from "../Dropdown";
 import CBDatePicker from "../CBDatePicker";
 
-const WalletTransactions = ({ refetch, userId }) => {
-	// Data states
-	const [transLoading, setTransLoading] = useState(false);
-	const [transactionList, setTransactionList] = useState([]);
-	// Pagination states
-	const [currPage, setCurrPage] = useState(1);
-	const [totalTransactionPages, setTotalTransactionPages] = useState(1);
-
-	const fetchTransactionData = async () => {
-		setTransLoading(true);
-		try {
-			const res2 = await getUserWalletTransactions(userId, currPage);
-			console.log("res2", res2);
-			if (res2.data?.success) {
-				setTransactionList(res2.data?.data?.transactions);
-				setTotalTransactionPages(res2.data?.data?.page_info?.total_pages);
-			}
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setTransLoading(false);
-			// setFetched(true);
-		}
-	};
-
-	useEffect(() => {
-		fetchTransactionData();
-		console.log("fetchTransactionData");
-	}, [refetch, currPage]);
-
-	const {
-		filteredTransactions,
-		startDate,
-		endDate,
-		setStartDate,
-		setEndDate,
-		amountRange,
-		setAmountRange,
-		transactionType,
-		setTransactionType,
-	} = useFilterWalletHistory(transactionList);
-
-	console.log("transactionList", transactionList);
-
-	const clearFilters = () => {
-		setTransactionType(undefined);
-		setStartDate(undefined);
-		setEndDate(undefined);
-		setAmountRange(undefined);
-	};
-
+const TransactionsLog = ({ transactionsLog, creditLoading }) => {
 	return (
 		<div className="mt-10">
-			<h2 className="font-bold text-3xl mb-4">Wallet Transactions</h2>
-			<FilterRow clearFilters={clearFilters}>
+			<h2 className="font-bold text-3xl mb-4">Transaction Log</h2>
+			{/* <FilterRow clearFilters={clearFilters}>
 				<FilterBlock label="Type">
 					<Dropdown
 						optionsList={transactionTypeList.map((item) => item?.label)}
@@ -127,39 +77,25 @@ const WalletTransactions = ({ refetch, userId }) => {
 						placeholder="Select Filter Amount"
 					/>
 				</FilterBlock>
-			</FilterRow>
+			</FilterRow> */}
 			<MUITable
 				headers={[
 					{ label: "Amount", key: "amount" },
-					{ label: "Reference", key: "reference" },
-					{ label: "Balance Before", key: "balance_before" },
-					{ label: "Balance After", key: "balance_after" },
-					{ label: "Type", key: "type" },
-					{ label: "Remarks", key: "remarks" },
 					{ label: "Transaction Date", key: "date" },
+					{ label: "Type", key: "type" },
 				]}
-				bodyData={filteredTransactions.map((transItem) => ({
+				bodyData={transactionsLog.map((transItem) => ({
 					amount: `${
 						currencyList.find((item) => item.label === transItem?.currency)
 							?.symbol ?? "₦"
 					}${prettifyMoney(transItem?.amount)}`,
-					balance_before: `${
-						currencyList.find((item) => item.label === transItem?.currency)
-							?.symbol ?? "₦"
-					}${prettifyMoney(transItem?.balance_before)}`,
-					balance_after: `${
-						currencyList.find((item) => item.label === transItem?.currency)
-							?.symbol ?? "₦"
-					}${prettifyMoney(transItem?.balance_after)}`,
-					reference: transItem?.reference,
-					remarks: transItem?.remarks,
 					date: formatDate(transItem?.date),
 					type:
-						transItem?.type === "D" ? (
+						transItem?.type === "Debit" ? (
 							<span className="px-3 py-2 rounded-lg bg-[#FCDEDE] text-[#DD3333] ">
 								Debit
 							</span>
-						) : transItem?.type === "C" ? (
+						) : transItem?.type === "Credit" ? (
 							<span className="px-3 py-2 rounded-lg bg-[#D9FBE6] text-[#22C55E] ">
 								Credit
 							</span>
@@ -168,13 +104,13 @@ const WalletTransactions = ({ refetch, userId }) => {
 						),
 				}))}
 				handlePageClick={(page) => {
-					setCurrPage(page);
+					// setCurrPage(page);
 				}}
-				pageCount={totalTransactionPages}
-				loading={transLoading}
+				// pageCount={totalTransactionPages}
+				loading={creditLoading}
 			/>
 		</div>
 	);
 };
 
-export default WalletTransactions;
+export default TransactionsLog;

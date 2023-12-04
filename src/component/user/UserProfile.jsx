@@ -11,13 +11,18 @@ import UserActions from "./UserActions";
 import UserInfo from "./UserInfo";
 import UserSavings from "./UserSavings";
 import UserCreditScore from "./UserCreditScore";
+import { getUserCreditHistory } from "../../../requests/loans";
+import TransactionsLog from "./TransactionsLog";
 
 function UserProfile({ params }) {
 	// Data states
 	const [userData, setUserData] = useState({});
+	const [creditScore, setCreditScore] = useState(null);
+	const [transactionsLog, setTransactionsLog] = useState([]);
 
 	// loading states
 	const [loading, setLoading] = useState(false);
+	const [creditLoading, setCreditLoading] = useState(false);
 
 	// fetch states
 	const [refetch, setRefetch] = useState(false);
@@ -39,9 +44,29 @@ function UserProfile({ params }) {
 		}
 	};
 
+	const fetchCreditScore = async () => {
+		setCreditLoading(true);
+		try {
+			const res = await getUserCreditHistory(params.id);
+			console.log("resssss", res);
+			if (res?.data?.success) {
+				setCreditScore(res.data.data.score);
+				setTransactionsLog(res.data.data.transactions ?? []);
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setCreditLoading(false);
+		}
+	};
+
 	useEffect(() => {
 		fetchData();
 	}, [refetch]);
+
+	useEffect(() => {
+		fetchCreditScore();
+	}, []);
 
 	console.log("userData", userData);
 
@@ -91,7 +116,10 @@ function UserProfile({ params }) {
 							</span>
 						</div>
 
-						<UserCreditScore userId={params.id} />
+						<UserCreditScore
+							creditLoading={creditLoading}
+							creditScore={creditScore}
+						/>
 
 						<div className="flex flex-col items-center gap-4 mt-6 ">
 							<p className="text-warning-300">
@@ -114,6 +142,11 @@ function UserProfile({ params }) {
 						refetch={refetch}
 						setRefetch={setRefetch}
 						userData={userData}
+					/>
+
+					<TransactionsLog
+						creditLoading={creditLoading}
+						transactionsLog={transactionsLog}
 					/>
 
 					<WalletTransactions userId={params.id} refetch={refetch} />
