@@ -2,6 +2,8 @@ import ProtoTypes from "prop-types";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "../../../utils/helperFuncs";
+import { FaCheck } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 
 function UserData({ userInfo, index }) {
 	return (
@@ -55,7 +57,15 @@ function UserData({ userInfo, index }) {
 				</div>
 			</td>
 			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-				<span
+				<div className="px-4">
+					{userInfo?.isKYC ? (
+						<FaCheck color="#22C55E" size={18} />
+					) : (
+						<IoClose color="#DD3333" size={18} />
+					)}
+				</div>
+
+				{/* <span
 					className={` text-sm ${
 						userInfo?.isKYC
 							? "text-[#22C55E] bg-[#D9FBE6]"
@@ -63,7 +73,7 @@ function UserData({ userInfo, index }) {
 					} font-medium rounded-lg py-1 px-3`}
 				>
 					{userInfo?.isKYC ? "KYC Verified" : "KYC Not Verified"}
-				</span>
+				</span> */}
 			</td>
 			<td className="whitespace-nowrap px-2 py-4 text-sm text-gray-500">
 				<span
