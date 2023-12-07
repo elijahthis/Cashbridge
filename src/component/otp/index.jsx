@@ -45,9 +45,6 @@ function LeftSide() {
 					<h2 className="text-bgray-900 dark:text-white text-4xl font-semibold font-poppins mb-2">
 						Enter your OTP
 					</h2>
-					<p className="font-urbanis text-base font-medium text-bgray-600 dark:text-bgray-50">
-						Send, spend and save smarter
-					</p>
 				</header>
 				<form
 					action=""

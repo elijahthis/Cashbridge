@@ -4,9 +4,16 @@ import vline from "@/assets/images/shapes/vline.svg";
 import dotted from "@/assets/images/shapes/dotted.svg";
 import Image from "next/image";
 
-function RightSide({ img }) {
+function RightSide({ img, imgURL }) {
 	return (
-		<div className="lg:w-1/2 lg:grid place-items-center hidden bg-[#F6FAFF] dark:bg-darkblack-600 p-20 relative min-h-screen ">
+		<div
+			className="lg:w-1/2 lg:grid place-items-center hidden bg-[#F6FAFF] dark:bg-darkblack-600 p-20 relative min-h-screen "
+			style={{
+				backgroundImage: `url(${imgURL})`,
+				backgroundRepeat: "no-repeat",
+				backgroundPosition: "top 0 right 0",
+			}}
+		>
 			{/* <ul>
 				<li className="absolute top-10 left-8">
 					<Image
@@ -36,7 +43,7 @@ function RightSide({ img }) {
 					/>
 				</li>
 			</ul> */}
-			<div className="">
+			{/* <div className="">
 				<Image
 					priority={true}
 					height={img.height}
@@ -44,7 +51,7 @@ function RightSide({ img }) {
 					src={img.src}
 					alt=""
 				/>
-			</div>
+			</div> */}
 			{/* <div>
 				<div className="text-center max-w-lg px-1.5 m-auto">
 					<h3 className="text-bgray-900 dark:text-white font-semibold font-popins text-4xl mb-4">
