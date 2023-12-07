@@ -7,6 +7,7 @@ import { useState } from "react";
 import Link from "next/link";
 import ResProfilePopup from "./ResProfilePopup";
 import Image from "next/image";
+import { FaRegUser } from "react-icons/fa6";
 
 function HeaderTwo({ handleSidebar }) {
 	const [activePopup, handleActivePopup] = useState(false);
@@ -69,15 +70,16 @@ function HeaderTwo({ handleSidebar }) {
 							onClick={() => handleActivePopup(!activePopup)}
 							className="flex cursor-pointer space-x-0 lg:space-x-3"
 						>
-							<div className="h-[52px] w-[52px] overflow-hidden rounded-xl border border-bgray-300">
-								<Image
+							<div className="h-[52px] w-[52px] overflow-hidden rounded-xl border border-bgray-300 grid place-items-center ">
+								{/* <Image
 									priority={true}
 									height={profile.height}
 									width={profile.width}
 									className="object-cover"
 									src={profile.src}
 									alt="avater"
-								/>
+								/> */}
+								<FaRegUser color="#86272d" />
 							</div>
 							<div className="hidden 2xl:block">
 								<div className="flex items-center space-x-2.5">
