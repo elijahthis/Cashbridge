@@ -367,3 +367,14 @@
 		}
 	}
 }
+
+@media only screen and (max-width: 480px) {
+	.Toastify {
+		&__toast {
+			&-container {
+				width: 100% !important;
+				min-width: 320px;
+			}
+		}
+	}
+}
