@@ -17,7 +17,7 @@ import CBDatePicker from "../CBDatePicker";
 const TransactionsLog = ({ transactionsLog, creditLoading }) => {
 	return (
 		<div className="mt-10">
-			<h2 className="font-bold text-3xl mb-4">Transaction Log</h2>
+			<h2 className="font-bold text-3xl mb-4">SMS Logs</h2>
 			{/* <FilterRow clearFilters={clearFilters}>
 				<FilterBlock label="Type">
 					<Dropdown
