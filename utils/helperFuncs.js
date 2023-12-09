@@ -53,3 +53,18 @@ export function formatNumberAsMoney(number) {
 
 	return formattedNumber;
 }
+
+export function camelCaseToTitleCase(inputString) {
+	// Handle empty input
+	if (!inputString) {
+		return "";
+	}
+
+	// Add a space before each capital letter, except for the first letter
+	const titleCaseString = inputString.replace(/([A-Z])/g, " $1");
+
+	// Capitalize the first letter and remove leading space
+	return (
+		titleCaseString.charAt(0).toUpperCase() + titleCaseString.slice(1).trim()
+	);
+}
