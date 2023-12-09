@@ -67,3 +67,15 @@ export const updateSavingsConfig = async (values) => {
 		throw err;
 	}
 };
+
+export const getSavingsAnalytics = async () => {
+	try {
+		const res = await request.get(`v1/savings/analytics`);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
