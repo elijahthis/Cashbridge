@@ -2,7 +2,7 @@ import SavingsAnalyticsWidget from "@/component/savings/SavingsAnalyticsWidget";
 import SavingsConfigList from "@/component/savings/SavingsConfigList";
 import SavingsList from "@/component/savings/SavingsList";
 
-function MyWallet() {
+function Savings() {
 	return (
 		<>
 			<div className="">
@@ -14,4 +14,4 @@ function MyWallet() {
 	);
 }
 
-export default MyWallet;
+export default Savings;
