@@ -83,3 +83,15 @@ export const deleteLoanTier = async (tierId) => {
 		throw err;
 	}
 };
+
+export const getLoanAnalytics = async () => {
+	try {
+		const res = await request.get(`v1/loans/analytics`);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};

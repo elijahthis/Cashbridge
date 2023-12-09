@@ -1,12 +1,12 @@
+import SavingsAnalyticsWidget from "@/component/savings/SavingsAnalyticsWidget";
 import SavingsConfigList from "@/component/savings/SavingsConfigList";
 import SavingsList from "@/component/savings/SavingsList";
-import SavingsWidget from "@/component/savings/SavingsWidget";
 
 function MyWallet() {
 	return (
 		<>
 			<div className="">
-				<SavingsWidget />
+				<SavingsAnalyticsWidget />
 				<SavingsConfigList />
 				<SavingsList />
 			</div>

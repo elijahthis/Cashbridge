@@ -7,7 +7,7 @@ import memberImg from "@/assets/images/avatar/members-2.png";
 import TotalWidgetCard from "../widget/TotalWidgetCard";
 import { getSavingsAnalytics } from "../../../requests/savings";
 
-function SavingsWidget() {
+function SavingsAnalyticsWidget() {
 	const [savingsAnalytics, setSavingsAnalytics] = useState({
 		totalSavings: 0,
 		totalLockedSavings: 0,
@@ -76,4 +76,4 @@ function SavingsWidget() {
 	);
 }
 
-export default SavingsWidget;
+export default SavingsAnalyticsWidget;
