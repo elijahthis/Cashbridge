@@ -20,7 +20,7 @@ import CBDatePicker from "../CBDatePicker";
 import { getAllBilling } from "../../../requests/billing";
 import { useRouter } from "next/navigation";
 
-const billingSummary = () => {
+const BillingSummary = () => {
 	const router = useRouter();
 
 	const [billingLoading, setBillingLoading] = useState(false);
@@ -122,4 +122,4 @@ const billingSummary = () => {
 	);
 };
 
-export default billingSummary;
+export default BillingSummary;
