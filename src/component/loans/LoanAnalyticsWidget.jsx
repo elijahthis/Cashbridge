@@ -6,6 +6,7 @@ import totalEarn from "@/assets/images/icons/total-earn.svg";
 import memberImg from "@/assets/images/avatar/members-2.png";
 import TotalWidgetCard from "../widget/TotalWidgetCard";
 import { getLoanAnalytics } from "../../../requests/loans";
+import { formatNumberAsMoney } from "../../../utils/helperFuncs";
 
 function LoanAnalyticsWidget() {
 	const [loanAnalytics, setLoanAnalytics] = useState({
@@ -42,7 +43,7 @@ function LoanAnalyticsWidget() {
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="Total Loan Amount"
-					amount={loanAnalytics.totalLoanAmount}
+					amount={`₦${formatNumberAsMoney(loanAnalytics.totalLoanAmount)}`}
 					groth="+ 3.5%"
 					id="totalLoanAmount"
 					loading={loading}
@@ -51,7 +52,7 @@ function LoanAnalyticsWidget() {
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="Total Loan Repayment"
-					amount={loanAnalytics.totalLoanRepayment}
+					amount={`₦${formatNumberAsMoney(loanAnalytics.totalLoanRepayment)}`}
 					groth="+ 3.5%"
 					id="totalLoanRepayment"
 					loading={loading}
@@ -60,7 +61,7 @@ function LoanAnalyticsWidget() {
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="Average Loan Amount"
-					amount={loanAnalytics.averageLoanAmount}
+					amount={`₦${formatNumberAsMoney(loanAnalytics.averageLoanAmount)}`}
 					groth="+ 3.5%"
 					id="averageLoanAmount"
 					loading={loading}
@@ -69,7 +70,7 @@ function LoanAnalyticsWidget() {
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="Total Due Loan"
-					amount={loanAnalytics.totalDueLoan}
+					amount={`₦${formatNumberAsMoney(loanAnalytics.totalDueLoan)}`}
 					groth="+ 3.5%"
 					id="totalDueLoan"
 					loading={loading}
@@ -78,7 +79,7 @@ function LoanAnalyticsWidget() {
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="Average Loan Duration"
-					amount={loanAnalytics.averageLoanDuration}
+					amount={`${loanAnalytics.averageLoanDuration} days`}
 					groth="+ 3.5%"
 					id="averageLoanDuration"
 					loading={loading}
@@ -96,7 +97,7 @@ function LoanAnalyticsWidget() {
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="Total Unpaid Loan"
-					amount={loanAnalytics.totalUnpaidLoan}
+					amount={`₦${formatNumberAsMoney(loanAnalytics.totalUnpaidLoan)}`}
 					groth="+ 3.5%"
 					id="totalUnpaidLoan"
 					loading={loading}

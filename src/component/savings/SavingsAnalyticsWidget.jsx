@@ -6,6 +6,7 @@ import totalEarn from "@/assets/images/icons/total-earn.svg";
 import memberImg from "@/assets/images/avatar/members-2.png";
 import TotalWidgetCard from "../widget/TotalWidgetCard";
 import { getSavingsAnalytics } from "../../../requests/savings";
+import { formatNumberAsMoney } from "../../../utils/helperFuncs";
 
 function SavingsAnalyticsWidget() {
 	const [savingsAnalytics, setSavingsAnalytics] = useState({
@@ -39,7 +40,7 @@ function SavingsAnalyticsWidget() {
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="Total Savings"
-					amount={savingsAnalytics.totalSavings}
+					amount={`₦${formatNumberAsMoney(savingsAnalytics.totalSavings)}`}
 					groth="+ 3.5%"
 					id="totalSavings"
 					loading={loading}
@@ -48,7 +49,9 @@ function SavingsAnalyticsWidget() {
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="Total Locked Savings"
-					amount={savingsAnalytics.totalLockedSavings}
+					amount={`₦${formatNumberAsMoney(
+						savingsAnalytics.totalLockedSavings
+					)}`}
 					groth="+ 3.5%"
 					id="totalLockedSavings"
 					loading={loading}
@@ -57,7 +60,9 @@ function SavingsAnalyticsWidget() {
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="Total Interest Earned"
-					amount={savingsAnalytics.totalInterestEarned}
+					amount={`₦${formatNumberAsMoney(
+						savingsAnalytics.totalInterestEarned
+					)}`}
 					groth="+ 3.5%"
 					id="totalInterestEarned"
 					loading={loading}
@@ -66,7 +71,7 @@ function SavingsAnalyticsWidget() {
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="Average Lock Duration"
-					amount={savingsAnalytics.averageLockDuration}
+					amount={`${savingsAnalytics.averageLockDuration} days`}
 					groth="+ 3.5%"
 					id="averageLockDuration"
 					loading={loading}
