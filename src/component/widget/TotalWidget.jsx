@@ -40,7 +40,7 @@ function TotalWidget() {
 					id="totalEarn"
 					loading={loading}
 				/>
-				<TotalWidgetCard
+				{/* <TotalWidgetCard
 					totalEarnImg={totalEarn}
 					memberImg={memberImg}
 					title="PSA balance"
@@ -84,7 +84,7 @@ function TotalWidget() {
 					groth="+ 3.5%"
 					id="totalSpending"
 					loading={loading}
-				/>
+				/> */}
 			</div>
 		</div>
 	);
