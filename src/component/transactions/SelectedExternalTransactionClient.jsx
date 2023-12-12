@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getCompanyExternalTransactions } from "../../../requests/transactions";
+import {
+	createRefund,
+	getCompanyExternalTransactions,
+} from "../../../requests/transactions";
 import Loading from "../loading";
 import GoBack from "../GoBack";
 import InfoBlock from "../user/InfoBlock";
@@ -11,10 +14,14 @@ import {
 } from "../../../utils/helperFuncs";
 import { formatDate } from "@fullcalendar/core";
 import { currencyList } from "@/data/constants";
+import Button from "../button";
+import { toast } from "react-toastify";
 
 const SelectedExternalTransactionClient = ({ params }) => {
 	const [transactionData, setTransactionData] = useState({});
 	const [transLoading, setTransLoading] = useState(false);
+	const [refundLoading, setRefundLoading] = useState(false);
+	const [refetch, setRefetch] = useState(false);
 	const [fetched, setFetched] = useState(false);
 
 	const fetchTransactionData = async () => {
@@ -33,11 +40,30 @@ const SelectedExternalTransactionClient = ({ params }) => {
 		}
 	};
 
+	// action requests
+	const refundFunc = async () => {
+		setRefundLoading(true);
+		try {
+			const res = await createRefund({
+				trnx_id: transactionData?.id?.toString(),
+			});
+			if (res?.data?.success) {
+				toast.success("Refund Successful");
+				setRefetch((val) => !val);
+			}
+		} catch (error) {
+			console.log(error);
+			toast.error(error?.response?.data?.error);
+		} finally {
+			setRefundLoading(false);
+		}
+	};
+
 	console.log("transactionData", transactionData);
 
 	useEffect(() => {
 		fetchTransactionData();
-	}, []);
+	}, [refetch]);
 
 	return fetched ? (
 		transLoading ? (
@@ -46,6 +72,19 @@ const SelectedExternalTransactionClient = ({ params }) => {
 			<>
 				<GoBack backLink="/transactions" />
 				<h2 className="font-bold text-3xl my-4">Transaction Data</h2>
+
+				<div className="flex flex-row items-center mb-6 ">
+					<div>
+						<Button
+							onClick={() => {
+								refundFunc();
+							}}
+							loading={refundLoading}
+						>
+							Refund
+						</Button>
+					</div>
+				</div>
 
 				{/* <div className="w-full bg-white dark:bg-darkblack-600 rounded-lg px-12 pb-7"> */}
 				<InfoBlock title="Customer Info">

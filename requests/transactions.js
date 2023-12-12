@@ -83,3 +83,27 @@ export const getAllSavingTransactions = async (trnx_id) => {
 		throw err;
 	}
 };
+
+export const createRefund = async (values) => {
+	try {
+		const res = await request.post(`v1/transactions/refunds`, values);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
+
+export const getAllRefunds = async (values) => {
+	try {
+		const res = await request.get(`v1/transactions/refunds`, values);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
