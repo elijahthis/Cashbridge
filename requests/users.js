@@ -130,3 +130,15 @@ export const updateUserAddress = async (userId, values) => {
 		throw err;
 	}
 };
+
+export const getUserAnalytics = async () => {
+	try {
+		const res = await request.get(`v1/user-management/analytics`);
+		console.log(res);
+		return res;
+	} catch (err) {
+		// toast.error(err?.response?.data?.error);
+		console.log(err?.response?.data);
+		throw err;
+	}
+};
