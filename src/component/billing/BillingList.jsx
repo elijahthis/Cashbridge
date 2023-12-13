@@ -77,9 +77,9 @@ const BillingSummary = () => {
 							product_name: billItem?.product_name,
 							commission: billItem?.commission,
 							created_at: formatDate(billItem?.created_at),
-							onClick: () => {
-								router.push(`/billing/${billItem?.tx_id}`);
-							},
+							// onClick: () => {
+							// 	router.push(`/billing/${billItem?.tx_id}`);
+							// },
 						}))}
 						handlePageClick={(page) => {}}
 						pageCount={1}
