@@ -43,15 +43,15 @@ export default function RootLayout({ children }) {
 	}, []);
 
 	return (
-		<authContext.Provider
-			value={{ isLoggedIn, setIsLoggedIn, userObj, setUserObj }}
-		>
-			<ThemeContext.Provider value={{ theme, setTheme }}>
-				<html lang="en">
-					<head>
-						<link rel="icon" href="/images/logo.png" sizes="any" />
-					</head>
-					<body>
+		<html lang="en">
+			<head>
+				<link rel="icon" href="/images/logo.png" sizes="any" />
+			</head>
+			<body>
+				<authContext.Provider
+					value={{ isLoggedIn, setIsLoggedIn, userObj, setUserObj }}
+				>
+					<ThemeContext.Provider value={{ theme, setTheme }}>
 						{children}
 						<ToastContainer
 							position="bottom-center"
@@ -66,9 +66,9 @@ export default function RootLayout({ children }) {
 							pauseOnHover={true}
 							transition={Zoom}
 						/>
-					</body>
-				</html>
-			</ThemeContext.Provider>
-		</authContext.Provider>
+					</ThemeContext.Provider>
+				</authContext.Provider>
+			</body>
+		</html>
 	);
 }
