@@ -60,10 +60,10 @@ const UserActions = ({ refetch, setRefetch, userId, userData }) => {
 	const verifyKYCFunc = async () => {
 		setVerifyKYCLoading(true);
 		try {
-			const res = await verifyKYC(userId, { bvn: "" });
+			const res = await verifyKYC(userId, { bvn: userData?.bvn });
 			if (res?.data?.success) {
 				toast.success("Customer KYC Verified");
-				setRefetch((val) => !val);
+				// setRefetch((val) => !val);
 			}
 		} catch (error) {
 			console.log(error);
@@ -141,6 +141,14 @@ const UserActions = ({ refetch, setRefetch, userId, userData }) => {
 						}}
 					>
 						{userData?.isSuspended ? "Un-suspend" : "Suspend"} User
+					</Button>
+					<Button
+						onClick={() => {
+							verifyKYCFunc();
+						}}
+						loading={verifyKYCLoading}
+					>
+						Verify KYC
 					</Button>
 					{/* <Button
 						onClick={() => {
