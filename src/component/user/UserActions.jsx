@@ -12,6 +12,7 @@ import {
 import { getUserCreditScore } from "../../../requests/loans";
 import Modal from "../modal";
 import CreditScoreModal from "../modal/CreditScoreModal";
+import VerifyKYCModal from "../modal/VerifyKYCModal";
 
 const UserActions = ({ refetch, setRefetch, userId, userData }) => {
 	// data states
@@ -23,6 +24,7 @@ const UserActions = ({ refetch, setRefetch, userId, userData }) => {
 	const [creditScoreLoading, setCreditScoreLoading] = useState(false);
 	// modal states
 	const [openCreditScoreModal, setOpenCreditScoreModal] = useState(false);
+	const [openKYCModal, setOpenKYCModal] = useState(false);
 
 	// action requests
 	const suspendFunc = async () => {
@@ -115,6 +117,11 @@ const UserActions = ({ refetch, setRefetch, userId, userData }) => {
 					<CreditScoreModal score={creditScore} />
 				</Modal>
 			)}
+			{openKYCModal && (
+				<Modal isActive={openKYCModal} setIsActive={setOpenKYCModal}>
+					<VerifyKYCModal userId={userId} setIsActive={setOpenKYCModal} />
+				</Modal>
+			)}
 			<div className="py-6 mb-6 border-b border-bgray-200 dark:border-darkblack-400">
 				<div className="md:grid md:grid-cols-3 md:gap-4 flex flex-col items-stretch gap-3 py-3">
 					{/* <Button>Verify KYC</Button> */}
@@ -144,9 +151,10 @@ const UserActions = ({ refetch, setRefetch, userId, userData }) => {
 					</Button>
 					<Button
 						onClick={() => {
-							verifyKYCFunc();
+							setOpenKYCModal(true);
 						}}
 						loading={verifyKYCLoading}
+						disabled={userData?.isKYC}
 					>
 						Verify KYC
 					</Button>
