@@ -68,7 +68,7 @@ function UserProfile({ params }) {
 		fetchCreditScore();
 	}, []);
 
-	console.log("userData", userData);
+	console.log("userData", userData, Object.values(userData));
 
 	return fetched ? (
 		loading ? (
@@ -76,85 +76,90 @@ function UserProfile({ params }) {
 		) : (
 			<>
 				<GoBack backLink="/users" />
-				<div className="w-full bg-white dark:bg-darkblack-600 rounded-lg px-4 md:px-12 pb-7">
-					<header className="flex flex-col items-center text-center -mt-8 pb-7">
-						<Image
-							priority={true}
-							height={64}
-							width={64}
-							src={userData?.dp}
-							className="rounded-lg"
-							alt=""
-						/>
-						<h3 className="text-xl font-bold text-bgray-700 dark:text-white mt-4">
-							{`${userData?.firstname ?? "-"} ${userData?.lastname ?? "-"}`}
-						</h3>
-						<p className="text-base font-medium text-bgray-500 dark:text-white">
-							{userData?.email} • +{userData?.phone} • Created{" "}
-							{userData?.createdAt ? formatDate(userData?.createdAt) : "-"}
-						</p>
-						<div className="mt-4 flex flex-row items-center gap-2 ">
-							<span
-								className={` text-sm ${
-									userData?.isKYC
-										? "text-[#22C55E] bg-[#D9FBE6]"
-										: "text-error-300 bg-[#FEE2E2]"
-								} font-medium rounded-lg py-1 px-3`}
-							>
-								{userData?.isKYC ? "KYC Verified" : "KYC Not Verified"}
-							</span>
-							<span
-								className={` text-sm ${
-									userData?.bvnVerificationStatus
-										? "text-[#22C55E] bg-[#D9FBE6]"
-										: "text-error-300 bg-[#FEE2E2]"
-								} font-medium rounded-lg py-1 px-3`}
-							>
-								{userData?.bvnVerificationStatus
-									? "BVN Verified"
-									: "BVN Not Verified"}
-							</span>
-						</div>
-
-						<UserCreditScore
-							creditLoading={creditLoading}
-							creditScore={creditScore}
-						/>
-
-						<div className="flex flex-col items-center gap-4 mt-6 ">
-							<p className="text-warning-300">
-								{userData?.isSuspended
-									? "This user account has been suspended"
-									: ""}
+				{Object.values(userData).length !== 0 ? (
+					<div className="w-full bg-white dark:bg-darkblack-600 rounded-lg px-4 md:px-12 pb-7">
+						<header className="flex flex-col items-center text-center -mt-8 pb-7">
+							<Image
+								priority={true}
+								height={64}
+								width={64}
+								src={userData?.dp}
+								className="rounded-lg"
+								alt=""
+							/>
+							<h3 className="text-xl font-bold text-bgray-700 dark:text-white mt-4">
+								{`${userData?.firstname ?? "-"} ${userData?.lastname ?? "-"}`}
+							</h3>
+							<p className="text-base font-medium text-bgray-500 dark:text-white">
+								{userData?.email} • +{userData?.phone} • Created{" "}
+								{userData?.createdAt ? formatDate(userData?.createdAt) : "-"}
 							</p>
-						</div>
-					</header>
-					<UserWallet userId={params.id} refetch={refetch} />
-					<UserActions
-						userId={params.id}
-						refetch={refetch}
-						setRefetch={setRefetch}
-						userData={userData}
-					/>
+							<div className="mt-4 flex flex-row items-center gap-2 ">
+								<span
+									className={` text-sm ${
+										userData?.isKYC
+											? "text-[#22C55E] bg-[#D9FBE6]"
+											: "text-error-300 bg-[#FEE2E2]"
+									} font-medium rounded-lg py-1 px-3`}
+								>
+									{userData?.isKYC ? "KYC Verified" : "KYC Not Verified"}
+								</span>
+								<span
+									className={` text-sm ${
+										userData?.bvnVerificationStatus
+											? "text-[#22C55E] bg-[#D9FBE6]"
+											: "text-error-300 bg-[#FEE2E2]"
+									} font-medium rounded-lg py-1 px-3`}
+								>
+									{userData?.bvnVerificationStatus
+										? "BVN Verified"
+										: "BVN Not Verified"}
+								</span>
+							</div>
 
-					<UserInfo
-						userId={params.id}
-						refetch={refetch}
-						setRefetch={setRefetch}
-						userData={userData}
-					/>
+							<UserCreditScore
+								creditLoading={creditLoading}
+								creditScore={creditScore}
+							/>
 
-					<TransactionsLog
-						creditLoading={creditLoading}
-						transactionsLog={transactionsLog}
-					/>
+							<div className="flex flex-col items-center gap-4 mt-6 ">
+								<p className="text-warning-300">
+									{userData?.isSuspended
+										? "This user account has been suspended"
+										: ""}
+								</p>
+							</div>
+						</header>
+						<UserWallet userId={params.id} refetch={refetch} />
+						<UserActions
+							userId={params.id}
+							refetch={refetch}
+							setRefetch={setRefetch}
+							userData={userData}
+						/>
 
-					<WalletTransactions userId={params.id} refetch={refetch} />
+						<UserInfo
+							userId={params.id}
+							refetch={refetch}
+							setRefetch={setRefetch}
+							userData={userData}
+						/>
 
-					<UserSavings userId={params.id} refetch={refetch} />
+						<TransactionsLog
+							creditLoading={creditLoading}
+							transactionsLog={transactionsLog}
+						/>
 
-					{/* <WalletHistory userId={params.id} refetch={refetch} /> */}
-				</div>
+						<WalletTransactions userId={params.id} refetch={refetch} />
+
+						<UserSavings userId={params.id} refetch={refetch} />
+
+						{/* <WalletHistory userId={params.id} refetch={refetch} /> */}
+					</div>
+				) : (
+					// <></>
+					<></>
+				)}
 			</>
 		)
 	) : (
