@@ -14,7 +14,9 @@ const CompanyWallet = () => {
 			const res = await getCompanyWalletBalance();
 			console.log("res", res);
 			if (res.data?.success) {
-				setWalletList(res.data?.data);
+				setWalletList(
+					res.data?.data?.filter((item) => item?.currency === "NGN")
+				);
 			}
 		} catch (error) {
 			console.log(error);

@@ -6,8 +6,8 @@ import SavingTransactionList from "@/component/transactions/SavingTransactionLis
 async function Transaction() {
 	return (
 		<>
-			<CompanyTransactions />
 			<CompanyWallet />
+			<CompanyTransactions />
 			<CompanyWalletHistory />
 			<SavingTransactionList />
 		</>
