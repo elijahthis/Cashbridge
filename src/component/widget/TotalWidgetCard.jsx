@@ -20,94 +20,8 @@ function TotalWidgetCard({
 	memberImg,
 	totalEarnImg,
 	loading,
+	values = [],
 }) {
-	const chartRef = useRef(null);
-
-	useEffect(() => {
-		// // Get canvas context and create gradient
-		const ctx = chartRef?.current?.getContext("2d")?.chart.ctx;
-		if (ctx) {
-			const gradient = createGradient(ctx);
-			// Update chart data and options
-			chartRef.current.data.datasets[0].backgroundColor = gradient;
-			chartRef.current.update();
-		}
-	}, []);
-
-	const options = {
-		maintainAspectRatio: false,
-		responsive: true,
-		scales: {
-			x: {
-				display: false,
-				grid: {
-					display: false,
-					drawBorder: false,
-				},
-				ticks: {
-					display: false,
-				},
-			},
-			y: {
-				display: false,
-				grid: {
-					display: false,
-					drawBorder: false,
-				},
-				ticks: {
-					display: false,
-				},
-			},
-		},
-
-		plugins: {
-			legend: {
-				display: false,
-				position: "top",
-			},
-			title: {
-				display: false,
-				text: "Visitor: 2k",
-			},
-			tooltip: {
-				enabled: false,
-			},
-		},
-	};
-	const labels = [
-		"Jan",
-		"Feb",
-		"Mar",
-		"Afril",
-		"May",
-		"Jan",
-		"Feb",
-		"Mar",
-		"Afril",
-		"May",
-		"Feb",
-		"Mar",
-		"Afril",
-		"May",
-	];
-
-	const data = {
-		labels,
-		datasets: [
-			{
-				data: [0, 10, 0, 65, 0, 25, 0, 35, 20, 100, 40, 75, 50, 85, 60],
-				label: "Visitor",
-				borderColor: "#86272D",
-				pointRadius: 0,
-				pointBackgroundColor: "#fff",
-				pointBorderColor: "#86272D",
-				borderWidth: 1,
-				fill: true,
-				fillColor: "#fff",
-				tension: 0.4,
-			},
-		],
-	};
 	return (
 		<div className="rounded-lg bg-white p-5 dark:bg-darkblack-600">
 			<div className="mb-5 flex items-center justify-between">
@@ -127,21 +41,28 @@ function TotalWidgetCard({
 						{title}
 					</span>
 				</div>
-				<div>
-					{/* <Image
-						priority={true}
-						height={memberImg.height}
-						width={memberImg.width}
-						src={memberImg.src}
-						alt="members"
-					/> */}
-				</div>
 			</div>
 			<div className="flex items-end justify-between">
 				<div className="flex-1">
-					<p className="text-3xl font-bold leading-[48px] text-bgray-900 dark:text-white">
-						{loading ? <Loading size={"48px"} /> : amount}
-					</p>
+					{loading ? (
+						<Loading size={"48px"} />
+					) : values.length > 0 ? (
+						<div>
+							{values.map((item, ind) => (
+								<div
+									key={ind}
+									className="flex flex-row items-center gap-2 text-xl font-bold text-bgray-900 dark:text-white"
+								>
+									<p className="">{item?.label}:</p>
+									<p className="">{item?.value}</p>
+								</div>
+							))}
+						</div>
+					) : (
+						<p className="text-3xl font-bold leading-[48px] text-bgray-900 dark:text-white">
+							{amount}
+						</p>
+					)}
 					{/* <div className="flex items-center space-x-1">
 						<span>
 							<svg

@@ -16,7 +16,7 @@ const UserDashPage = () => {
 	const fetchData = async () => {
 		setLoading(true);
 		try {
-			const res = await getAllUsers(1, 5);
+			const res = await  (1, 5);
 			setUserArr(res?.data?.data?.users);
 		} catch (error) {
 			console.log(error);
