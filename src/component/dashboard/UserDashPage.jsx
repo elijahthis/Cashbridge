@@ -34,7 +34,7 @@ const UserDashPage = () => {
 	return (
 		<div className="w-full">
 			<div className=" mb-4 flex flex-row items-center justify-between ">
-				<h2 className="font-bold text-3xl">Users</h2>
+				<h2 className="font-bold text-3xl">Recent Users</h2>
 				<button
 					onClick={() => {
 						router.push("/users");

@@ -9,24 +9,7 @@ function UserData({ userInfo, index }) {
 	return (
 		<tr className={index % 2 === 0 ? "bg-white dark:bg-darkblack-600" : ""}>
 			<td className="whitespace-nowrap p-4 text-sm font-medium rounded-l-lg">
-				<span>
-					<svg
-						className="fill-bgray-400"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M12.0001 17.75L5.82808 20.995L7.00708 14.122L2.00708 9.25495L8.90708 8.25495L11.9931 2.00195L15.0791 8.25495L21.9791 9.25495L16.9791 14.122L18.1581 20.995L12.0001 17.75Z"
-							fill={userInfo?.importance === "gold" ? "#F6A723" : ""}
-							stroke={userInfo?.importance === "gold" ? "#F6A723" : ""}
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
-				</span>
+				<span>{index + 1}</span>
 			</td>
 			<td className="whitespace-nowrap py-4 text-sm text-gray-500 w-[400px] lg:w-auto">
 				<div className="flex items-center gap-5">

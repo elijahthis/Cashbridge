@@ -52,6 +52,38 @@ const BillingSummary = () => {
 	return (
 		<>
 			<section className="py-6">
+				<h2 className="font-bold text-3xl mb-4">Billing Summary</h2>
+				<div>
+					<MUITable
+						headers={[
+							// { label: "Customer Name", key: "customer" },
+							{ label: "Currency", key: "currency" },
+							{ label: "Bills Sum", key: "sum_bills" },
+							{ label: "Commission Sum", key: "sum_commission" },
+							{ label: "DSTV Sum", key: "sum_dstv" },
+							{ label: "Airtime Sum", key: "sum_airtime" },
+							{ label: "DSTV Count", key: "count_dstv" },
+							{ label: "Airtime Count", key: "count_airtime" },
+						]}
+						bodyData={billingSummary
+							?.filter((item) => item?.currency === "NGN")
+							.map((billItem) => ({
+								currency: billItem?.currency,
+								sum_bills: billItem?.sum_bills,
+								sum_commission: billItem?.sum_commission,
+								sum_dstv: billItem?.sum_dstv,
+								sum_airtime: billItem?.sum_airtime,
+								count_dstv: billItem?.count_dstv,
+								count_airtime: billItem?.count_airtime,
+							}))}
+						handlePageClick={(page) => {}}
+						pageCount={1}
+						loading={billingLoading}
+						showPagination={false}
+					/>
+				</div>
+			</section>
+			<section className="py-6">
 				<h2 className="font-bold text-3xl mb-4">Billing Transactions</h2>
 				<div>
 					<MUITable
@@ -80,36 +112,6 @@ const BillingSummary = () => {
 							// onClick: () => {
 							// 	router.push(`/billing/${billItem?.tx_id}`);
 							// },
-						}))}
-						handlePageClick={(page) => {}}
-						pageCount={1}
-						loading={billingLoading}
-						showPagination={false}
-					/>
-				</div>
-			</section>
-			<section className="py-6">
-				<h2 className="font-bold text-3xl mb-4">Billing Summary</h2>
-				<div>
-					<MUITable
-						headers={[
-							// { label: "Customer Name", key: "customer" },
-							{ label: "Currency", key: "currency" },
-							{ label: "Bills Sum", key: "sum_bills" },
-							{ label: "Commission Sum", key: "sum_commission" },
-							{ label: "DSTV Sum", key: "sum_dstv" },
-							{ label: "Airtime Sum", key: "sum_airtime" },
-							{ label: "DSTV Count", key: "count_dstv" },
-							{ label: "Airtime Count", key: "count_airtime" },
-						]}
-						bodyData={billingSummary.map((billItem) => ({
-							currency: billItem?.currency,
-							sum_bills: billItem?.sum_bills,
-							sum_commission: billItem?.sum_commission,
-							sum_dstv: billItem?.sum_dstv,
-							sum_airtime: billItem?.sum_airtime,
-							count_dstv: billItem?.count_dstv,
-							count_airtime: billItem?.count_airtime,
 						}))}
 						handlePageClick={(page) => {}}
 						pageCount={1}

@@ -13,7 +13,7 @@ const UserClientPage = () => {
 	const [currPage, setCurrPage] = useState(1);
 	const [totalUsers, setTotalUsers] = useState(0);
 
-	const itemsPerPage = 5;
+	const itemsPerPage = 50;
 
 	const fetchData = async () => {
 		setLoading(true);
