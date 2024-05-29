@@ -2,8 +2,8 @@ import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { LuChevronDown } from "react-icons/lu";
 
-const InfoBlock = ({ title, children, editFunc }) => {
-	const [collapsed, setCollapsed] = useState(true);
+const InfoBlock = ({ title, children, editFunc, isOpen = false }) => {
+	const [collapsed, setCollapsed] = useState(isOpen ? false : true);
 
 	return (
 		<div className="mb-5">

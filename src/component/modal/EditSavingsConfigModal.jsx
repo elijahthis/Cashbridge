@@ -38,7 +38,7 @@ const EditSavingsConfigModal = ({ configData, setIsActive, refetchFunc }) => {
 	return (
 		<div className="bg-white rounded-lg px-4 pt-4 pb-8 ">
 			<div className="flex flex-row items-center gap-4 justify-between mb-6 ">
-				<h2 className="font-bold text-2xl ">Edit Savings Config</h2>
+				<h2 className="font-bold text-2xl ">Configure Savings Settings</h2>
 				<CgClose
 					size={24}
 					className="cursor-pointer"

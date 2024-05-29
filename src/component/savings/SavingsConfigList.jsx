@@ -73,14 +73,15 @@ const SavingsConfigList = () => {
 				</Modal>
 			)}
 			<section className="py-6">
-				<h2 className="font-bold text-3xl mb-4">Savings Config</h2>
+				<h2 className="font-bold text-3xl mb-4">Configure Savings</h2>
 
 				<div>
 					<InfoBlock
-						title="Savings Config Info"
+						title="Savings Settings"
 						editFunc={() => {
 							setOpenConfigModal(true);
 						}}
+						isOpen={true}
 					>
 						{savingsLoading ? (
 							<Loading size="80px" />

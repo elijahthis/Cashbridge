@@ -109,7 +109,7 @@ function Sidebar({ handleActive }) {
 							))}
 						</ul>
 					</div>
-					<div className="item-wrapper mb-5">
+					{/* <div className="item-wrapper mb-5">
 						<h4 className="border-b border-bgray-200 text-sm font-medium leading-7 text-bgray-700 dark:border-darkblack-400 dark:text-bgray-50">
 							Others
 						</h4>
@@ -254,7 +254,6 @@ function Sidebar({ handleActive }) {
 								</Link>
 							</li>
 							<li className="item py-[11px] text-bgray-900 dark:text-white">
-								{/* <Link href="#"> */}
 								<div
 									className="flex items-center justify-between cursor-pointer"
 									onClick={() => {
@@ -299,10 +298,9 @@ function Sidebar({ handleActive }) {
 										</span>
 									</div>
 								</div>
-								{/* </Link> */}
 							</li>
 						</ul>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</aside>

@@ -24,7 +24,7 @@ const SavingsList = () => {
 	const [totalSavingsPages, setTotalSavingsPages] = useState(1);
 	const [savingsList, setSavingsList] = useState([]);
 
-	const itemsPerPage = 10;
+	const itemsPerPage = 50;
 
 	const fetchSavingsData = async () => {
 		setSavingsLoading(true);
@@ -69,7 +69,7 @@ const SavingsList = () => {
 
 	return (
 		<section className="py-6">
-			<h2 className="font-bold text-3xl mb-4">All Savings</h2>
+			<h2 className="font-bold text-3xl mb-4">Savings Transactions</h2>
 			<FilterRow clearFilters={clearFilters}>
 				<FilterBlock label="Status">
 					<Dropdown
