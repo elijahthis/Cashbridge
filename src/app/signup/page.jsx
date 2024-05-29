@@ -67,22 +67,10 @@ function SignUp() {
 							>
 								Privacy Policy
 							</Link>
-							<Link
-								href="#"
-								className="text-sm text-bgray-700 dark:text-bgray-50"
-							>
-								Help
-							</Link>
-							<Link
-								href="#"
-								className="text-sm text-bgray-700 dark:text-bgray-50"
-							>
-								English
-							</Link>
 						</nav>
 						{/* Copyright  */}
 						<p className="text-bgray-600 dark:text-darkblack-300 text-center text-sm mt-6">
-							&copy; 2023 Cashbridge. All Right Reserved.
+							&copy; {new Date().getFullYear()} Cashbridge. All Right Reserved.
 						</p>
 					</div>
 				</div>

@@ -80,13 +80,18 @@ function UserAnalyticsWidget() {
 			<div>
 				<MUITable
 					headers={[
-						{ label: "Tier", key: "tier" },
-						{ label: "No. of Users", key: "user_count" },
+						{ label: "", key: "left_label" },
+						{ label: "Tier 0", key: "tier_0" },
+						{ label: "Tier 1", key: "tier_1" },
+						{ label: "Tier 3", key: "tier_3" },
 					]}
 					bodyData={[
-						{ tier: "Tier 0", user_count: userAnalytics?.tierLevelStats["0"] },
-						{ tier: "Tier 1", user_count: userAnalytics?.tierLevelStats["1"] },
-						{ tier: "Tier 3", user_count: userAnalytics?.tierLevelStats["3"] },
+						{
+							left_label: <div className="font-bold">No. of Users</div>,
+							tier_0: userAnalytics?.tierLevelStats["0"],
+							tier_1: userAnalytics?.tierLevelStats["1"],
+							tier_3: userAnalytics?.tierLevelStats["3"],
+						},
 					]}
 					handlePageClick={(page) => {}}
 					pageCount={1}

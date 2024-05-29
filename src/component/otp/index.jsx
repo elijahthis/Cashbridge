@@ -100,15 +100,9 @@ function LeftSide() {
 					<Link href="#" className="text-sm text-bgray-700 dark:text-white">
 						Privacy Policy
 					</Link>
-					<Link href="#" className="text-sm text-bgray-700 dark:text-white">
-						Help
-					</Link>
-					<Link href="#" className="text-sm text-bgray-700 dark:text-white">
-						English
-					</Link>
 				</nav>
 				<p className="text-bgray-600 dark:text-white text-center text-sm mt-6">
-					@ 2023 Cashbridge. All Right Reserved.
+					@ {new Date().getFullYear()} Cashbridge. All Right Reserved.
 				</p>
 			</div>
 		</div>
