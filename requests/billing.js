@@ -1,13 +1,9 @@
 import { request } from "../utils/axios";
 import { formatDatetoYyyyMmDd } from "../utils/helperFuncs";
 
-export const getAllBilling = async () => {
+export const getAllBilling = async (from, to) => {
 	try {
-		const res = await request.get(
-			`v1/billings/summary?from=2023-01-01&to=${formatDatetoYyyyMmDd(
-				new Date()
-			)}`
-		);
+		const res = await request.get(`v1/billings/summary?from=${from}&to=${to}`);
 		console.log(res);
 		return res;
 	} catch (err) {

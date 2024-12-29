@@ -1,22 +1,32 @@
 "use client";
 import { useEffect, useState } from "react";
 import MUITable from "../MUITable";
-import { formatDate, prettifyMoney } from "../../../utils/helperFuncs";
+import {
+	capitalizeFirstLetter,
+	formatDate,
+	prettifyMoney,
+} from "../../../utils/helperFuncs";
 import { getAllSavings } from "../../../requests/savings";
 import { currencyList } from "@/data/constants";
 import useFilterSavings from "../../../hooks/useFilterSavings";
 import { useRouter } from "next/navigation";
+import FilterRow from "../filter/FilterRow";
+import FilterBlock from "../filter/FilterBlock";
+import CBDatePicker from "../CBDatePicker";
+import Dropdown from "../Dropdown";
 
 const SavingsDashPage = () => {
 	const [savingsLoading, setSavingsLoading] = useState(false);
 	const [savingsList, setSavingsList] = useState([]);
+	const [status, setStatus] = useState(null);
+	const [type, setType] = useState(null);
 
 	const router = useRouter();
 
 	const fetchSavingsData = async () => {
 		setSavingsLoading(true);
 		try {
-			const res2 = await getAllSavings(1, 5);
+			const res2 = await getAllSavings(1, 10, status, type);
 			console.log("res2", res2);
 			if (res2.data?.success) {
 				setSavingsList(res2.data?.data?.data);
@@ -30,7 +40,19 @@ const SavingsDashPage = () => {
 
 	useEffect(() => {
 		fetchSavingsData();
-	}, []);
+	}, [status, type]);
+
+	const savingsStatusList = ["active", "inactive"];
+	const savingsTypeList = ["saving", "lock"];
+	const savingsTypeLabelList = ["BRIDGE SAVE", "BRIDGE LOCK"];
+
+	const clearFilters = () => {
+		setStatus(null);
+		setType(null);
+		// setStartDate(undefined);
+		// setEndDate(undefined);
+		// setAmountRange(undefined);
+	};
 
 	console.log("savingsList", savingsList);
 
@@ -47,6 +69,76 @@ const SavingsDashPage = () => {
 					View More
 				</button>
 			</div>
+			<FilterRow clearFilters={clearFilters}>
+				<FilterBlock label="Status">
+					<Dropdown
+						optionsList={savingsStatusList.map((item) =>
+							capitalizeFirstLetter(item)
+						)}
+						selectedOption={status ? capitalizeFirstLetter(status) : undefined}
+						handleSelect={(e, ind) => {
+							setStatus(savingsStatusList[ind]);
+						}}
+						placeholder="Select Status"
+					/>
+				</FilterBlock>
+				<FilterBlock label="Type">
+					<Dropdown
+						optionsList={savingsTypeList.map(
+							(item, ind) => savingsTypeLabelList[ind]
+						)}
+						selectedOption={type ? capitalizeFirstLetter(type) : undefined}
+						handleSelect={(e, ind) => {
+							setType(savingsTypeList[ind]);
+						}}
+						placeholder="Select Type"
+					/>
+				</FilterBlock>
+				{/* <FilterBlock label="From">
+					<CBDatePicker
+						selectedDate={startDate ? new Date(startDate) : undefined}
+						handleSelect={(date) => {
+							// set date at 12:00am
+							const newDate = new Date(date);
+							newDate.setHours(0, 0, 0, 0);
+							setStartDate(newDate);
+						}}
+					/>
+				</FilterBlock>
+				<FilterBlock label="To">
+					<CBDatePicker
+						selectedDate={endDate ? new Date(endDate) : undefined}
+						handleSelect={(date) => {
+							// set date at 11:59pm
+							const newDate = new Date(date);
+							newDate.setHours(23, 59, 59, 999);
+							setEndDate(newDate);
+						}}
+					/>
+				</FilterBlock> */}
+				{/* <FilterBlock label="Amount">
+					<Dropdown
+						optionsList={amountFilterList.map((item) =>
+							item?.from === 0
+								? `< ₦${prettifyMoney(item?.to)}`
+								: item.to === Number.MAX_SAFE_INTEGER
+								? `> ₦${prettifyMoney(item?.from)}`
+								: `₦${prettifyMoney(item?.from)} - ₦${prettifyMoney(item?.to)}`
+						)}
+						selectedOption={
+							amountRange
+								? `₦${prettifyMoney(amountRange?.from)} - ₦${prettifyMoney(
+										amountRange?.to
+								  )}`
+								: undefined
+						}
+						handleSelect={(e, ind) => {
+							setAmountRange(amountFilterList[ind]);
+						}}
+						placeholder="Select Filter Amount"
+					/>
+				</FilterBlock> */}
+			</FilterRow>
 			<div>
 				<MUITable
 					headers={[

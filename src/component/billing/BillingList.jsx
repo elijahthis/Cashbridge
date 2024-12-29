@@ -4,6 +4,7 @@ import MUITable from "../MUITable";
 import {
 	capitalizeFirstLetter,
 	formatDate,
+	formatDatetoYyyyMmDd,
 	prettifyMoney,
 } from "../../../utils/helperFuncs";
 import { getAllSavings } from "../../../requests/savings";
@@ -26,11 +27,16 @@ const BillingSummary = () => {
 	const [billingLoading, setBillingLoading] = useState(false);
 	const [billingSummary, setBillingSummary] = useState([]);
 	const [billingTransactions, setBillingTransactions] = useState([]);
+	const [startDate, setStartDate] = useState(new Date("2023-01-01"));
+	const [endDate, setEndDate] = useState(new Date());
 
 	const fetchBillingData = async () => {
 		setBillingLoading(true);
 		try {
-			const res2 = await getAllBilling();
+			const res2 = await getAllBilling(
+				formatDatetoYyyyMmDd(startDate),
+				formatDatetoYyyyMmDd(endDate)
+			);
 			console.log("res2", res2);
 			if (res2.data?.success) {
 				setBillingSummary(res2.data?.data?.data?.summary);
@@ -45,7 +51,15 @@ const BillingSummary = () => {
 
 	useEffect(() => {
 		fetchBillingData();
-	}, []);
+	}, [startDate, endDate]);
+
+	const clearFilters = () => {
+		setStartDate(new Date("2023-01-01"));
+		setEndDate(new Date());
+		// setStartDate(undefined);
+		// setEndDate(undefined);
+		// setAmountRange(undefined);
+	};
 
 	console.log("billingSummary", billingSummary);
 
@@ -85,6 +99,78 @@ const BillingSummary = () => {
 			</section>
 			<section className="py-6">
 				<h2 className="font-bold text-3xl mb-4">Billing Transactions</h2>
+				<FilterRow clearFilters={clearFilters}>
+					{/* <FilterBlock label="Status">
+						<Dropdown
+							optionsList={savingsStatusList.map((item) =>
+								capitalizeFirstLetter(item)
+							)}
+							selectedOption={
+								status ? capitalizeFirstLetter(status) : undefined
+							}
+							handleSelect={(e, ind) => {
+								setStatus(savingsStatusList[ind]);
+							}}
+							placeholder="Select Status"
+						/>
+					</FilterBlock> */}
+					{/* <FilterBlock label="Type">
+						<Dropdown
+							optionsList={savingsTypeList.map(
+								(item, ind) => savingsTypeLabelList[ind]
+							)}
+							selectedOption={type ? capitalizeFirstLetter(type) : undefined}
+							handleSelect={(e, ind) => {
+								setType(savingsTypeList[ind]);
+							}}
+							placeholder="Select Type"
+						/>
+					</FilterBlock> */}
+					<FilterBlock label="From">
+						<CBDatePicker
+							selectedDate={startDate ? new Date(startDate) : undefined}
+							handleSelect={(date) => {
+								// set date at 12:00am
+								const newDate = new Date(date);
+								newDate.setHours(0, 0, 0, 0);
+								setStartDate(newDate);
+							}}
+						/>
+					</FilterBlock>
+					<FilterBlock label="To">
+						<CBDatePicker
+							selectedDate={endDate ? new Date(endDate) : undefined}
+							handleSelect={(date) => {
+								// set date at 11:59pm
+								const newDate = new Date(date);
+								newDate.setHours(23, 59, 59, 999);
+								setEndDate(newDate);
+							}}
+						/>
+					</FilterBlock>
+					{/* <FilterBlock label="Amount">
+					<Dropdown
+						optionsList={amountFilterList.map((item) =>
+							item?.from === 0
+								? `< ₦${prettifyMoney(item?.to)}`
+								: item.to === Number.MAX_SAFE_INTEGER
+								? `> ₦${prettifyMoney(item?.from)}`
+								: `₦${prettifyMoney(item?.from)} - ₦${prettifyMoney(item?.to)}`
+						)}
+						selectedOption={
+							amountRange
+								? `₦${prettifyMoney(amountRange?.from)} - ₦${prettifyMoney(
+										amountRange?.to
+								  )}`
+								: undefined
+						}
+						handleSelect={(e, ind) => {
+							setAmountRange(amountFilterList[ind]);
+						}}
+						placeholder="Select Filter Amount"
+					/>
+				</FilterBlock> */}
+				</FilterRow>
 				<div>
 					<MUITable
 						headers={[

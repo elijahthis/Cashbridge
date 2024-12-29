@@ -12,7 +12,7 @@ import {
 	formatNumberAsMoney,
 } from "../../../utils/helperFuncs";
 import { currencyList } from "@/data/constants";
-import { getAllLoans } from "../../../requests/loans";
+import { getAllLoans, getSingleLoan } from "../../../requests/loans";
 import { getSelectedUserKYC } from "../../../requests/users";
 
 const SelectedLoanInfo = ({ id }) => {
@@ -25,7 +25,7 @@ const SelectedLoanInfo = ({ id }) => {
 	const fetchLoanData = async () => {
 		setLoanLoading(true);
 		try {
-			const res2 = await getAllLoans(id);
+			const res2 = await getSingleLoan(id);
 			console.log("res2", res2);
 			if (res2.data?.success) {
 				setLoanData(res2.data?.data?.[0]);

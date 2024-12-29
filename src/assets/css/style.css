@@ -903,3 +903,28 @@ button.fc-button.fc-button-primary.fc-prev-button {
 .dark .fc-next-button:focus {
 	outline: 4px solid #1d1e24 !important;
 }
+
+.rmdp-input {
+	padding: 1.5rem 1rem !important;
+	cursor: pointer !important;
+}
+
+.rmdp-day.rmdp-selected span:not(.highlight) {
+	background-color: #86272d !important;
+}
+
+.rmdp-week-day {
+	color: #86272d !important;
+}
+
+.rmdp-day:not(.rmdp-disabled, .rmdp-day-hidden) span:hover {
+	background-color: rgba(134, 39, 45, 0.5) !important;
+}
+.rmdp-arrow {
+	border: solid #86272d !important;
+	border-width: 0 2px 2px 0 !important;
+}
+.rmdp-arrow-container:hover {
+	background-color: #86272d !important;
+	/* box-shadow: 0 0 3px #8798ad; */
+}
