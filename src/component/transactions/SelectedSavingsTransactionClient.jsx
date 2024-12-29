@@ -51,7 +51,7 @@ const SelectedSavingsTransactionClient = ({ params }) => {
 				<h2 className="font-bold text-3xl my-4">Savings Transaction Data</h2>
 
 				{/* <div className="w-full bg-white dark:bg-darkblack-600 rounded-lg px-12 pb-7"> */}
-				<InfoBlock title="Customer Info">
+				<InfoBlock title="Customer Info" isOpen={true}>
 					<InfoRow
 						label="Name"
 						value={
@@ -70,7 +70,7 @@ const SelectedSavingsTransactionClient = ({ params }) => {
 					/>
 				</InfoBlock>
 
-				<InfoBlock title="Transaction Info">
+				<InfoBlock title="Transaction Info" isOpen={true}>
 					<InfoRow
 						label="Amount"
 						value={`${
@@ -111,7 +111,7 @@ const SelectedSavingsTransactionClient = ({ params }) => {
 					/>
 				</InfoBlock>
 				{transactionData?.payment_type === "card" ? (
-					<InfoBlock title="Card Info">
+					<InfoBlock title="Card Info" isOpen={true}>
 						<InfoRow
 							label="Card Type"
 							value={transactionData?.card?.type ?? "-"}

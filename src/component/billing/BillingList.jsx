@@ -20,6 +20,7 @@ import Dropdown from "../Dropdown";
 import CBDatePicker from "../CBDatePicker";
 import { getAllBilling } from "../../../requests/billing";
 import { useRouter } from "next/navigation";
+import SelectedBilling from "./SelectedBilling";
 
 const BillingSummary = () => {
 	const router = useRouter();
@@ -29,6 +30,8 @@ const BillingSummary = () => {
 	const [billingTransactions, setBillingTransactions] = useState([]);
 	const [startDate, setStartDate] = useState(new Date("2023-01-01"));
 	const [endDate, setEndDate] = useState(new Date());
+	const [selectedBillingTransaction, setSelectedBillingTransaction] =
+		useState(null);
 
 	const fetchBillingData = async () => {
 		setBillingLoading(true);
@@ -171,40 +174,47 @@ const BillingSummary = () => {
 					/>
 				</FilterBlock> */}
 				</FilterRow>
-				<div>
-					<MUITable
-						headers={[
-							{ label: "Transaction ID", key: "tx_id" },
-							{ label: "Amount", key: "amount" },
-							{ label: "Customer ID (Phone)", key: "customer_id" },
-							{ label: "Frequency", key: "frequency" },
-							{ label: "Product", key: "product" },
-							{ label: "Product Name", key: "product_name" },
-							{ label: "Commission", key: "commission" },
-							{ label: "Created At", key: "created_at" },
-						]}
-						bodyData={billingTransactions.map((billItem) => ({
-							tx_id: billItem?.tx_id,
-							amount: `${
-								currencyList.find((item) => item.label === billItem?.currency)
-									?.symbol ?? "₦"
-							} ${billItem?.amount}`,
-							customer_id: billItem?.customer_id,
-							frequency: billItem?.frequency,
-							product: billItem?.product,
-							product_name: billItem?.product_name,
-							commission: billItem?.commission,
-							created_at: formatDate(billItem?.created_at),
-							// onClick: () => {
-							// 	router.push(`/billing/${billItem?.tx_id}`);
-							// },
-						}))}
-						handlePageClick={(page) => {}}
-						pageCount={1}
-						loading={billingLoading}
-						showPagination={false}
+				{selectedBillingTransaction ? (
+					<SelectedBilling
+						billItem={selectedBillingTransaction}
+						backFunc={() => setSelectedBillingTransaction(null)}
 					/>
-				</div>
+				) : (
+					<div>
+						<MUITable
+							headers={[
+								{ label: "Transaction ID", key: "tx_id" },
+								{ label: "Amount", key: "amount" },
+								{ label: "Customer ID (Phone)", key: "customer_id" },
+								{ label: "Frequency", key: "frequency" },
+								{ label: "Product", key: "product" },
+								{ label: "Product Name", key: "product_name" },
+								{ label: "Commission", key: "commission" },
+								{ label: "Created At", key: "created_at" },
+							]}
+							bodyData={billingTransactions.map((billItem) => ({
+								tx_id: billItem?.tx_id,
+								amount: `${
+									currencyList.find((item) => item.label === billItem?.currency)
+										?.symbol ?? "₦"
+								} ${billItem?.amount}`,
+								customer_id: billItem?.customer_id,
+								frequency: billItem?.frequency,
+								product: billItem?.product,
+								product_name: billItem?.product_name,
+								commission: billItem?.commission,
+								created_at: formatDate(billItem?.created_at),
+								onClick: () => {
+									setSelectedBillingTransaction(billItem);
+								},
+							}))}
+							handlePageClick={(page) => {}}
+							pageCount={1}
+							loading={billingLoading}
+							showPagination={false}
+						/>
+					</div>
+				)}
 			</section>
 		</>
 	);

@@ -14,12 +14,15 @@ import FilterRow from "../filter/FilterRow";
 import FilterBlock from "../filter/FilterBlock";
 import CBDatePicker from "../CBDatePicker";
 import Dropdown from "../Dropdown";
+import SelectedSavings from "../savings/SelectedSavings";
 
 const SavingsDashPage = () => {
 	const [savingsLoading, setSavingsLoading] = useState(false);
 	const [savingsList, setSavingsList] = useState([]);
 	const [status, setStatus] = useState(null);
 	const [type, setType] = useState(null);
+	const [selectedSavingsTransaction, setSelectedSavingsTransaction] =
+		useState(null);
 
 	const router = useRouter();
 
@@ -139,59 +142,69 @@ const SavingsDashPage = () => {
 					/>
 				</FilterBlock> */}
 			</FilterRow>
-			<div>
-				<MUITable
-					headers={[
-						// { label: "Customer Name", key: "customer" },
-						{ label: "Amount", key: "amount" },
-						{ label: "Type", key: "type" },
-						{ label: "Lock Period", key: "lockPeriod" },
-						{ label: "Interest Rate", key: "interestRate" },
-						{ label: "Interest Earned", key: "interestEarned" },
-						{ label: "Status", key: "status" },
-						{ label: "Created At", key: "createdAt" },
-						{ label: "Last Updated", key: "updatedAt" },
-					]}
-					bodyData={savingsList?.slice(0, 5).map((transItem) => ({
-						// customer: `${transItem?.userId?.firstname} ${transItem?.userId?.lastname}`,
-
-						amount: `${
-							currencyList.find((item) => item.label === transItem?.currency)
-								?.symbol ?? "₦"
-						}${prettifyMoney(transItem?.amount ?? 0)}`,
-						type:
-							transItem?.type === "lock"
-								? "BRIDGE LOCK"
-								: transItem?.type === "saving"
-								? "BRIDGE SAVE"
-								: transItem?.type,
-						status:
-							transItem?.status === "inactive" ? (
-								<span className="px-3 py-2 rounded-lg bg-[#FCDEDE] text-[#DD3333] ">
-									Inactive
-								</span>
-							) : transItem?.status === "active" ? (
-								<span className="px-3 py-2 rounded-lg bg-[#D9FBE6] text-[#22C55E] ">
-									Active
-								</span>
-							) : (
-								transItem?.status
-							),
-						lockPeriod: `${transItem?.lockPeriod || 0} days`,
-						createdAt: formatDate(transItem?.createdAt),
-						updatedAt: formatDate(transItem?.updatedAt),
-						interestRate: `${transItem?.interestRate}%`,
-						interestEarned: `${
-							currencyList.find((item) => item.label === transItem?.currency)
-								?.symbol ?? "₦"
-						}${prettifyMoney(transItem?.interestEarned ?? 0)}`,
-					}))}
-					handlePageClick={() => {}}
-					pageCount={1}
-					loading={savingsLoading}
-					showPagination={false}
+			{selectedSavingsTransaction ? (
+				<SelectedSavings
+					transItem={selectedSavingsTransaction}
+					backFunc={() => setSelectedSavingsTransaction(null)}
 				/>
-			</div>
+			) : (
+				<div>
+					<MUITable
+						headers={[
+							// { label: "Customer Name", key: "customer" },
+							{ label: "Amount", key: "amount" },
+							{ label: "Type", key: "type" },
+							{ label: "Lock Period", key: "lockPeriod" },
+							{ label: "Interest Rate", key: "interestRate" },
+							{ label: "Interest Earned", key: "interestEarned" },
+							{ label: "Status", key: "status" },
+							{ label: "Created At", key: "createdAt" },
+							{ label: "Last Updated", key: "updatedAt" },
+						]}
+						bodyData={savingsList?.slice(0, 5).map((transItem) => ({
+							// customer: `${transItem?.userId?.firstname} ${transItem?.userId?.lastname}`,
+
+							amount: `${
+								currencyList.find((item) => item.label === transItem?.currency)
+									?.symbol ?? "₦"
+							}${prettifyMoney(transItem?.amount ?? 0)}`,
+							type:
+								transItem?.type === "lock"
+									? "BRIDGE LOCK"
+									: transItem?.type === "saving"
+									? "BRIDGE SAVE"
+									: transItem?.type,
+							status:
+								transItem?.status === "inactive" ? (
+									<span className="px-3 py-2 rounded-lg bg-[#FCDEDE] text-[#DD3333] ">
+										Inactive
+									</span>
+								) : transItem?.status === "active" ? (
+									<span className="px-3 py-2 rounded-lg bg-[#D9FBE6] text-[#22C55E] ">
+										Active
+									</span>
+								) : (
+									transItem?.status
+								),
+							lockPeriod: `${transItem?.lockPeriod || 0} days`,
+							createdAt: formatDate(transItem?.createdAt),
+							updatedAt: formatDate(transItem?.updatedAt),
+							interestRate: `${transItem?.interestRate}%`,
+							interestEarned: `${
+								currencyList.find((item) => item.label === transItem?.currency)
+									?.symbol ?? "₦"
+							}${prettifyMoney(transItem?.interestEarned ?? 0)}`,
+							onClick: () => {
+								setSelectedSavingsTransaction(transItem);
+							},
+						}))}
+						handlePageClick={() => {}}
+						pageCount={1}
+						loading={savingsLoading}
+						showPagination={false}
+					/>
+				</div>
+			)}
 		</section>
 	);
 };
