@@ -90,3 +90,13 @@ export function formatDatetoYyyyMmDd(date) {
 
 	return `${year}-${month}-${day}`;
 }
+
+export const generateURLParams = (params) => {
+	let urlParams = "";
+	for (const key in params) {
+		if (params[key]) {
+			urlParams += `${key}=${params[key]}&`;
+		}
+	}
+	return urlParams;
+};

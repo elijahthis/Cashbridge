@@ -27,12 +27,28 @@ const SavingsList = () => {
 	const [selectedSavingsTransaction, setSelectedSavingsTransaction] =
 		useState(null);
 
+	const [startDate, setStartDate] = useState(new Date("2023-01-01"));
+	const [endDate, setEndDate] = useState(new Date());
+	const [status, setStatus] = useState(null);
+	const [type, setType] = useState(null);
+
 	const itemsPerPage = 50;
+
+	const savingsStatusList = ["active", "inactive"];
+	const savingsTypeList = ["saving", "lock"];
+	const savingsTypeLabelList = ["BRIDGE SAVE", "BRIDGE LOCK"];
 
 	const fetchSavingsData = async () => {
 		setSavingsLoading(true);
 		try {
-			const res2 = await getAllSavings(currPage, itemsPerPage);
+			const res2 = await getAllSavings(
+				currPage,
+				itemsPerPage,
+				status,
+				type,
+				startDate,
+				endDate
+			);
 			console.log("res2", res2);
 			if (res2.data?.success) {
 				setSavingsList(res2.data?.data?.data);
@@ -47,27 +63,20 @@ const SavingsList = () => {
 
 	useEffect(() => {
 		fetchSavingsData();
-	}, [currPage, itemsPerPage]);
+	}, [currPage, itemsPerPage, status, type, startDate, endDate]);
 
-	const {
-		filteredSavings,
-		startDate,
-		endDate,
-		setStartDate,
-		setEndDate,
-		amountRange,
-		setAmountRange,
-		status,
-		setStatus,
-	} = useFilterSavings(savingsList);
+	const { filteredSavings, amountRange, setAmountRange } =
+		useFilterSavings(savingsList);
 
 	console.log("savingsList", savingsList);
+	console.log("startDate", startDate);
 
-	const clearFilters = () => {
+	const clearFilters = async () => {
 		setStatus(undefined);
 		setStartDate(undefined);
 		setEndDate(undefined);
 		setAmountRange(undefined);
+		setType(null);
 	};
 
 	return (
@@ -84,6 +93,18 @@ const SavingsList = () => {
 							setStatus(savingsStatusList[ind]);
 						}}
 						placeholder="Select Status"
+					/>
+				</FilterBlock>
+				<FilterBlock label="Type">
+					<Dropdown
+						optionsList={savingsTypeList.map(
+							(item, ind) => savingsTypeLabelList[ind]
+						)}
+						selectedOption={type ? capitalizeFirstLetter(type) : undefined}
+						handleSelect={(e, ind) => {
+							setType(savingsTypeList[ind]);
+						}}
+						placeholder="Select Type"
 					/>
 				</FilterBlock>
 				<FilterBlock label="From">

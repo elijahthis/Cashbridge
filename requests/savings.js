@@ -1,11 +1,22 @@
 import { request } from "../utils/axios";
+import { formatDatetoYyyyMmDd, generateURLParams } from "../utils/helperFuncs";
 
-export const getAllSavings = async (page, limit, status, type) => {
+export const getAllSavings = async (page, limit, status, type, from, to) => {
 	try {
+		// const res = await request.get(
+		// 	`v1/savings?page=${page}&limit=${limit}&${
+		// 		status ? `status=${status}` : ""
+		// 	}&${type ? `type=${type}` : ""}`
+		// );
 		const res = await request.get(
-			`v1/savings?page=${page}&limit=${limit}&${
-				status ? `status=${status}` : ""
-			}&${type ? `type=${type}` : ""}`
+			`v1/savings?${generateURLParams({
+				page,
+				limit,
+				status,
+				type,
+				from: from ? formatDatetoYyyyMmDd(from) : from,
+				to: to ? formatDatetoYyyyMmDd(to) : to,
+			})}`
 		);
 		console.log(res);
 		return res;

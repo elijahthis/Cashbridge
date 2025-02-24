@@ -23,13 +23,15 @@ const SavingsDashPage = () => {
 	const [type, setType] = useState(null);
 	const [selectedSavingsTransaction, setSelectedSavingsTransaction] =
 		useState(null);
+	const [startDate, setStartDate] = useState();
+	const [endDate, setEndDate] = useState();
 
 	const router = useRouter();
 
 	const fetchSavingsData = async () => {
 		setSavingsLoading(true);
 		try {
-			const res2 = await getAllSavings(1, 10, status, type);
+			const res2 = await getAllSavings(1, 10, status, type, startDate, endDate);
 			console.log("res2", res2);
 			if (res2.data?.success) {
 				setSavingsList(res2.data?.data?.data);
@@ -43,7 +45,7 @@ const SavingsDashPage = () => {
 
 	useEffect(() => {
 		fetchSavingsData();
-	}, [status, type]);
+	}, [status, type, startDate, endDate]);
 
 	const savingsStatusList = ["active", "inactive"];
 	const savingsTypeList = ["saving", "lock"];
@@ -52,12 +54,13 @@ const SavingsDashPage = () => {
 	const clearFilters = () => {
 		setStatus(null);
 		setType(null);
-		// setStartDate(undefined);
-		// setEndDate(undefined);
+		setStartDate(undefined);
+		setEndDate(undefined);
 		// setAmountRange(undefined);
 	};
 
 	console.log("savingsList", savingsList);
+	console.log("startDate", startDate);
 
 	return (
 		<section className="py-6">

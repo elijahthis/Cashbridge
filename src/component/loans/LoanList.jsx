@@ -35,6 +35,10 @@ const LoanList = () => {
 	const [deleteId, setDeleteId] = useState(null);
 
 	const loansStatusList = ["created", "paid", "active", "due", "rejected"];
+	const defaultStatusList = [
+		{ label: "Defaulted", value: true },
+		{ label: "Not Defaulted", value: false },
+	];
 
 	const fetchData = async () => {
 		setLoanListLoading(true);
@@ -148,6 +152,21 @@ const LoanList = () => {
 								newDate.setHours(23, 59, 59, 999);
 								setEndDate(newDate);
 							}}
+						/>
+					</FilterBlock>
+					<FilterBlock label="Default Status">
+						<Dropdown
+							optionsList={defaultStatusList.map((item) => item.label)}
+							selectedOption={
+								isDefaulted !== null
+									? defaultStatusList.find((item) => item.value === isDefaulted)
+											.label
+									: undefined
+							}
+							handleSelect={(e, ind) => {
+								setIsDefaulted(defaultStatusList[ind].value);
+							}}
+							placeholder="Select Default Status"
 						/>
 					</FilterBlock>
 					{/* <FilterBlock label="Amount">

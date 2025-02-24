@@ -15,7 +15,7 @@ const CompanyWallet = () => {
 			console.log("res", res);
 			if (res.data?.success) {
 				setWalletList(
-					res.data?.data?.filter((item) => item?.currency === "NGN")
+					res.data?.data?.filter((item) => item?.currency === "NGN") ?? []
 				);
 			}
 		} catch (error) {
