@@ -26,12 +26,34 @@ const SavingTransactionList = () => {
 	const [totalTransactionPages, setTotalTransactionPages] = useState(1);
 	const [transactionList, setTransactionList] = useState([]);
 
+	const [startDate, setStartDate] = useState(new Date("2023-01-01"));
+	const [endDate, setEndDate] = useState(new Date());
+	const [source, setSource] = useState(null);
+	const [type, setType] = useState(null);
+
 	const router = useRouter();
+
+	const savingsTypeList = ["deposit", "lock", "withdrawal", "interest"];
+	const savingsTypeLabelList = [
+		"BRIDGE DEPOSIT",
+		"BRIDGE LOCK",
+		"BRIDGE WITHDRAWAL",
+		"BRIDGE INTEREST",
+	];
+	const savingsSourceList = ["wallet", "card", "lock"];
 
 	const fetchTransactionData = async () => {
 		setTransLoading(true);
 		try {
-			const res2 = await getAllSavingTransactions();
+			const res2 = await getAllSavingTransactions(
+				null,
+				currPage,
+				10,
+				type,
+				source,
+				startDate,
+				endDate
+			);
 			console.log("res2", res2);
 			if (res2.data?.success) {
 				setTransactionList(res2.data?.data);
@@ -47,45 +69,53 @@ const SavingTransactionList = () => {
 
 	useEffect(() => {
 		fetchTransactionData();
-	}, [currPage]);
+	}, [currPage, startDate, endDate, type, source]);
 
 	const {
 		filteredSavings,
-		startDate,
-		endDate,
-		setStartDate,
-		setEndDate,
+
 		amountRange,
 		setAmountRange,
-		status,
-		setStatus,
 	} = useFilterSavings(transactionList);
 
 	console.log("transactionList", transactionList);
 
 	const clearFilters = () => {
-		setStatus(undefined);
 		setStartDate(undefined);
 		setEndDate(undefined);
 		setAmountRange(undefined);
+		setType(undefined);
+		setSource(undefined);
 	};
 
 	return (
 		<section className="py-6">
 			<h2 className="font-bold text-3xl mb-4">Savings Transactions</h2>
 			<FilterRow clearFilters={clearFilters}>
-				{/* <FilterBlock label="Status">
+				<FilterBlock label="Type">
 					<Dropdown
-						optionsList={savingsStatusList.map((item) =>
+						optionsList={savingsTypeList.map(
+							(item, ind) => savingsTypeLabelList[ind]
+						)}
+						selectedOption={type ? capitalizeFirstLetter(type) : undefined}
+						handleSelect={(e, ind) => {
+							setType(savingsTypeList[ind]);
+						}}
+						placeholder="Select Type"
+					/>
+				</FilterBlock>
+				<FilterBlock label="Source">
+					<Dropdown
+						optionsList={savingsSourceList.map((item, ind) =>
 							capitalizeFirstLetter(item)
 						)}
-						selectedOption={status ? capitalizeFirstLetter(status) : undefined}
+						selectedOption={source ? capitalizeFirstLetter(source) : undefined}
 						handleSelect={(e, ind) => {
-							setStatus(savingsStatusList[ind]);
+							setSource(savingsSourceList[ind]);
 						}}
-						placeholder="Select Status"
+						placeholder="Select Source"
 					/>
-				</FilterBlock> */}
+				</FilterBlock>
 				<FilterBlock label="From">
 					<CBDatePicker
 						selectedDate={startDate ? new Date(startDate) : undefined}
@@ -137,7 +167,7 @@ const SavingTransactionList = () => {
 						{ label: "Customer Name", key: "customer" },
 						{ label: "Amount", key: "amount" },
 						{ label: "Type", key: "type" },
-						// { label: "Source", key: "source" },
+						{ label: "Source", key: "source" },
 						{ label: "Transaction Date", key: "createdAt" },
 						{ label: "Transaction ID", key: "trnx_id" },
 						{ label: "Reference", key: "reference" },

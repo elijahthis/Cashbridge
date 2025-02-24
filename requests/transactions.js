@@ -1,4 +1,5 @@
 import { request } from "../utils/axios";
+import { formatDatetoYyyyMmDd, generateURLParams } from "../utils/helperFuncs";
 
 export const getUserWalletTransactions = async (userId, page, type) => {
 	try {
@@ -70,10 +71,26 @@ export const getCompanyWalletTransactions = async (page, type) => {
 	}
 };
 
-export const getAllSavingTransactions = async (trnx_id) => {
+export const getAllSavingTransactions = async (
+	trnx_id,
+	page,
+	limit,
+	type,
+	source,
+	from,
+	to
+) => {
 	try {
 		const res = await request.get(
-			`v1/transactions/savings${trnx_id ? `?trnx_id=${trnx_id}` : ""}`
+			`v1/transactions/savings?${generateURLParams({
+				trnx_id,
+				page,
+				limit,
+				type,
+				source,
+				from: from ? formatDatetoYyyyMmDd(from) : from,
+				to: to ? formatDatetoYyyyMmDd(to) : to,
+			})}`
 		);
 		console.log(res);
 		return res;
