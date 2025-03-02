@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 
 const useFilterTransactions = (transactionArr) => {
 	if (!Array.isArray(transactionArr)) {
-		throw new Error("Invalid input: transactionArr must be an array");
+		console.log("transactionArr", transactionArr);
+		throw new Error(
+			"Invalid input: transactionArr must be an array",
+			transactionArr
+		);
 	}
 
 	const [filters, setFilters] = useState({

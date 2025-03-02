@@ -28,7 +28,7 @@ const TransactionDashPage = () => {
 			const res2 = await getCompanyExternalTransactions(1);
 			console.log("res2", res2);
 			if (res2.data?.success) {
-				setTransactionList(res2.data?.data?.data);
+				setTransactionList(res2.data?.data?.data ?? []);
 			}
 		} catch (error) {
 			console.log(error);
