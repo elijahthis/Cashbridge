@@ -30,7 +30,7 @@ const CompanyTransactions = () => {
 			const res2 = await getCompanyExternalTransactions(currPage);
 			console.log("res2", res2);
 			if (res2.data?.success) {
-				setTransactionList(res2.data?.data?.data);
+				setTransactionList(res2.data?.data?.data ?? []);
 				setTotalTransactionPages(res2.data?.data?.meta?.page_info?.total_pages);
 			}
 		} catch (error) {
