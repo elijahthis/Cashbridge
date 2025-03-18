@@ -368,3 +368,4 @@ export const amountFilterList = [
 export const statusList = ["successful", "failed"];
 
 export const savingsStatusList = ["active", "inactive"];
+export const productList = ["AIRTIME", "GLO VTU", "AIRTEL VTU", "9MOBILE VTU"];

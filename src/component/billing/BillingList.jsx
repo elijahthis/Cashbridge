@@ -11,6 +11,7 @@ import { getAllSavings } from "../../../requests/savings";
 import {
 	amountFilterList,
 	currencyList,
+	productList,
 	savingsStatusList,
 } from "@/data/constants";
 import useFilterSavings from "../../../hooks/useFilterSavings";
@@ -32,13 +33,15 @@ const BillingSummary = () => {
 	const [endDate, setEndDate] = useState(new Date());
 	const [selectedBillingTransaction, setSelectedBillingTransaction] =
 		useState(null);
+	const [product, setProduct] = useState(null);
 
 	const fetchBillingData = async () => {
 		setBillingLoading(true);
 		try {
 			const res2 = await getAllBilling(
 				formatDatetoYyyyMmDd(startDate),
-				formatDatetoYyyyMmDd(endDate)
+				formatDatetoYyyyMmDd(endDate),
+				product
 			);
 			console.log("res2", res2);
 			if (res2.data?.success) {
@@ -54,11 +57,12 @@ const BillingSummary = () => {
 
 	useEffect(() => {
 		fetchBillingData();
-	}, [startDate, endDate]);
+	}, [startDate, endDate, product]);
 
 	const clearFilters = () => {
 		setStartDate(new Date("2023-01-01"));
 		setEndDate(new Date());
+		setProduct(null);
 		// setStartDate(undefined);
 		// setEndDate(undefined);
 		// setAmountRange(undefined);
@@ -103,20 +107,6 @@ const BillingSummary = () => {
 			<section className="py-6">
 				<h2 className="font-bold text-3xl mb-4">Billing Transactions</h2>
 				<FilterRow clearFilters={clearFilters}>
-					{/* <FilterBlock label="Status">
-						<Dropdown
-							optionsList={savingsStatusList.map((item) =>
-								capitalizeFirstLetter(item)
-							)}
-							selectedOption={
-								status ? capitalizeFirstLetter(status) : undefined
-							}
-							handleSelect={(e, ind) => {
-								setStatus(savingsStatusList[ind]);
-							}}
-							placeholder="Select Status"
-						/>
-					</FilterBlock> */}
 					{/* <FilterBlock label="Type">
 						<Dropdown
 							optionsList={savingsTypeList.map(
@@ -149,6 +139,16 @@ const BillingSummary = () => {
 								newDate.setHours(23, 59, 59, 999);
 								setEndDate(newDate);
 							}}
+						/>
+					</FilterBlock>
+					<FilterBlock label="Product">
+						<Dropdown
+							optionsList={productList}
+							selectedOption={product ? product : undefined}
+							handleSelect={(e, ind) => {
+								setProduct(productList[ind]);
+							}}
+							placeholder="Select Product"
 						/>
 					</FilterBlock>
 					{/* <FilterBlock label="Amount">
