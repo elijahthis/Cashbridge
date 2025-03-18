@@ -4,6 +4,7 @@ import { authors } from "../../data/user";
 import PaginationComponent from "../PaginationComponent";
 import usePaginate from "../../../hooks/usePaginate";
 import Loading from "../loading";
+import { IoSearchOutline } from "react-icons/io5";
 
 function UsersList({
 	userArr,

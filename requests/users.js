@@ -1,9 +1,11 @@
 import { request } from "../utils/axios";
 
-export const getAllUsers = async (page, limit) => {
+export const getAllUsers = async (page, limit, search) => {
 	try {
 		const res = await request.get(
-			`v1/user-management?page=${page}&limit=${limit}`
+			`v1/user-management?page=${page}&limit=${limit}${
+				search ? `&firstname=${search}` : ""
+			}`
 		);
 		console.log(res);
 		return res;

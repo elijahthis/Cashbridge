@@ -19,7 +19,7 @@ const SelectedBilling = ({ billItem, backFunc }) => {
 						`${
 							currencyList.find((item) => item.label === billItem?.currency)
 								?.symbol ?? "₦"
-						} ${billItem?.amount}` ?? "-"
+						} ${Number(billItem?.amount)}` ?? "-"
 					}
 				/>
 				<InfoRow

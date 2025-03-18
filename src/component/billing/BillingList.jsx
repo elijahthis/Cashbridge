@@ -197,7 +197,7 @@ const BillingSummary = () => {
 								amount: `${
 									currencyList.find((item) => item.label === billItem?.currency)
 										?.symbol ?? "₦"
-								} ${billItem?.amount}`,
+								} ${Number(billItem?.amount)}`,
 								customer_id: billItem?.customer_id,
 								frequency: billItem?.frequency,
 								product: billItem?.product,
